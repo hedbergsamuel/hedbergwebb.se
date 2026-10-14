@@ -672,5 +672,11 @@ if(!matchMedia('(prefers-reduced-motion: reduce)').matches&&'IntersectionObserve
   document.querySelectorAll('[data-tema]').forEach(function(el){if(el!==root)io.observe(el)});
 })();
 </script>
+<script>
+/* Rensa kampanjparametrarna ur adressfältet när Analytics hunnit läsa dem */
+if (/[?&]utm_/.test(location.search)) addEventListener('load', function () {
+  setTimeout(function () { try { history.replaceState(null, '', location.pathname + location.hash); } catch (e) {} }, 2000);
+});
+</script>
 </body>
 </html>
