@@ -1,0 +1,667 @@
+<!doctype html>
+<html lang="sv">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Samuel Hedberg – hemsidor åt små företag</title>
+<meta name="description" content="Jag pluggar teknik på gymnasiet och bygger hemsidor åt företag vid sidan av skolan.">
+<meta name="theme-color" content="#F6EFDF">
+<meta name="format-detection" content="telephone=no, email=no, address=no, date=no">
+<link rel="canonical" href="https://hedbergwebb.se/">
+<meta property="og:type" content="website">
+<meta property="og:locale" content="sv_SE">
+<meta property="og:url" content="https://hedbergwebb.se/">
+<meta property="og:title" content="Samuel Hedberg – hemsidor åt små företag">
+<meta property="og:description" content="Jag pluggar teknik på gymnasiet och bygger hemsidor åt företag vid sidan av skolan.">
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
+<link rel="preload" href="typsnitt/archivo.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="typsnitt/plexmono-400.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="typsnitt/caveat.woff2" as="font" type="font/woff2" crossorigin>
+<style>
+@font-face{font-family:'Archivo';font-style:normal;font-weight:100 900;font-stretch:62% 125%;font-display:swap;src:url(typsnitt/archivo.woff2) format('woff2')}
+@font-face{font-family:'IBM Plex Mono';font-style:normal;font-weight:400;font-display:swap;src:url(typsnitt/plexmono-400.woff2) format('woff2')}
+@font-face{font-family:'IBM Plex Mono';font-style:normal;font-weight:600;font-display:swap;src:url(typsnitt/plexmono-600.woff2) format('woff2')}
+@font-face{font-family:'Caveat';font-style:normal;font-weight:500 700;font-display:swap;src:url(typsnitt/caveat.woff2) format('woff2')}
+@font-face{font-family:'Syne';font-style:normal;font-weight:600 800;font-display:swap;src:url(typsnitt/syne.woff2) format('woff2')}
+@font-face{font-family:'DM Sans';font-style:normal;font-weight:400 500;font-display:swap;src:url(typsnitt/dmsans.woff2) format('woff2')}
+@font-face{font-family:'Newsreader';font-style:normal;font-weight:500;font-display:swap;src:url(typsnitt/newsreader-500.woff2) format('woff2')}
+@font-face{font-family:'Newsreader';font-style:italic;font-weight:500;font-display:swap;src:url(typsnitt/newsreader-500-italic.woff2) format('woff2')}
+@font-face{font-family:'Barlow';font-style:normal;font-weight:400;font-display:swap;src:url(typsnitt/barlow-400.woff2) format('woff2')}
+@font-face{font-family:'Barlow';font-style:normal;font-weight:500;font-display:swap;src:url(typsnitt/barlow-500.woff2) format('woff2')}
+@font-face{font-family:'Cormorant Garamond';font-style:normal;font-weight:500;font-display:swap;src:url(typsnitt/cormorant-500.woff2) format('woff2')}
+@font-face{font-family:'Cormorant Garamond';font-style:italic;font-weight:500;font-display:swap;src:url(typsnitt/cormorant-500-italic.woff2) format('woff2')}
+@font-face{font-family:'Jost';font-style:normal;font-weight:300 400;font-display:swap;src:url(typsnitt/jost.woff2) format('woff2')}
+
+html{background:#F6EFDF}
+body{margin:0;-webkit-text-size-adjust:100%}
+a[x-apple-data-detectors]{color:inherit!important;text-decoration:none!important;font:inherit!important}
+a:focus-visible{outline:2px solid #C2331F;outline-offset:3px}
+
+@media (max-width:520px){.namnruta-fot{grid-template-columns:repeat(2,minmax(0,1fr))!important}.namnruta-fot>:last-child{grid-column:1/-1}}
+
+/* Skärmbild: blyertsskiss till vänster, färdig sida till höger */
+@property --skiss{syntax:'<percentage>';inherits:false;initial-value:0%}
+[data-sketch]{--skiss:0%;-webkit-mask-image:linear-gradient(90deg,transparent calc(var(--skiss) - 36%),#000 var(--skiss));mask-image:linear-gradient(90deg,transparent calc(var(--skiss) - 36%),#000 var(--skiss))}
+
+.rita #hej:not(.skriven){color:transparent;animation:nodvisning 0s 9s forwards}
+@keyframes nodvisning{to{color:#1B2B52}}
+
+/* ---------- Sagoboken: varje kapitel har sin egen värld ---------- */
+@property --paper{syntax:'<color>';inherits:true;initial-value:#F6EFDF}
+@property --paper2{syntax:'<color>';inherits:true;initial-value:#FBF6EA}
+@property --ink{syntax:'<color>';inherits:true;initial-value:#1B2B52}
+@property --ink2{syntax:'<color>';inherits:true;initial-value:#4C5A7C}
+@property --graphite{syntax:'<color>';inherits:true;initial-value:#66635C}
+:root{--paper:#F6EFDF;--paper2:#FBF6EA;--ink:#1B2B52;--ink2:#4C5A7C;--graphite:#66635C;
+  transition:--paper 1.2s ease,--paper2 1.2s ease,--ink 1.2s ease,--ink2 1.2s ease,--graphite 1.2s ease}
+:root[data-tema="ren"]{--paper:#120E0A;--paper2:#1C1612;--ink:#E4D3B4;--ink2:#B39E7E;--graphite:#8E7D66}
+:root[data-tema="skymning"]{--paper:#0E1A36;--paper2:#152447;--ink:#E8E1CF;--ink2:#A8B2CA;--graphite:#8790A8}
+:root[data-tema="natt"]{--paper:#0B1226;--paper2:#121B36;--ink:#EFE7D4;--ink2:#A9B2C9;--graphite:#7E879E}
+html,body{background:var(--paper)}
+#atmosfar{position:fixed;inset:0;z-index:0;pointer-events:none;overflow:hidden}
+#bok{z-index:1}
+#atmosfar>div{position:absolute;inset:-10%;opacity:0;transition:opacity 1.4s ease}
+/* papper: en varm lampa över boken */
+#atmosfar .lampa{background:radial-gradient(ellipse 70% 55% at 22% 8%,rgba(255,246,222,.75),transparent 70%),radial-gradient(ellipse 120% 90% at 50% 50%,transparent 55%,rgba(120,88,40,.10) 100%)}
+:root:not([data-tema]) #atmosfar .lampa,:root[data-tema="papper"] #atmosfar .lampa{opacity:1}
+/* ren: glöden från ljusslingorna */
+#atmosfar .glod{background:
+  radial-gradient(circle at 12% 28%,rgba(255,196,110,.20),transparent 9%),
+  radial-gradient(circle at 84% 18%,rgba(255,206,130,.16),transparent 7%),
+  radial-gradient(circle at 70% 72%,rgba(255,180,90,.14),transparent 11%),
+  radial-gradient(circle at 26% 82%,rgba(255,214,150,.12),transparent 8%),
+  radial-gradient(circle at 50% 46%,rgba(201,169,110,.10),transparent 30%);
+  filter:blur(6px)}
+:root[data-tema="ren"] #atmosfar .glod{opacity:1}
+/* skymning: kvällsljus över horisonten */
+#atmosfar .skymning{background:radial-gradient(ellipse 90% 50% at 50% 110%,rgba(214,162,46,.20),transparent 70%),radial-gradient(ellipse 60% 40% at 80% 0%,rgba(110,130,200,.18),transparent 70%)}
+:root[data-tema="skymning"] #atmosfar .skymning{opacity:1}
+/* natt: stjärnhimmel */
+#atmosfar .stjarnor{inset:0;background-image:
+  radial-gradient(1.2px 1.2px at 8% 12%,#fff,transparent),radial-gradient(1px 1px at 23% 34%,#fff,transparent),
+  radial-gradient(1.4px 1.4px at 41% 9%,#fff,transparent),radial-gradient(1px 1px at 57% 27%,#fff,transparent),
+  radial-gradient(1.2px 1.2px at 73% 14%,#fff,transparent),radial-gradient(1px 1px at 88% 38%,#fff,transparent),
+  radial-gradient(1px 1px at 14% 58%,#fff,transparent),radial-gradient(1.3px 1.3px at 33% 71%,#fff,transparent),
+  radial-gradient(1px 1px at 62% 63%,#fff,transparent),radial-gradient(1.2px 1.2px at 81% 77%,#fff,transparent),
+  radial-gradient(1px 1px at 93% 88%,#fff,transparent),radial-gradient(1px 1px at 47% 90%,#fff,transparent),
+  radial-gradient(ellipse 80% 60% at 50% 100%,rgba(214,162,46,.10),transparent 70%)}
+:root[data-tema="natt"] #atmosfar .stjarnor{opacity:.7}
+
+
+/* Rutpapperet ligger längre bak och glider långsammare än innehållet */
+#atmosfar>#rutnat{position:absolute;left:0;right:0;top:0;bottom:auto;height:calc(100% + 1800px);opacity:.14;background:var(--ink);transition:none;
+  -webkit-mask:url("data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20width%3D%22160%22%20height%3D%22160%22%3E%3Cg%20fill%3D%22none%22%20stroke%3D%22%23000%22%20stroke-width%3D%220.7%22%3E%3Cpath%20d%3D%22M20%200%20Q20.9%2070%2020%20160%22/%3E%3Cpath%20d%3D%22M60%200%20Q59.2%2090%2060%20160%22/%3E%3Cpath%20d%3D%22M100%200%20Q100.7%2050%20100%20160%22/%3E%3Cpath%20d%3D%22M140%200%20Q139.3%20110%20140%20160%22/%3E%3Cpath%20d%3D%22M0%2020%20Q80%2020.8%20160%2020%22/%3E%3Cpath%20d%3D%22M0%2060%20Q70%2059.3%20160%2060%22/%3E%3Cpath%20d%3D%22M0%20100%20Q90%20100.8%20160%20100%22/%3E%3Cpath%20d%3D%22M0%20140%20Q60%20139.4%20160%20140%22/%3E%3C/g%3E%3Cg%20fill%3D%22%23000%22%20fill-opacity%3D%22.9%22%3E%3Ccircle%20cx%3D%2213%22%20cy%3D%2237%22%20r%3D%220.6%22/%3E%3Ccircle%20cx%3D%2271%22%20cy%3D%2212%22%20r%3D%220.5%22/%3E%3Ccircle%20cx%3D%22118%22%20cy%3D%2244%22%20r%3D%220.7%22/%3E%3Ccircle%20cx%3D%2233%22%20cy%3D%2291%22%20r%3D%220.5%22/%3E%3Ccircle%20cx%3D%2288%22%20cy%3D%2277%22%20r%3D%220.6%22/%3E%3Ccircle%20cx%3D%22151%22%20cy%3D%2296%22%20r%3D%220.5%22/%3E%3Ccircle%20cx%3D%2247%22%20cy%3D%22133%22%20r%3D%220.7%22/%3E%3Ccircle%20cx%3D%22109%22%20cy%3D%22121%22%20r%3D%220.5%22/%3E%3Ccircle%20cx%3D%228%22%20cy%3D%22151%22%20r%3D%220.6%22/%3E%3Ccircle%20cx%3D%22131%22%20cy%3D%22149%22%20r%3D%220.5%22/%3E%3C/g%3E%3C/svg%3E") 0 0/160px 160px repeat;mask:url("data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20width%3D%22160%22%20height%3D%22160%22%3E%3Cg%20fill%3D%22none%22%20stroke%3D%22%23000%22%20stroke-width%3D%220.7%22%3E%3Cpath%20d%3D%22M20%200%20Q20.9%2070%2020%20160%22/%3E%3Cpath%20d%3D%22M60%200%20Q59.2%2090%2060%20160%22/%3E%3Cpath%20d%3D%22M100%200%20Q100.7%2050%20100%20160%22/%3E%3Cpath%20d%3D%22M140%200%20Q139.3%20110%20140%20160%22/%3E%3Cpath%20d%3D%22M0%2020%20Q80%2020.8%20160%2020%22/%3E%3Cpath%20d%3D%22M0%2060%20Q70%2059.3%20160%2060%22/%3E%3Cpath%20d%3D%22M0%20100%20Q90%20100.8%20160%20100%22/%3E%3Cpath%20d%3D%22M0%20140%20Q60%20139.4%20160%20140%22/%3E%3C/g%3E%3Cg%20fill%3D%22%23000%22%20fill-opacity%3D%22.9%22%3E%3Ccircle%20cx%3D%2213%22%20cy%3D%2237%22%20r%3D%220.6%22/%3E%3Ccircle%20cx%3D%2271%22%20cy%3D%2212%22%20r%3D%220.5%22/%3E%3Ccircle%20cx%3D%22118%22%20cy%3D%2244%22%20r%3D%220.7%22/%3E%3Ccircle%20cx%3D%2233%22%20cy%3D%2291%22%20r%3D%220.5%22/%3E%3Ccircle%20cx%3D%2288%22%20cy%3D%2277%22%20r%3D%220.6%22/%3E%3Ccircle%20cx%3D%22151%22%20cy%3D%2296%22%20r%3D%220.5%22/%3E%3Ccircle%20cx%3D%2247%22%20cy%3D%22133%22%20r%3D%220.7%22/%3E%3Ccircle%20cx%3D%22109%22%20cy%3D%22121%22%20r%3D%220.5%22/%3E%3Ccircle%20cx%3D%228%22%20cy%3D%22151%22%20r%3D%220.6%22/%3E%3Ccircle%20cx%3D%22131%22%20cy%3D%22149%22%20r%3D%220.5%22/%3E%3C/g%3E%3C/svg%3E") 0 0/160px 160px repeat}
+@media (min-width:900px){.tidslinje{display:flex!important}}
+
+/* Textkapitlen: en smalare spalt mitt på sidan, som i en bok */
+.spalt{max-width:880px;margin-inline:auto}
+footer[aria-label="Namnruta"]>div{max-width:880px;flex-basis:880px!important}
+
+/* Sista sidan: kontakten står ensam på skärmen */
+.sista-sidan{display:grid!important;grid-template-rows:1fr;min-height:calc(100vh - 70px);min-height:calc(100svh - 70px);padding-bottom:clamp(40px,8vh,96px)!important}
+.sista-sidan>.spalt{align-self:center;width:100%}
+
+/* Natthimlen lever: stjärnor som glittrar och ett stjärnfall då och då */
+#atmosfar .natthimmel{inset:0}
+:root[data-tema="natt"] #atmosfar .natthimmel{opacity:1}
+.glitter{position:absolute;inset:0;opacity:.8}
+.g1{background-image:radial-gradient(1.4px 1.4px at 17% 21%,#fff,transparent),radial-gradient(1.2px 1.2px at 36% 48%,#fff,transparent),radial-gradient(1.6px 1.6px at 66% 8%,#fff,transparent),radial-gradient(1.2px 1.2px at 79% 56%,#fff,transparent),radial-gradient(1.4px 1.4px at 52% 82%,#fff,transparent),radial-gradient(1.2px 1.2px at 6% 72%,#fff,transparent)}
+.g2{background-image:radial-gradient(1.2px 1.2px at 28% 14%,#fff,transparent),radial-gradient(1.5px 1.5px at 58% 36%,#fff,transparent),radial-gradient(1.2px 1.2px at 91% 24%,#fff,transparent),radial-gradient(1.3px 1.3px at 44% 66%,#fff,transparent),radial-gradient(1.2px 1.2px at 71% 90%,#fff,transparent),radial-gradient(1.5px 1.5px at 12% 41%,#fff,transparent)}
+.stjarnfall{position:absolute;width:140px;height:1.5px;border-radius:2px;opacity:0;background:linear-gradient(90deg,rgba(255,255,255,0),rgba(255,248,225,.95));transform-origin:100% 50%}
+.s1{top:14%;left:62%}
+.s2{top:30%;left:84%}
+@media (prefers-reduced-motion:no-preference){
+  :root[data-tema="natt"] .g1{animation:glittra 3.2s ease-in-out infinite}
+  :root[data-tema="natt"] .g2{animation:glittra 4.6s ease-in-out 1.3s infinite}
+  :root[data-tema="natt"] .s1{animation:stjarnfall 9s ease-in 2s infinite}
+  :root[data-tema="natt"] .s2{animation:stjarnfall 13s ease-in 7s infinite}
+}
+@keyframes glittra{0%,100%{opacity:.25}50%{opacity:1}}
+@keyframes stjarnfall{
+  0%{opacity:0;transform:rotate(-28deg) translateX(0) scaleX(.3)}
+  1%{opacity:1}
+  8%{opacity:0;transform:rotate(-28deg) translateX(-420px) scaleX(1)}
+  100%{opacity:0;transform:rotate(-28deg) translateX(-420px) scaleX(1)}
+}
+@media (min-width:760px){[aria-labelledby="kontakt"] a>svg{min-width:calc(100% + 56px)!important}}
+/* Processen: tre steg på rad, en linje som slår en ögla vid justeringen */
+.process ol{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:56px}
+@media (max-width:759px){
+  .process ol{grid-template-columns:1fr;gap:28px;padding-left:34px!important;position:relative}
+  .process ol::before{content:"";position:absolute;left:6px;top:14px;bottom:10px;width:1.8px;background:var(--ink);border-radius:2px}
+  .process li{position:relative}
+  .process li::before{content:"";position:absolute;left:-34px;top:12px;width:12px;height:12px;border-radius:50%;background:var(--ink)}
+  .process li:last-child p::after{content:" \2713";color:var(--ink);font-weight:800}
+  .process-linje{display:none!important}
+}
+article[data-tema="ren"]{--paper:#120E0A;--paper2:#1C1612;--ink:#E4D3B4;--ink2:#B39E7E;--graphite:#8E7D66;color:var(--ink)}
+
+
+
+/* Titelsidan */
+.vand{transition:opacity .6s}
+@media (prefers-reduced-motion:no-preference){.rita .vand.ritad{animation:gunga 2.6s ease-in-out 1.4s infinite}}
+@keyframes gunga{0%,100%{transform:translateY(0)}50%{transform:translateY(7px)}}
+@media (max-width:759px){.portratt{max-width:280px!important}.titelsida{min-height:0!important;padding-bottom:clamp(56px,8vw,96px)!important}.vand{display:none}}
+/* Ljuset från Renprodukters sida lyser ut i rummet */
+article[data-tema="ren"] figure>div+div{box-shadow:0 40px 120px -10px rgba(255,186,100,.16)}
+[data-tema="skymning"]>article>div:first-child>div:first-child{box-shadow:0 30px 70px -20px rgba(0,0,0,.45)}
+/* ---------- Scrollstyrd rörelse: sidorna lyfts fram ur boken ---------- */
+@media (prefers-reduced-motion:no-preference){
+  @supports (animation-timeline:view()){
+    @keyframes rutnat-glid{to{transform:translateY(-1800px)}}
+    #atmosfar>#rutnat{animation:rutnat-glid linear both;animation-timeline:scroll(root)}
+    @keyframes fokus{from{opacity:0;filter:blur(10px);transform:translateY(30px) scale(.97)}to{opacity:1;filter:none;transform:none}}
+    h2{animation:fokus linear both!important;animation-timeline:view()!important;animation-range:entry 0% cover 28%!important}
+    @keyframes sida-in{from{opacity:0;transform:perspective(1400px) translateY(90px) rotateX(18deg) scale(.95)}to{opacity:1;transform:none}}
+    @keyframes stig{from{opacity:0;transform:translateY(40px)}to{opacity:1;transform:none}}
+    @keyframes framgrund-ut{to{transform:translateY(-110px);opacity:.15}}
+    @keyframes bakgrund-ut{to{transform:translateY(70px) scale(.96);opacity:.5}}
+    @keyframes skarm-scroll{from{transform:translateY(0)}to{transform:translateY(var(--skarm,-120px))}}
+    #projekt~article figure,[data-tema="skymning"]>article{animation:sida-in linear both;animation-timeline:view();animation-range:entry 0% cover 38%;transform-origin:50% 100%}
+    h2,h3,[aria-labelledby="om"] p,.process li,[aria-labelledby="kontakt"] a,footer>div{animation:stig linear both;animation-timeline:view();animation-range:entry 0% cover 25%}
+    [aria-labelledby="hej"]>div>div>div:first-child{animation:framgrund-ut linear both;animation-timeline:view();animation-range:exit 0% exit 100%}
+    [aria-labelledby="hej"] figure{animation:bakgrund-ut linear both;animation-timeline:view();animation-range:exit 0% exit 100%}
+    article[data-tema="ren"] [data-color],div[data-tema="skymning"] [data-color]{animation:skarm-scroll linear both;animation-timeline:view();animation-range:cover 20% cover 90%}
+    div[data-tema="skymning"] [data-color]{--skarm:-50px}
+  }
+}
+/* ---------- Animationer (bara när JS körs och rörelse är tillåten) ---------- */
+.rita [data-draw]{transition:clip-path .7s cubic-bezier(.4,0,.2,1) var(--d,0s),opacity .5s ease var(--d,0s)}
+.rita [data-draw="line"][data-dir="h-left"]:not(.ritad){clip-path:inset(-30px 100% -30px 0)}
+.rita [data-draw="line"][data-dir="h-right"]:not(.ritad){clip-path:inset(-30px 0 -30px 100%)}
+.rita [data-draw="line"][data-dir="v-top"]:not(.ritad){clip-path:inset(0 -30px 100% -30px)}
+.rita [data-draw="line"][data-dir="v-bottom"]:not(.ritad){clip-path:inset(100% -30px 0 -30px)}
+.rita [data-draw="line"].ritad{clip-path:inset(-30px -30px -30px -30px)}
+.rita [data-draw="dim"]:not(.ritad){opacity:0}
+.rita [data-draw="loop"]{transition-duration:.9s}
+.rita [data-draw="loop"]:not(.ritad){clip-path:inset(100% -12px -12px -12px)}
+.rita [data-draw="loop"].ritad{clip-path:inset(-12px -12px -12px -12px)}
+.rita [data-draw="path"]{stroke-dasharray:1 1;transition:stroke-dashoffset .9s cubic-bezier(.4,0,.2,1) var(--d,0s)}
+.rita [data-draw="path"]:not(.ritad){stroke-dashoffset:1}
+.rita [data-draw="path"].ritad{stroke-dashoffset:0}
+
+.rita [data-note]{transition:clip-path 1.1s steps(14,end) var(--d,0s)}
+.rita [data-note]:not(.ritad){clip-path:inset(-20px 100% -20px -20px)}
+.rita [data-note].ritad{clip-path:inset(-20px -20px -20px -20px)}
+
+.rita [data-sketch]{transition:--skiss 2.4s cubic-bezier(.45,0,.2,1) var(--d,0s)}
+.rita [data-sketch]:not(.ritad){--skiss:140%}
+.rita [data-color]{transition:filter 1.4s ease var(--d,0s)}
+.rita [data-color]:not(.ritad){filter:grayscale(1) contrast(.85) brightness(1.08)}
+
+@media (prefers-reduced-motion:reduce){
+  .rita [data-draw],.rita [data-note],.rita [data-sketch],.rita [data-color]{transition:none!important}
+}
+@media print{
+  .rita #hej{color:#1B2B52!important}#penn-lager{display:none}
+  .rita [data-draw],.rita [data-note]{clip-path:none!important;opacity:1!important}
+  .rita [data-draw="path"]{stroke-dashoffset:0!important}
+  .rita [data-sketch]{--skiss:0%!important}
+  .rita [data-color]{filter:none!important}
+}
+</style>
+<script>
+if(!matchMedia('(prefers-reduced-motion: reduce)').matches&&'IntersectionObserver' in window)document.documentElement.classList.add('rita');
+</script>
+</head>
+<body>
+<div id="atmosfar" aria-hidden="true"><div id="rutnat"></div><div class="lampa"></div><div class="glod"></div><div class="skymning"></div><div class="stjarnor"></div><div class="natthimmel"><span class="glitter g1"></span><span class="glitter g2"></span><span class="stjarnfall s1"></span><span class="stjarnfall s2"></span></div></div>
+<div id="bok" style="position: relative; min-height: 100vh; box-sizing: border-box; padding: 0; color: var(--ink); font-family: 'Archivo', system-ui, sans-serif;">
+
+<svg width="0" height="0" aria-hidden="true" style="position: absolute; width: 0; height: 0;">
+<defs>
+<filter id="blyerts" x="-3%" y="-3%" width="106%" height="106%"><feTurbulence type="fractalNoise" baseFrequency="0.8" numOctaves="2" seed="4" result="brus"></feTurbulence><feDisplacementMap in="SourceGraphic" in2="brus" scale="2.2" xChannelSelector="R" yChannelSelector="G"></feDisplacementMap></filter>
+<filter id="penna" x="-3%" y="-10%" width="106%" height="120%"><feTurbulence type="fractalNoise" baseFrequency="0.6" numOctaves="1" seed="9" result="brus"></feTurbulence><feDisplacementMap in="SourceGraphic" in2="brus" scale="1.4" xChannelSelector="R" yChannelSelector="G"></feDisplacementMap></filter>
+</defs>
+</svg>
+
+
+<div style="position: relative; min-height: 100vh; box-sizing: border-box;">
+
+<main style="max-width: 1120px; margin: 0 auto; padding: 0 clamp(16px, 4vw, 56px);">
+
+
+<section data-tema="papper" aria-labelledby="hej" class="titelsida" style="position: relative; display: flex; flex-wrap: wrap; align-items: center; gap: 28px 48px; min-height: 100vh; min-height: 100svh; box-sizing: border-box; padding: clamp(40px, 6vw, 72px) 0 clamp(96px, 12vh, 140px);">
+<div style="flex: 999 1 560px; min-width: 0;">
+<div style="display: flex; flex-wrap: wrap; gap: 40px 56px; align-items: center;">
+<div style="flex: 1 1 300px; min-width: 0;">
+<h1 id="hej" style="margin: 0 0 24px; font-weight: 800; font-stretch: 112%; font-size: clamp(48px, 5.4vw, 72px); line-height: .96; letter-spacing: -.02em;">Hej! Jag heter<br>Samuel.</h1>
+<div role="img" aria-label="Handritat mått: 18 år" style="max-width: 420px; color: var(--graphite);">
+<div data-note="efter" style="text-align: center; font-family: 'Caveat', cursive; font-size: 30px; line-height: 1; font-weight: 600; transform: rotate(-2deg); margin-bottom: -2px; filter: url(#blyerts);">18 år</div>
+<svg viewBox="0 0 420 26" width="100%" height="26" preserveAspectRatio="none" aria-hidden="true" style="display: block; overflow: visible; filter: url(#blyerts);"><path data-draw="path" pathLength="1" d="M3 13.4 C 90 11.6, 180 14.6, 262 12.6 S 380 13.9, 417 12.6" fill="none" stroke-width="1.4" stroke-linecap="round" vector-effect="non-scaling-stroke" style="stroke: var(--graphite)"></path><path d="M12 7.6 L3 13.4 L12.6 18.8 M408 6.9 L417 12.6 L407.4 18.2 M2.2 2.6 L3.4 23.6 M418.4 2.2 L417.4 24" fill="none" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round" vector-effect="non-scaling-stroke" style="stroke: var(--graphite)"></path></svg>
+</div>
+<p style="margin: 20px 0 0; font-size: clamp(19px, 1.9vw, 23px); line-height: 1.45; max-width: 30ch;">Jag pluggar teknik på gymnasiet och bygger hemsidor åt företag vid sidan av skolan.</p>
+</div>
+
+<figure class="portratt" style="margin: 0 auto; flex: 0 1 340px; min-width: 220px; max-width: 340px;">
+<div style="position: relative; aspect-ratio: 3 / 4; border-radius: 50% 50% 8px 8px / 37.5% 37.5% 8px 8px; overflow: hidden; border: 1.5px solid var(--ink); box-shadow: 0 0 0 9px var(--paper), 0 0 0 10.5px var(--ink), 0 40px 80px -20px rgba(27, 43, 82, .35);">
+<img src="bilder/portratt-600.webp" srcset="bilder/portratt-600.webp 600w, bilder/portratt-900.webp 900w" sizes="(min-width: 760px) 340px, 70vw" width="900" height="1350" fetchpriority="high" decoding="async" alt="Porträtt av Samuel Hedberg" style="position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: 50% 30%; display: block;">
+</div>
+</figure>
+</div>
+</div>
+<svg class="vand" aria-hidden="true" viewBox="0 0 40 90" width="28" height="64" style="position: absolute; left: 50%; bottom: clamp(24px, 4vh, 44px); margin-left: -14px; overflow: visible; color: var(--graphite); filter: url(#blyerts);"><path data-draw="path" pathLength="1" d="M20 2 C 14 20, 26 34, 19 52 S 21 74, 20 86 M10 72 C 14 77, 17 82, 20 87 C 23 81, 26 77, 31 71" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"></path></svg>
+</section>
+
+<section aria-labelledby="projekt" style="display: flex; flex-wrap: wrap; gap: 28px 48px; padding: 0 0 clamp(56px, 8vw, 96px);">
+<div aria-hidden="true" data-draw="line" style="flex: 1 1 100%; height: 1px; opacity: .6; transform-origin: left; background-image: repeating-linear-gradient(90deg, var(--ink) 0 22px, transparent 22px 27px, var(--ink) 27px 30px, transparent 30px 35px);"></div>
+<div style="flex: 999 1 560px; min-width: 0; display: flex; flex-direction: column; gap: 40px;">
+<h2 data-tema="papper" id="projekt" style="margin: 0; font-weight: 800; font-stretch: 112%; font-size: clamp(34px, 5vw, 60px); line-height: 1; letter-spacing: -.015em;">Projekt</h2>
+<p style="margin: -22px 0 0; max-width: 38ch; font-size: clamp(18px, 1.7vw, 21px); line-height: 1.45;">Här är ett urval av mina senaste projekt.</p>
+
+<!-- ============ RENPRODUKTER BOHUSLÄN ============ -->
+<article data-tema="ren" aria-labelledby="p3" style="position: relative;">
+<div style="display: flex; flex-direction: column; gap: 14px; padding: 20px 16px 0;">
+<figure style="margin: 0; display: flex; flex-direction: column; gap: 8px;">
+<div data-draw="dim" aria-hidden="true" style="display: flex; align-items: center; gap: 6px; height: 14px; border-left: 1px solid var(--ink); border-right: 1px solid var(--ink);">
+<svg width="9" height="7" viewBox="0 0 9 7" style="display: block; flex: none;"><path d="M0 3.5L9 0V7Z" style="fill: var(--ink)"></path></svg>
+<div data-draw="line" style="flex: 1; height: 1px; background: var(--ink); transform-origin: right;"></div>
+<span style="font-family: 'IBM Plex Mono', monospace; font-size: 10px; letter-spacing: .06em; text-transform: uppercase; color: var(--ink2); padding: 0 3px;">Dator</span>
+<div data-draw="line" style="flex: 1; height: 1px; background: var(--ink); transform-origin: left;"></div>
+<svg width="9" height="7" viewBox="0 0 9 7" style="display: block; flex: none;"><path d="M9 3.5L0 0V7Z" style="fill: var(--ink)"></path></svg>
+</div>
+<div style="border: 1.5px solid var(--ink); border-radius: 6px; overflow: hidden; background: var(--paper2);">
+<div aria-hidden="true" style="display: flex; align-items: center; gap: 4px; height: 16px; padding: 0 7px; border-bottom: 1px solid var(--ink);">
+<span style="width: 6px; height: 6px; box-sizing: border-box; border: 1px solid var(--ink); border-radius: 50%;"></span>
+<span style="width: 6px; height: 6px; box-sizing: border-box; border: 1px solid var(--ink); border-radius: 50%;"></span>
+<span style="width: 6px; height: 6px; box-sizing: border-box; border: 1px solid var(--ink); border-radius: 50%;"></span>
+<span style="flex: 0 1 45%; height: 7px; margin-left: 10px; box-sizing: border-box; border: 1px solid var(--ink); border-radius: 4px;"></span>
+</div>
+<div style="position: relative; aspect-ratio: 16 / 10;">
+<svg viewBox="0 0 160 100" preserveAspectRatio="none" aria-hidden="true" style="position: absolute; inset: 0; width: 100%; height: 100%; filter: url(#blyerts);">
+<g fill="none" stroke-linecap="round" stroke-linejoin="round" style="stroke: var(--graphite)">
+<path d="M0.5 0.8 L159.3 99.2 M159.4 0.6 L0.7 99.4" stroke-width="0.8" opacity=".35" vector-effect="non-scaling-stroke"></path>
+<path d="M6 2.4 Q7.5 1.2 9 2.6 M7.5 2 L7.6 6" stroke-width="1.2" vector-effect="non-scaling-stroke"></path>
+<path d="M86 4.3 L92 4.2 M96 4.4 L104 4.3 M108 4.3 L115 4.5 M119 4.2 L127 4.4 M131 4.4 L137 4.3 M141 4.3 L152 4.5" stroke-width="1.2" vector-effect="non-scaling-stroke"></path>
+<path d="M52 38.3 L60 38.2 M64 38.4 L96 38.2 M100 38.3 L108 38.4" stroke-width="1.2" vector-effect="non-scaling-stroke"></path>
+<path d="M46 50 Q80 49 114 50.4 M52 62 Q80 61.2 108 62.3" stroke-width="8" vector-effect="non-scaling-stroke"></path>
+<path d="M54 71.8 L106 72 M62 75.2 L98 75" stroke-width="1" vector-effect="non-scaling-stroke"></path>
+<path d="M56 81 L79.3 80.8 L79.1 87.2 L55.8 87 Z M81.2 80.9 L104.3 81.1 L104 87.1 L81 86.9 Z" stroke-width="1.2" vector-effect="non-scaling-stroke"></path>
+<path d="M58 86.6 L62 81.4 M62.5 86.7 L66.5 81.3 M67 86.6 L71 81.4 M71.5 86.8 L75.5 81.3" stroke-width="0.8" vector-effect="non-scaling-stroke"></path>
+</g>
+</svg>
+<img src="bilder/renprodukter-dator-800.webp" srcset="bilder/renprodukter-dator-800.webp 800w, bilder/renprodukter-dator-1400.webp 1400w, bilder/renprodukter-dator-2000.webp 2000w" sizes="(min-width: 1180px) 980px, 90vw" width="1400" height="875" loading="lazy" decoding="async" data-sketch alt="Renprodukter Bohusläns startsida på dator" style="position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: top; display: block;">
+</div>
+</div>
+</figure>
+</div>
+<div style="margin: 20px 16px 16px; background: #1A1410; border: 1px solid var(--ink); border-top: 6px solid #C9A96E; padding: clamp(28px, 4vw, 44px) clamp(20px, 4vw, 44px) 0; display: flex; flex-wrap: wrap; align-items: flex-start; gap: 36px 48px; overflow: hidden; color: #F7F3EE;">
+<div style="flex: 1 1 280px; min-width: 0; display: flex; flex-direction: column; gap: 18px; padding-bottom: clamp(28px, 4vw, 44px);">
+<h3 id="p3" style="margin: 0; font-family: 'Cormorant Garamond', Georgia, serif; font-weight: 500; font-size: clamp(34px, 4.6vw, 56px); line-height: 1; letter-spacing: -.005em;"><span style="font-style: italic;">Renprodukter</span> <span style="color: #C9A96E;">Bohuslän</span></h3>
+<p style="margin: 0; max-width: 46ch; font-family: 'Jost', sans-serif; font-weight: 300; font-size: 17px; line-height: 1.55; color: rgba(247, 243, 238, .9);">Hemsida för en viltvagn med äkta samiska renprodukter – kött, skinn och hantverk.</p>
+<span aria-hidden="true" style="width: 32px; height: 2px; background: #C9A96E;"></span>
+<p style="margin: 0; max-width: 42ch; font-family: 'Jost', sans-serif; font-weight: 300; font-size: 16px; line-height: 1.6; color: rgba(247, 243, 238, .75);">Visar produkterna, berättelsen bakom och var man hittar dem.</p>
+<a href="https://renprodukterbohuslan.se" style="align-self: flex-start; display: inline-block; padding: 10px 0; margin: -6px 0 -10px; font-family: 'Jost', sans-serif; font-size: 15px; color: #C9A96E; overflow-wrap: anywhere; text-underline-offset: 4px;">renprodukterbohuslan.se</a>
+</div>
+<figure style="margin: 0 auto; flex: 0 0 auto; width: clamp(200px, 64vw, 290px); max-width: 100%; aspect-ratio: 7 / 11; align-self: flex-end; display: flex; flex-direction: column; gap: 10px; overflow: hidden;">
+<div data-draw="dim" aria-hidden="true" style="display: flex; align-items: center; gap: 6px; height: 14px; flex: none; border-left: 1px solid #C9A96E; border-right: 1px solid #C9A96E;">
+<svg width="9" height="7" viewBox="0 0 9 7" style="display: block; flex: none;"><path d="M0 3.5L9 0V7Z" fill="#C9A96E"></path></svg>
+<div data-draw="line" style="flex: 1; height: 1px; background: #C9A96E; transform-origin: right;"></div>
+<span style="font-family: 'IBM Plex Mono', monospace; font-size: 10px; letter-spacing: .06em; text-transform: uppercase; color: rgba(247, 243, 238, .75); padding: 0 3px;">Mobil</span>
+<div data-draw="line" style="flex: 1; height: 1px; background: #C9A96E; transform-origin: left;"></div>
+<svg width="9" height="7" viewBox="0 0 9 7" style="display: block; flex: none;"><path d="M9 3.5L0 0V7Z" fill="#C9A96E"></path></svg>
+</div>
+<div style="flex: 1; min-height: 0; display: flex; flex-direction: column; align-items: center; gap: 8px; padding: 11px 10px 0; box-sizing: border-box; border: 1.5px solid var(--ink); border-bottom: 0; border-radius: 32px 32px 0 0; background: var(--paper2);">
+<span aria-hidden="true" style="flex: none; width: 26%; height: 6px; box-sizing: border-box; border: 1px solid var(--ink); border-radius: 3px;"></span>
+<div style="position: relative; flex: 1; width: 100%; box-sizing: border-box; border: 1px solid var(--ink); border-bottom: 0; border-radius: 14px 14px 0 0; overflow: hidden;">
+<img src="bilder/renprodukter-mobil-600.webp" srcset="bilder/renprodukter-mobil-300.webp 300w, bilder/renprodukter-mobil-600.webp 600w, bilder/renprodukter-mobil-900.webp 900w" sizes="(min-width: 760px) 270px, 62vw" width="900" height="1948" loading="lazy" decoding="async" data-color alt="Renprodukter Bohusläns startsida i mobilen" style="position: absolute; top: 0; left: 0; width: 100%; height: auto; display: block;">
+</div>
+</div>
+</figure>
+</div>
+</article>
+
+<!-- ============ FLER PROJEKT ============ -->
+<h3 data-tema="skymning" style="margin: 16px 0 -16px; font-weight: 800; font-stretch: 112%; font-size: clamp(22px, 2.4vw, 28px); line-height: 1.1; letter-spacing: -.01em;">Fler projekt</h3>
+<div data-tema="skymning" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 300px), 1fr)); gap: 28px;">
+<article aria-labelledby="p1" style="min-width: 0; display: flex; flex-direction: column;">
+<div style="position: relative; padding: 16px 16px 0; overflow: hidden;">
+<div style="width: 80%; margin-bottom: 16px; border: 1.5px solid var(--ink); border-radius: 6px; overflow: hidden; background: var(--paper2);">
+<div aria-hidden="true" style="display: flex; align-items: center; gap: 4px; height: 14px; padding: 0 6px; border-bottom: 1px solid var(--ink);">
+<span style="width: 5px; height: 5px; box-sizing: border-box; border: 1px solid var(--ink); border-radius: 50%;"></span>
+<span style="width: 5px; height: 5px; box-sizing: border-box; border: 1px solid var(--ink); border-radius: 50%;"></span>
+<span style="width: 5px; height: 5px; box-sizing: border-box; border: 1px solid var(--ink); border-radius: 50%;"></span>
+<span style="flex: 0 1 45%; height: 6px; margin-left: 8px; box-sizing: border-box; border: 1px solid var(--ink); border-radius: 3px;"></span>
+</div>
+<div style="position: relative; aspect-ratio: 16 / 10;">
+<svg viewBox="0 0 160 100" preserveAspectRatio="none" aria-hidden="true" style="position: absolute; inset: 0; width: 100%; height: 100%; filter: url(#blyerts);">
+<g fill="none" stroke-linecap="round" stroke-linejoin="round" style="stroke: var(--graphite)">
+<path d="M0.5 0.8 L159.3 99.2 M159.4 0.6 L0.7 99.4" stroke-width="0.8" opacity=".35" vector-effect="non-scaling-stroke"></path>
+<path d="M10 6.3 Q27 5.3 44 6.4" stroke-width="5" vector-effect="non-scaling-stroke"></path>
+<path d="M100 6.6 L110 6.3 M114 6.5 L124 6.7 M128 6.4 L138 6.6" stroke-width="1.4" vector-effect="non-scaling-stroke"></path>
+<path d="M142.8 3.6 L152.2 3.4 L152.4 9.3 L142.6 9.1 Z" stroke-width="1.2" vector-effect="non-scaling-stroke"></path>
+<path d="M12 31 L62 30.8 Q64.5 33.2 62 35.6 L12 35.7 Q9.6 33.3 12 31 Z" stroke-width="1.1" vector-effect="non-scaling-stroke"></path>
+<path d="M10 44.5 Q70 43.2 128 44.8 M10 55 Q40 54.2 70 55.3" stroke-width="7" vector-effect="non-scaling-stroke"></path>
+<path d="M10 63.2 L80 62.8 M10 67.1 L77 67.4 M10 71 L74 70.7 M10 74.8 L40 74.9" stroke-width="1" vector-effect="non-scaling-stroke"></path>
+<path d="M10 80.2 L34.4 79.9 L34.1 86.3 L9.8 86.1 Z M37.2 80 L59.3 80.3 L59 86.2 L37 86 Z" stroke-width="1.2" vector-effect="non-scaling-stroke"></path>
+<path d="M12 85.6 L16 80.6 M16 85.8 L20 80.5 M20 85.7 L24 80.6 M24 85.9 L28 80.4 M28 85.8 L32 80.7" stroke-width="0.8" vector-effect="non-scaling-stroke"></path>
+</g>
+</svg>
+<img src="bilder/fastminit-dator-800.webp" srcset="bilder/fastminit-dator-800.webp 800w, bilder/fastminit-dator-1400.webp 1400w" sizes="(min-width: 1180px) 380px, (min-width: 700px) 38vw, 72vw" width="1400" height="875" loading="lazy" decoding="async" data-sketch alt="Fast Minits startsida på dator" style="position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: top; display: block;">
+</div>
+</div>
+<div style="position: absolute; right: 16px; top: 24%; bottom: 0; width: 32%; display: flex; flex-direction: column; align-items: center; gap: 5px; padding: 7px 6px 0; box-sizing: border-box; border: 1.5px solid var(--ink); border-bottom: 0; border-radius: 20px 20px 0 0; background: var(--paper2); box-shadow: -6px 0 16px rgba(27, 43, 82, .12);">
+<span aria-hidden="true" style="flex: none; width: 26%; height: 4px; box-sizing: border-box; border: 1px solid var(--ink); border-radius: 2px;"></span>
+<div style="position: relative; flex: 1; width: 100%; box-sizing: border-box; border: 1px solid var(--ink); border-bottom: 0; border-radius: 9px 9px 0 0; overflow: hidden;">
+<img src="bilder/fastminit-mobil-600.webp" srcset="bilder/fastminit-mobil-300.webp 300w, bilder/fastminit-mobil-600.webp 600w" sizes="(min-width: 1180px) 150px, (min-width: 700px) 15vw, 32vw" width="900" height="1948" loading="lazy" decoding="async" data-color alt="Fast Minits startsida i mobilen" style="position: absolute; top: 0; left: 0; width: 100%; height: auto; display: block;">
+</div>
+</div>
+</div>
+<div style="flex: 1; display: flex; flex-direction: column; gap: 12px; margin: 0 16px 16px; padding: 22px 22px 24px; background: #F5F3F0; border: 1px solid var(--ink); border-top: 5px solid #4E3BAF;">
+<h4 id="p1" style="margin: 0; font-family: 'Syne', sans-serif; font-weight: 800; font-size: clamp(24px, 2.6vw, 30px); line-height: 1; letter-spacing: .01em; text-transform: uppercase; color: #3B2D8F;">Fast Minit</h4>
+<p style="margin: 0; max-width: 46ch; font-family: 'DM Sans', sans-serif; font-size: 16px; line-height: 1.5; color: #2A2540;">Hemsida för en skomakare som lagar skor, väskor och klockor.</p>
+<a href="https://fastminit.se" style="align-self: flex-start; display: inline-block; padding: 10px 0; margin: auto 0 -10px; font-family: 'DM Sans', sans-serif; font-size: 15px; font-weight: 500; color: #3B2D8F; text-underline-offset: 4px;">fastminit.se</a>
+</div>
+</article>
+<article aria-labelledby="p2" style="min-width: 0; display: flex; flex-direction: column;">
+<div style="position: relative; padding: 16px 16px 0; overflow: hidden;">
+<div style="width: 80%; margin-bottom: 16px; border: 1.5px solid var(--ink); border-radius: 6px; overflow: hidden; background: var(--paper2);">
+<div aria-hidden="true" style="display: flex; align-items: center; gap: 4px; height: 14px; padding: 0 6px; border-bottom: 1px solid var(--ink);">
+<span style="width: 5px; height: 5px; box-sizing: border-box; border: 1px solid var(--ink); border-radius: 50%;"></span>
+<span style="width: 5px; height: 5px; box-sizing: border-box; border: 1px solid var(--ink); border-radius: 50%;"></span>
+<span style="width: 5px; height: 5px; box-sizing: border-box; border: 1px solid var(--ink); border-radius: 50%;"></span>
+<span style="flex: 0 1 45%; height: 6px; margin-left: 8px; box-sizing: border-box; border: 1px solid var(--ink); border-radius: 3px;"></span>
+</div>
+<div style="position: relative; aspect-ratio: 16 / 10;">
+<svg viewBox="0 0 160 100" preserveAspectRatio="none" aria-hidden="true" style="position: absolute; inset: 0; width: 100%; height: 100%; filter: url(#blyerts);">
+<g fill="none" stroke-linecap="round" stroke-linejoin="round" style="stroke: var(--graphite)">
+<path d="M0.5 8.6 L159.3 99.2 M159.4 8.4 L0.7 99.4" stroke-width="0.8" opacity=".35" vector-effect="non-scaling-stroke"></path>
+<path d="M0 8.2 Q80 7.6 160 8.4" stroke-width="1.2" vector-effect="non-scaling-stroke"></path>
+<path d="M12 2 L30.5 2.2 L30.3 6.4 L11.8 6.2 Z M126 2.3 L141 2.1 Q143 4.3 141 6.6 L126 6.5 Q124 4.4 126 2.3 Z" stroke-width="1.2" vector-effect="non-scaling-stroke"></path>
+<path d="M88 4.4 L96 4.2 M99 4.5 L107 4.3 M110 4.4 L118 4.6" stroke-width="1.4" vector-effect="non-scaling-stroke"></path>
+<path d="M12 51.8 L32 51.6 M12 55.4 L38 55.6" stroke-width="1.4" vector-effect="non-scaling-stroke"></path>
+<path d="M12 61 Q36 60.2 58 61.3 M12 68.4 Q40 67.6 70 68.6" stroke-width="7" vector-effect="non-scaling-stroke"></path>
+<path d="M12 74.2 L60 73.9 M12 77.4 L58 77.6 M12 80.6 L40 80.4" stroke-width="1" vector-effect="non-scaling-stroke"></path>
+<path d="M12 84 L27.3 83.8 L27.1 89.4 L11.9 89.2 Z M29.2 84 L41.4 84.2 L41.2 89.3 L29 89.1 Z" stroke-width="1.2" vector-effect="non-scaling-stroke"></path>
+<path d="M13.5 89 L17 84.2 M17.5 89.1 L21 84.1 M21.5 89 L25 84.3" stroke-width="0.8" vector-effect="non-scaling-stroke"></path>
+<path d="M12 92.6 L38 92.4" stroke-width="1.2" vector-effect="non-scaling-stroke"></path>
+</g>
+</svg>
+<img src="bilder/thailamdee-dator-800.webp" srcset="bilder/thailamdee-dator-800.webp 800w, bilder/thailamdee-dator-1400.webp 1400w" sizes="(min-width: 1180px) 380px, (min-width: 700px) 38vw, 72vw" width="1400" height="875" loading="lazy" decoding="async" data-sketch alt="Thai Lam-Dees startsida på dator" style="position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: top; display: block;">
+</div>
+</div>
+<div style="position: absolute; right: 16px; top: 24%; bottom: 0; width: 32%; display: flex; flex-direction: column; align-items: center; gap: 5px; padding: 7px 6px 0; box-sizing: border-box; border: 1.5px solid var(--ink); border-bottom: 0; border-radius: 20px 20px 0 0; background: var(--paper2); box-shadow: -6px 0 16px rgba(27, 43, 82, .12);">
+<span aria-hidden="true" style="flex: none; width: 26%; height: 4px; box-sizing: border-box; border: 1px solid var(--ink); border-radius: 2px;"></span>
+<div style="position: relative; flex: 1; width: 100%; box-sizing: border-box; border: 1px solid var(--ink); border-bottom: 0; border-radius: 9px 9px 0 0; overflow: hidden;">
+<img src="bilder/thailamdee-mobil-600.webp" srcset="bilder/thailamdee-mobil-300.webp 300w, bilder/thailamdee-mobil-600.webp 600w" sizes="(min-width: 1180px) 150px, (min-width: 700px) 15vw, 32vw" width="900" height="1948" loading="lazy" decoding="async" data-color alt="Thai Lam-Dees startsida i mobilen" style="position: absolute; top: 0; left: 0; width: 100%; height: auto; display: block;">
+</div>
+</div>
+</div>
+<div style="flex: 1; display: flex; flex-direction: column; gap: 12px; margin: 0 16px 16px; padding: 22px 22px 24px; background: #081F52; border: 1px solid var(--ink); border-top: 5px solid #D6A22E; color: #FBF7EF;">
+<h4 id="p2" style="margin: 0; font-family: 'Newsreader', Georgia, serif; font-weight: 500; font-size: clamp(26px, 2.8vw, 32px); line-height: 1; letter-spacing: -.01em;">Thai <span style="font-style: italic; color: #D6A22E;">Lam-Dee</span></h4>
+<p style="margin: 0; max-width: 46ch; font-family: 'Barlow', sans-serif; font-size: 16px; line-height: 1.5; color: rgba(251, 247, 239, .9);">Hemsida för ett thaikök, med meny och öppettider.</p>
+<a href="https://thailamdee.se" style="align-self: flex-start; display: inline-block; padding: 10px 0; margin: auto 0 -10px; font-family: 'Barlow', sans-serif; font-size: 15px; font-weight: 500; color: #D6A22E; text-underline-offset: 4px;">thailamdee.se</a>
+</div>
+</article>
+</div>
+</div>
+</section>
+
+<section data-tema="papper" aria-labelledby="om" style="display: flex; flex-wrap: wrap; gap: 28px 48px; padding: 0 0 clamp(56px, 8vw, 96px);">
+<div aria-hidden="true" data-draw="line" style="flex: 1 1 100%; height: 1px; opacity: .6; transform-origin: left; background-image: repeating-linear-gradient(90deg, var(--ink) 0 22px, transparent 22px 27px, var(--ink) 27px 30px, transparent 30px 35px);"></div>
+<div class="spalt" style="flex: 999 1 560px; min-width: 0; display: flex; flex-direction: column; gap: 28px;">
+<h2 id="om" style="margin: 0; font-weight: 800; font-stretch: 112%; font-size: clamp(34px, 5vw, 60px); line-height: 1; letter-spacing: -.015em;">Om mig</h2>
+<div style="display: flex; gap: clamp(40px, 6vw, 88px); align-items: stretch;">
+<div style="max-width: 60ch; display: flex; flex-direction: column; gap: 18px; font-size: clamp(18px, 1.7vw, 21px); line-height: 1.5;">
+<p style="margin: 0;">Jag byggde min första hemsida när jag var 12. Pappa hade precis startat sin arboristfirma och behövde en sida, och jag blev helt överlycklig när jag fick sitta och klura ut hur man gjorde.</p>
+<p style="margin: 0;">Allt fick jag lära mig från grunden, från hur en sida ska se ut till hur den ska vara uppbyggd för att vara lätt att använda.</p>
+<p style="margin: 0;">Sen insåg jag att en snygg hemsida inte räcker för att den ska uppfylla sitt syfte, den måste synas på Google också. Här lärde jag mig mycket om SEO och konsten att skapa värdefullt innehåll, som faktiskt syns i sökresultat. Jag byggde om hemsidan. Den här gången räckte det inte att pappa var nöjd, jag ville imponera på Google också.</p>
+<p style="margin: 0;">Idag pluggar jag teknik på gymnasiet med digitalt skapande som inriktning. Men mina planer tar inte slut efter studenten. Intresset finns kvar, och jag vill fortsätta bygga bättre och bättre hemsidor!</p>
+</div>
+<div class="tidslinje" aria-hidden="true" style="flex: 0 0 auto; display: none; flex-direction: column; align-items: center; gap: 6px; padding: 4px 0; color: var(--graphite);">
+<div data-note style="font-family: 'Caveat', cursive; font-size: 30px; font-weight: 600; line-height: 1; transform: rotate(-3deg); filter: url(#blyerts);">12 år</div>
+<div style="position: relative; flex: 1; min-height: 120px; width: 26px;">
+<svg viewBox="0 0 26 100" preserveAspectRatio="none" style="position: absolute; inset: 0; width: 100%; height: 100%; overflow: visible; filter: url(#blyerts);"><path data-draw="path" pathLength="1" d="M13 2 C 12 30, 14.5 60, 12.6 98" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" vector-effect="non-scaling-stroke"></path><path d="M4 2.4 L22 1.6 M4.6 98.2 L21.4 98.8 M8 9 L13 2 L18 9.4 M8.4 91.6 L12.6 98 L17.6 91" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round" vector-effect="non-scaling-stroke"></path></svg>
+</div>
+<div data-note style="font-family: 'Caveat', cursive; font-size: 30px; font-weight: 600; line-height: 1; transform: rotate(-2deg); filter: url(#blyerts);">18 år</div>
+</div>
+</div>
+</div>
+</section>
+
+<section data-tema="papper" aria-labelledby="gang" style="display: flex; flex-wrap: wrap; gap: 28px 48px; padding: 0 0 clamp(56px, 8vw, 96px);">
+<div aria-hidden="true" data-draw="line" style="flex: 1 1 100%; height: 1px; opacity: .6; transform-origin: left; background-image: repeating-linear-gradient(90deg, var(--ink) 0 22px, transparent 22px 27px, var(--ink) 27px 30px, transparent 30px 35px);"></div>
+<div class="spalt" style="flex: 999 1 560px; min-width: 0; display: flex; flex-direction: column; gap: 36px;">
+<h2 id="gang" style="margin: 0; font-weight: 800; font-stretch: 112%; font-size: clamp(34px, 5vw, 60px); line-height: 1; letter-spacing: -.015em;">Så går det till</h2>
+<div class="process">
+<ol style="list-style: none; margin: 0; padding: 0;">
+<li style="min-width: 0;">
+<span aria-hidden="true" class="steg-nr" style="display: block; font-family: 'Caveat', cursive; font-size: 34px; font-weight: 600; line-height: 1; color: var(--graphite); filter: url(#blyerts);">1</span>
+<p style="margin: 8px 0 0; font-size: clamp(19px, 1.8vw, 23px); line-height: 1.4; font-weight: 500;">Vi pratar och bollar lite idéer.</p>
+</li>
+<li style="min-width: 0;">
+<span aria-hidden="true" class="steg-nr" style="display: block; font-family: 'Caveat', cursive; font-size: 34px; font-weight: 600; line-height: 1; color: var(--graphite); filter: url(#blyerts);">2</span>
+<p style="margin: 8px 0 0; font-size: clamp(19px, 1.8vw, 23px); line-height: 1.4; font-weight: 500;">Jag bygger sidan.</p>
+</li>
+<li style="min-width: 0;">
+<span aria-hidden="true" class="steg-nr" style="display: block; font-family: 'Caveat', cursive; font-size: 34px; font-weight: 600; line-height: 1; color: var(--graphite); filter: url(#blyerts);">3</span>
+<p style="margin: 8px 0 0; font-size: clamp(19px, 1.8vw, 23px); line-height: 1.4; font-weight: 500;">Du tittar och vi justerar tills du är nöjd.</p>
+</li>
+</ol>
+<svg class="process-linje" viewBox="0 0 1000 64" aria-hidden="true" style="display: block; width: 100%; height: auto; margin-top: 22px; overflow: visible; color: var(--ink); filter: url(#blyerts);">
+<path data-draw="path" pathLength="1" d="M8 34 C 120 30, 240 38, 360 34 S 600 31, 712 34 C 770 35, 806 36, 818 18 C 828 0, 788 -6, 784 14 C 781 32, 812 38, 852 35 S 920 33, 948 34" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" vector-effect="non-scaling-stroke"></path>
+<circle cx="8" cy="34" r="6" style="fill: var(--ink)"></circle>
+<circle cx="360" cy="34" r="6" style="fill: var(--ink)"></circle>
+<circle cx="712" cy="34" r="6" style="fill: var(--ink)"></circle>
+<path data-draw="path" pathLength="1" d="M956 34 L 968 46 L 994 12" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" vector-effect="non-scaling-stroke"></path>
+</svg>
+</div>
+</div>
+</section>
+
+<section data-tema="natt" aria-labelledby="kontakt" class="sista-sidan" style="display: flex; flex-wrap: wrap; gap: 28px 48px; padding: 0 0 clamp(56px, 8vw, 96px);">
+<div class="spalt" style="flex: 999 1 560px; min-width: 0;">
+<h2 id="kontakt" style="margin: 0; max-width: 18ch; font-weight: 600; font-stretch: 108%; font-size: clamp(32px, 4.4vw, 54px); line-height: 1.14; letter-spacing: -.01em;">Låt oss bygga en hemsida du kan vara stolt över.</h2>
+<p style="margin: clamp(16px, 2vw, 24px) 0 0; max-width: 40ch; font-size: clamp(18px, 1.8vw, 22px); line-height: 1.5; color: var(--ink2);">Ring eller mejla gärna, så tar vi det därifrån:)</p>
+<div style="margin-top: clamp(32px, 5vw, 56px); display: flex; flex-direction: column; gap: clamp(14px, 2vw, 22px);">
+<a href="mailto:samuel@hedbergwebb.se" style="align-self: flex-start; display: inline-flex; flex-direction: column; gap: 2px; padding: 6px 0; color: var(--ink); text-decoration: none; font-size: clamp(26px, 4vw, 44px); font-weight: 700; font-stretch: 106%; letter-spacing: -.01em; overflow-wrap: anywhere;">
+<span>samuel@hedbergwebb.se</span>
+<svg viewBox="0 0 400 12" preserveAspectRatio="none" aria-hidden="true" data-draw="line" style="transform-origin: left; display: block; width: 0; min-width: 100%; height: 12px; overflow: visible; filter: url(#blyerts);"><path d="M2 7 C 60 4.5, 140 9, 220 6 S 360 4.8, 398 7.4" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" vector-effect="non-scaling-stroke"></path></svg>
+</a>
+<a href="tel:+46725202993" style="align-self: flex-start; display: inline-flex; flex-direction: column; gap: 2px; padding: 6px 0; color: var(--ink); text-decoration: none; font-size: clamp(26px, 4vw, 44px); font-weight: 700; font-stretch: 106%; letter-spacing: -.01em; overflow-wrap: anywhere;">
+<span>072-520 29 93</span>
+<svg viewBox="0 0 240 12" preserveAspectRatio="none" aria-hidden="true" data-draw="line" style="transform-origin: left; display: block; width: 0; min-width: 100%; height: 12px; overflow: visible; filter: url(#blyerts);"><path d="M2 6.5 C 50 8.6, 110 4.2, 170 6.6 S 230 7.8, 238 5.6" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" vector-effect="non-scaling-stroke"></path></svg>
+</a>
+</div>
+</div>
+</section>
+
+<footer data-tema="natt" aria-label="Företagsuppgifter" style="padding: 0 0 clamp(24px, 4vw, 40px); text-align: center; font-family: 'IBM Plex Mono', monospace; font-size: 11px; line-height: 1.8; letter-spacing: .08em; text-transform: uppercase; color: var(--ink2);"><span style="white-space: nowrap;">Samuel Hedberg</span> · <span style="white-space: nowrap;">Enskild firma</span> · <span style="white-space: nowrap;">Org.nr 080725-2994</span> · <span style="white-space: nowrap;">Godkänd för F-skatt</span></footer>
+
+</main>
+</div>
+</div>
+<script>
+// Rubriken ritas fram som med blyerts: konturer i pennans takt, skuggning och sist bläck
+(function(){
+  var h1=document.getElementById('hej'),root=document.documentElement;
+  if(!h1||!root.classList.contains('rita'))return;
+  window.pennaAktiv=true;
+  var G={"upm":1000,"asc":878,"desc":210,"g":{"!":["M 105 236 L 68 687 L 267 687 L 230 236 Z","M 73 0 L 73 171 L 263 171 L 263 0 Z"],".":["M 69 0 L 69 175 L 264 175 L 264 0 Z"],"H":["M 80 0 L 80 687 L 271 687 L 271 427 L 613 427 L 613 687 L 804 687 L 804 0 L 613 0 L 613 272 L 271 272 L 271 0 Z"],"J":["M 317 -12 Q 226 -12 161 14 Q 97 39 63 93 Q 29 146 29 230 L 29 249 L 211 249 L 211 228 Q 211 179 237 156 Q 263 133 312 133 Q 363 133 390 162 Q 416 190 416 251 L 416 687 L 607 687 L 607 254 Q 607 162 573 103 Q 538 44 473 16 Q 408 -12 317 -12 Z"],"S":["M 404 -12 Q 330 -12 265 -1 Q 200 10 152 35 Q 103 61 75 104 Q 47 148 47 213 Q 47 216 47 220 Q 47 224 48 228 L 234 228 Q 233 224 233 220 Q 233 215 233 211 Q 233 180 252 162 Q 272 143 308 135 Q 344 127 392 127 Q 414 127 436 129 Q 458 131 477 135 Q 495 139 510 147 Q 525 154 533 164 Q 541 175 541 190 Q 541 212 521 226 Q 501 240 467 249 Q 432 257 390 265 Q 347 272 301 281 Q 256 291 213 305 Q 170 320 136 344 Q 102 367 82 403 Q 62 440 62 491 Q 62 546 87 585 Q 112 625 157 650 Q 202 675 263 687 Q 323 699 392 699 Q 462 699 521 687 Q 580 675 623 649 Q 667 624 691 585 Q 715 546 715 493 L 715 481 L 531 481 L 531 488 Q 531 510 516 527 Q 501 544 471 554 Q 442 564 399 564 Q 352 564 320 557 Q 288 550 273 537 Q 257 524 257 507 Q 257 486 277 473 Q 298 460 332 452 Q 366 443 409 436 Q 451 429 497 420 Q 543 411 585 397 Q 628 383 662 359 Q 696 336 717 302 Q 737 267 737 217 Q 737 135 694 85 Q 651 34 575 11 Q 500 -12 404 -12 Z"],"a":["M 238 -12 Q 198 -12 161 -5 Q 124 2 96 19 Q 67 36 51 65 Q 35 95 35 140 Q 35 200 64 236 Q 93 273 147 291 Q 200 310 275 316 Q 349 322 440 322 L 440 348 Q 440 374 428 391 Q 416 407 393 416 Q 370 424 333 424 Q 304 424 280 419 Q 256 413 241 402 Q 227 391 227 374 L 227 366 L 54 366 Q 53 370 53 373 Q 53 377 53 382 Q 53 429 86 464 Q 119 500 183 520 Q 247 539 339 539 Q 424 539 486 522 Q 547 504 581 466 Q 614 429 614 366 L 614 148 Q 614 131 623 120 Q 631 110 647 110 L 691 110 L 691 6 Q 678 1 651 -6 Q 624 -12 590 -12 Q 549 -12 521 -3 Q 493 7 478 23 Q 462 39 456 60 L 449 60 Q 425 39 394 22 Q 363 6 324 -3 Q 285 -12 238 -12 Z","M 295 103 Q 318 103 343 109 Q 369 115 391 127 Q 413 139 427 157 Q 440 174 440 197 L 440 230 Q 363 230 312 222 Q 260 214 234 198 Q 208 181 208 154 Q 208 135 220 123 Q 232 112 252 108 Q 272 103 295 103 Z"],"e":["M 358 -12 Q 259 -12 188 17 Q 117 47 78 108 Q 40 169 40 264 Q 40 357 78 418 Q 116 479 185 509 Q 255 539 351 539 Q 448 539 517 510 Q 585 481 621 421 Q 656 361 656 268 L 656 229 L 219 229 Q 220 187 236 159 Q 251 131 282 117 Q 313 103 358 103 Q 384 103 406 109 Q 428 115 445 126 Q 462 137 471 152 Q 480 167 481 187 L 655 187 Q 655 140 634 103 Q 613 66 574 40 Q 534 15 480 1 Q 425 -12 358 -12 Z","M 220 323 L 475 323 Q 475 348 466 366 Q 458 385 442 398 Q 426 411 405 417 Q 383 424 356 424 Q 315 424 286 412 Q 257 400 241 377 Q 224 355 220 323 Z"],"g":["M 153 -201 Q 115 -201 82 -186 Q 50 -171 30 -142 Q 10 -114 10 -75 Q 10 -33 37 -3 Q 64 26 102 41 Q 74 56 60 80 Q 45 104 45 132 Q 45 174 75 203 Q 104 232 149 240 Q 111 262 87 295 Q 63 329 63 369 Q 63 431 98 469 Q 134 506 198 523 Q 262 539 346 539 Q 377 539 404 537 Q 431 534 454 529 Q 499 553 518 579 Q 537 605 538 622 L 694 622 Q 694 582 679 555 Q 663 527 635 510 Q 606 493 566 483 Q 596 462 612 432 Q 629 403 629 368 Q 629 309 598 271 Q 567 233 511 215 Q 456 197 383 197 L 278 197 Q 248 197 234 188 Q 220 179 220 164 Q 220 150 233 140 Q 246 130 278 130 L 529 130 Q 610 130 652 86 Q 693 41 693 -28 Q 693 -80 665 -119 Q 637 -158 590 -179 Q 543 -201 486 -201 Z","M 237 -98 L 461 -98 Q 477 -98 490 -92 Q 503 -86 510 -74 Q 518 -62 518 -46 Q 518 -22 502 -9 Q 486 4 463 4 L 238 4 Q 215 4 199 -9 Q 183 -22 183 -46 Q 183 -69 198 -84 Q 214 -98 237 -98 Z","M 346 296 Q 398 296 427 313 Q 456 331 456 368 Q 456 405 427 423 Q 398 441 346 441 Q 295 441 265 423 Q 236 405 236 368 Q 236 343 249 327 Q 262 311 286 303 Q 311 296 346 296 Z"],"h":["M 64 0 L 64 724 L 237 724 L 237 466 L 245 466 Q 267 491 296 507 Q 324 523 358 531 Q 391 539 425 539 Q 492 539 537 517 Q 582 494 605 449 Q 628 403 628 334 L 628 0 L 454 0 L 454 309 Q 454 334 448 352 Q 441 370 429 382 Q 417 394 399 400 Q 381 406 358 406 Q 324 406 296 391 Q 269 377 253 351 Q 237 326 237 292 L 237 0 Z"],"j":["M 64 599 L 64 724 L 237 724 L 237 599 Z","M 61 -201 Q 45 -201 24 -199 Q 3 -197 -17 -193 Q -38 -189 -53 -184 L -53 -78 L 1 -78 Q 32 -78 48 -62 Q 64 -45 64 -15 L 64 527 L 237 527 L 237 -25 Q 237 -80 220 -120 Q 203 -159 165 -180 Q 126 -201 61 -201 Z"],"l":["M 64 0 L 64 724 L 237 724 L 237 0 Z"],"m":["M 64 0 L 64 527 L 206 527 L 218 446 L 226 446 Q 248 478 278 499 Q 308 519 344 529 Q 380 539 417 539 Q 481 539 524 516 Q 568 493 590 446 L 598 446 Q 620 478 651 499 Q 681 519 717 529 Q 753 539 790 539 Q 854 539 897 517 Q 941 495 963 449 Q 986 404 986 335 L 986 0 L 812 0 L 812 310 Q 812 334 806 352 Q 800 371 789 382 Q 777 394 761 400 Q 744 406 723 406 Q 692 406 666 391 Q 641 377 626 351 Q 612 326 612 292 L 612 0 L 438 0 L 438 310 Q 438 334 432 352 Q 426 371 415 382 Q 403 394 387 400 Q 370 406 349 406 Q 318 406 292 391 Q 267 377 252 351 Q 237 326 237 292 L 237 0 Z"],"r":["M 64 0 L 64 527 L 206 527 L 218 442 L 226 442 Q 239 472 260 494 Q 281 516 309 528 Q 337 540 370 540 Q 389 540 406 537 Q 422 534 433 529 L 433 384 L 365 384 Q 331 384 307 375 Q 283 365 268 346 Q 252 328 245 303 Q 237 278 237 248 L 237 0 Z"],"t":["M 287 -12 Q 228 -12 188 3 Q 148 19 128 52 Q 108 86 108 141 L 108 405 L 23 405 L 23 527 L 114 527 L 149 683 L 282 683 L 282 527 L 406 527 L 406 405 L 282 405 L 282 178 Q 282 145 295 127 Q 309 110 348 110 L 406 110 L 406 6 Q 392 1 371 -3 Q 349 -8 326 -10 Q 304 -12 287 -12 Z"],"u":["M 264 -12 Q 165 -12 113 39 Q 61 90 61 194 L 61 527 L 235 527 L 235 218 Q 235 194 241 175 Q 248 157 260 145 Q 272 133 290 127 Q 309 121 332 121 Q 365 121 393 136 Q 420 151 436 177 Q 452 202 452 235 L 452 527 L 625 527 L 625 0 L 484 0 L 472 81 L 464 81 Q 442 50 410 29 Q 378 8 341 -2 Q 303 -12 264 -12 Z"]}},NS='http://www.w3.org/2000/svg',lager,raf,klar=false,signal=false;
+  function el(n,a){var e=document.createElementNS(NS,n);for(var k in a)e.setAttribute(k,a[k]);return e}
+  function sluta(){
+    if(!signal){signal=true;document.dispatchEvent(new Event('penna-klar'))}
+  }
+  function visa(){
+    klar=true;cancelAnimationFrame(raf);
+    h1.classList.add('skriven');
+    if(lager){lager.remove();lager=null}
+    sluta();
+  }
+  function bygg(){
+    var fs=parseFloat(getComputedStyle(h1).fontSize),s=fs/G.upm,hr=h1.getBoundingClientRect();
+    h1.style.position='relative';
+    lager=el('svg',{'aria-hidden':'true',id:'penn-lager',width:hr.width,height:hr.height});
+    lager.style.cssText='position:absolute;left:0;top:0;overflow:visible;pointer-events:none';
+    h1.appendChild(lager);
+    var defs=el('defs',{});lager.appendChild(defs);
+    var glyfer=[],sw=Math.max(1.1,fs*.02);
+    var walker=document.createTreeWalker(h1,NodeFilter.SHOW_TEXT),nod,range=document.createRange(),gi=0;
+    while((nod=walker.nextNode())){
+      for(var i=0;i<nod.data.length;i++){
+        var ch=nod.data[i],kont=G.g[ch];if(!kont)continue;
+        range.setStart(nod,i);range.setEnd(nod,i+1);
+        var r=range.getBoundingClientRect(),x0=r.left-hr.left,bas=r.top-hr.top+G.asc*s;
+        var dd=kont.map(function(c){
+          var t=c.split(' '),ut=[],axel=0;
+          t.forEach(function(v){if(/[A-Z]/.test(v)){ut.push(v);axel=0}else{ut.push(((axel++%2)?bas-v*s:x0+v*s).toFixed(2))}});
+          return ut.join(' ');
+        });
+        var g=el('g',{}),id='glyf-'+(gi++),clip=el('clipPath',{id:id});
+        clip.appendChild(el('path',{d:dd.join(' ')}));defs.appendChild(clip);
+        var blck=el('path',{d:dd.join(' '),fill:'#1B2B52',opacity:0});
+        var skugga=el('g',{'clip-path':'url(#'+id+')'}),kontur=el('g',{fill:'none',stroke:'#4F4D48','stroke-width':sw,'stroke-linecap':'round','stroke-linejoin':'round'});
+        g.appendChild(skugga);g.appendChild(kontur);g.appendChild(blck);lager.appendChild(g);
+        var gl={blck:blck,skugga:skugga,kontur:kontur,streck:[],hatch:[]};
+        dd.forEach(function(d){
+          var p=el('path',{d:d}),spok=el('path',{d:d,'stroke-width':sw*.55,opacity:.45,transform:'translate('+(sw*.5)+' '+(-sw*.4)+')'});
+          kontur.appendChild(p);kontur.appendChild(spok);
+          var L=p.getTotalLength();
+          [p,spok].forEach(function(q){q.style.strokeDasharray=L+' '+(L+2);q.style.strokeDashoffset=L});
+          gl.streck.push({p:p,spok:spok,L:L});
+        });
+        glyfer.push(gl);
+      }
+    }
+    // Skuggning: snedställda blyertsstreck inom varje bokstav
+    var steg=Math.max(3,fs*.075),lut=.62;
+    glyfer.forEach(function(gl){
+      var b=gl.blck.getBBox(),n=0;
+      for(var k=-b.height*lut;k<b.width+steg;k+=steg){
+        var j=function(){return (Math.random()-.5)*steg*.35};
+        var x1=b.x+k+j(),y1=b.y+b.height+2,x2=x1+b.height*lut+j(),y2=b.y-2,L=Math.hypot(x2-x1,y2-y1);
+        var ln=el('line',{x1:x1,y1:y1,x2:x2,y2:y2,stroke:'#66635C','stroke-width':Math.max(.8,fs*.014),'stroke-linecap':'round',opacity:(.45+Math.random()*.35).toFixed(2)});
+        ln.style.strokeDasharray=L+' '+(L+2);ln.style.strokeDashoffset=L;
+        ln.style.transition='stroke-dashoffset .07s linear '+(n++*.005).toFixed(3)+'s';
+        gl.skugga.appendChild(ln);gl.hatch.push(ln);
+      }
+    });
+    return {glyfer:glyfer};
+  }
+  function spela(){
+    if(klar)return;
+    var B;
+    try{B=bygg()}catch(e){visa();return}
+    // Tidslinje: varje kontur ritas i jämn handtakt, med korta pauser där pennan lyfts och flyttas
+    var seg=[],tot=0,pos=null,t=0;
+    B.glyfer.forEach(function(gl){gl.streck.forEach(function(s){tot+=s.L})});
+    if(!(tot>0)){visa();return}
+    var fart=tot/650;
+    B.glyfer.forEach(function(gl){
+      gl.streck.forEach(function(s,si){
+        var start=s.p.getPointAtLength(0);
+        if(pos)t+=Math.min(40,Math.max(12,Math.hypot(start.x-pos.x,start.y-pos.y)/10));
+        var dur=Math.max(30,s.L/fart);
+        seg.push({t0:t,t1:t+dur,s:s,gl:gl,sist:si===gl.streck.length-1});t+=dur;
+        var slut=s.p.getPointAtLength(s.L);pos={x:slut.x,y:slut.y};
+      });
+    });
+    var blackStart=t+60,T0=null,nasta=0;
+    function las(u){return u<.5?2*u*u:1-Math.pow(-2*u+2,2)/2}
+    function bild(nu){
+      if(klar)return;
+      if(T0===null)T0=nu;
+      var tid=nu-T0;
+      while(nasta<seg.length&&seg[nasta].t1<=tid){avsluta(seg[nasta]);nasta++}
+      var sg=seg[nasta];
+      if(sg&&tid>sg.t0){
+        var u=(tid-sg.t0)/(sg.t1-sg.t0),p=u*.75+las(u)*.25;
+        sg.s.p.style.strokeDashoffset=sg.s.spok.style.strokeDashoffset=sg.s.L*(1-p);
+      }
+      if(tid>=blackStart&&!B.blackat){B.blackat=true;svartna()}
+      if(nasta<seg.length||!B.blackat)raf=requestAnimationFrame(bild);
+    }
+    function avsluta(sg){
+      sg.s.p.style.strokeDashoffset=sg.s.spok.style.strokeDashoffset=0;
+      if(sg.sist)sg.gl.hatch.forEach(function(l){l.style.strokeDashoffset=0});
+    }
+    function svartna(){
+      sluta();
+      B.glyfer.forEach(function(gl,i){
+        var d=(i*.015).toFixed(3)+'s';
+        gl.blck.style.transition='opacity .35s ease '+d;gl.blck.style.opacity=1;
+        gl.kontur.style.transition=gl.skugga.style.transition='opacity .35s ease '+d;
+        gl.kontur.style.opacity=gl.skugga.style.opacity=0;
+      });
+      setTimeout(visa,350+B.glyfer.length*15+100);
+    }
+    raf=requestAnimationFrame(bild);
+  }
+  var bredd=innerWidth;
+  addEventListener('resize',function(){if(!klar&&innerWidth!==bredd)visa()});
+  setTimeout(function(){if(!lager&&!klar)visa()},4000);
+  var start=function(){
+    var io=new IntersectionObserver(function(e){if(e[0].isIntersecting){io.disconnect();spela()}},{threshold:.4});
+    io.observe(h1);
+  };
+  try{
+    (document.fonts&&document.fonts.load?Promise.all([document.fonts.load('800 62px Archivo'),document.fonts.ready]):Promise.resolve()).then(function(){requestAnimationFrame(start)},visa);
+  }catch(e){visa()}
+})();
+</script>
+<script>
+(function(){
+  var root=document.documentElement;
+  if(!root.classList.contains('rita'))return;
+  // Riktning för linjer läses från designens transform-origin
+  var dir={left:'h-left',right:'h-right',top:'v-top',bottom:'v-bottom'};
+  document.querySelectorAll('[data-draw="line"]').forEach(function(el){
+    var o=(el.style.transformOrigin||'left').split(' ')[0];
+    el.setAttribute('data-dir',dir[o]||'h-left');
+  });
+  // Varje ritning (artikel) eller sektion ritas fram i dokumentordning när den syns
+  var groups=new Map();
+  document.querySelectorAll('[data-draw],[data-note],[data-sketch],[data-color]').forEach(function(el){
+    var g=el.closest('article,section,header,footer')||document.body;
+    if(!groups.has(g))groups.set(g,[]);
+    groups.get(g).push(el);
+  });
+  groups.forEach(function(els){
+    var t=0;
+    els.forEach(function(el){
+      if(el.getAttribute('data-note')==='efter')return;
+      if(el.hasAttribute('data-note'))t+=0.35;
+      el.style.setProperty('--d',Math.min(t,2.2).toFixed(2)+'s');
+      t+=el.hasAttribute('data-note')?0.9:0.07;
+    });
+  });
+  // Måttangivelsen skrivs när måttlinjen är ritad
+  document.querySelectorAll('[data-note="efter"]').forEach(function(el){
+    var linje=el.parentNode.querySelector('[data-draw="path"]');
+    var d=linje?parseFloat(linje.style.getPropertyValue('--d'))||0:0;
+    el.style.setProperty('--d',(d+0.6).toFixed(2)+'s');
+  });
+  var io=new IntersectionObserver(function(entries){
+    entries.forEach(function(e){
+      if(!e.isIntersecting)return;
+      groups.get(e.target).forEach(function(el){el.classList.add('ritad')});
+      io.unobserve(e.target);
+    });
+  },{rootMargin:'0px 0px -12% 0px'});
+  var hej=document.getElementById('hej'),inledning=hej&&hej.closest('section');
+  groups.forEach(function(_,g){
+    if(g===inledning&&window.pennaAktiv){
+      document.addEventListener('penna-klar',function(){groups.get(g).forEach(function(el){el.classList.add('ritad')})});
+    }else io.observe(g);
+  });
+})();
+</script>
+<script>
+// Kapitlet i mitten av skärmen bestämmer världens färger (även webbläsarens list i mobilen)
+(function(){
+  var root=document.documentElement,meta=document.querySelector('meta[name="theme-color"]');
+  var farg={papper:'#F6EFDF',ren:'#120E0A',skymning:'#0E1A36',natt:'#0B1226'};
+  if(!('IntersectionObserver' in window))return;
+  var io=new IntersectionObserver(function(e){
+    e.forEach(function(x){
+      if(!x.isIntersecting)return;
+      var t=x.target.getAttribute('data-tema');
+      if(root.getAttribute('data-tema')!==t){root.setAttribute('data-tema',t);if(meta)meta.setAttribute('content',farg[t])}
+    });
+  },{rootMargin:'-50% 0px -50% 0px'});
+  document.querySelectorAll('[data-tema]').forEach(function(el){if(el!==root)io.observe(el)});
+})();
+</script>
+</body>
+</html>
