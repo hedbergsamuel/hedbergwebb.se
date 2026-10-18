@@ -1,28 +1,209 @@
 <!doctype html>
 <html lang="sv">
 <head>
-<!-- Google tag (gtag.js) -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-J9WCFJR78B"></script>
 <script>
   window.dataLayer = window.dataLayer || [];
   function gtag(){dataLayer.push(arguments);}
   gtag('js', new Date());
-
   gtag('config', 'G-J9WCFJR78B');
+  /* Analytics laddas först efter att sidan visats, så den inte konkurrerar med rubriken och porträttet */
+  addEventListener('load', function(){
+    (window.requestIdleCallback || function(f){setTimeout(f, 1)})(function(){
+      var s = document.createElement('script'); s.async = true;
+      s.src = 'https://www.googletagmanager.com/gtag/js?id=G-J9WCFJR78B';
+      document.head.appendChild(s);
+    });
+  });
 </script>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Samuel Hedberg – hemsidor åt små företag</title>
-<meta name="description" content="Jag pluggar teknik på gymnasiet och bygger hemsidor åt företag vid sidan av skolan.">
+<title>Hedbergwebb – hemsidor åt små företag | Samuel Hedberg</title>
+<meta name="description" content="Hedbergwebb: Samuel Hedberg bygger hemsidor åt små företag, responsiva och SEO-optimerade, och hjälper till både före och efter lanseringen.">
 <meta name="theme-color" content="#F6EFDF">
 <meta name="format-detection" content="telephone=no, email=no, address=no, date=no">
 <link rel="canonical" href="https://hedbergwebb.se/">
+<script type="application/ld+json">
+{
+ "@context": "https://schema.org",
+ "@graph": [
+  {
+   "@type": "WebSite",
+   "@id": "https://hedbergwebb.se/#website",
+   "url": "https://hedbergwebb.se/",
+   "name": "Hedbergwebb",
+   "alternateName": "Samuel Hedberg – hemsidor åt små företag",
+   "inLanguage": "sv-SE",
+   "publisher": {
+    "@id": "https://hedbergwebb.se/#business"
+   }},
+  {
+   "@type": "WebPage",
+   "@id": "https://hedbergwebb.se/#webpage",
+   "url": "https://hedbergwebb.se/",
+   "name": "Hedbergwebb – hemsidor åt små företag | Samuel Hedberg",
+   "description": "Hedbergwebb: Samuel Hedberg bygger hemsidor åt små företag, responsiva och SEO-optimerade, och hjälper till både före och efter lanseringen.",
+   "inLanguage": "sv-SE",
+   "isPartOf": {
+    "@id": "https://hedbergwebb.se/#website"
+   },
+   "about": {
+    "@id": "https://hedbergwebb.se/#business"
+   },
+   "mainEntity": {
+    "@id": "https://hedbergwebb.se/#samuel"
+   },
+   "primaryImageOfPage": {
+    "@id": "https://hedbergwebb.se/#portrait"
+   },
+   "image": {
+    "@id": "https://hedbergwebb.se/#portrait"
+   }
+  },
+  {
+   "@type": "ProfessionalService",
+   "@id": "https://hedbergwebb.se/#business",
+   "name": "Hedbergwebb",
+   "legalName": "Samuel Hedberg",
+   "url": "https://hedbergwebb.se/",
+   "description": "Hedbergwebb: Samuel Hedberg bygger hemsidor åt små företag.",
+   "email": "samuel@hedbergwebb.se",
+   "telephone": "+46725202993",
+   "image": {
+    "@id": "https://hedbergwebb.se/#portrait"
+   },
+   "founder": {
+    "@id": "https://hedbergwebb.se/#samuel"
+   },
+   "employee": {
+    "@id": "https://hedbergwebb.se/#samuel"
+   },
+   "areaServed": {
+    "@type": "Country",
+    "name": "Sverige"
+   },
+   "knowsLanguage": "sv",
+   "contactPoint": {
+    "@type": "ContactPoint",
+    "contactType": "customer service",
+    "email": "samuel@hedbergwebb.se",
+    "telephone": "+46725202993",
+    "availableLanguage": "sv"
+   },
+   "hasOfferCatalog": {
+    "@type": "OfferCatalog",
+    "name": "Tjänster",
+    "itemListElement": [
+     {
+      "@type": "Offer",
+      "itemOffered": {
+       "@type": "Service",
+       "name": "Hemsidor för små företag",
+       "serviceType": "Webbutveckling",
+       "description": "Design och bygge av responsiv hemsida för småföretag, i dialog med kunden.",
+       "provider": {
+        "@id": "https://hedbergwebb.se/#business"
+       }
+      }
+     },
+     {
+      "@type": "Offer",
+      "itemOffered": {
+       "@type": "Service",
+       "name": "Sökmotoroptimering (SEO) i varje hemsida",
+       "serviceType": "Sökmotoroptimering",
+       "description": "Alla hemsidor byggs för att synas i Google.",
+       "provider": {
+        "@id": "https://hedbergwebb.se/#business"
+       }
+      }
+     }
+    ]
+   }
+  },
+  {
+   "@type": "Person",
+   "@id": "https://hedbergwebb.se/#samuel",
+   "name": "Samuel Hedberg",
+   "givenName": "Samuel",
+   "familyName": "Hedberg",
+   "url": "https://hedbergwebb.se/",
+   "email": "samuel@hedbergwebb.se",
+   "telephone": "+46725202993",
+   "jobTitle": "Webbutvecklare",
+   "description": "Bygger hemsidor åt små företag.",
+   "image": {
+    "@id": "https://hedbergwebb.se/#portrait"
+   },
+   "worksFor": {
+    "@id": "https://hedbergwebb.se/#business"
+   },
+   "knowsAbout": [
+    "Webbutveckling",
+    "Webbdesign",
+    "Responsiv design",
+    "Sökmotoroptimering",
+    "Hemsidor för småföretag"
+   ],
+   "knowsLanguage": "sv"
+  },
+  {
+   "@type": "ImageObject",
+   "@id": "https://hedbergwebb.se/#portrait",
+   "url": "https://hedbergwebb.se/bilder/portratt-900.webp",
+   "contentUrl": "https://hedbergwebb.se/bilder/portratt-900.webp",
+   "width": 900,
+   "height": 1350,
+   "encodingFormat": "image/webp",
+   "caption": "Porträtt av Samuel Hedberg",
+   "inLanguage": "sv-SE"
+  },
+  {
+   "@type": "WebSite",
+   "@id": "https://renprodukterbohuslan.se/#website",
+   "url": "https://renprodukterbohuslan.se/",
+   "name": "Renprodukter Bohuslän",
+   "creator": {
+    "@id": "https://hedbergwebb.se/#samuel"
+   }
+  },
+  {
+   "@type": "WebSite",
+   "@id": "https://fastminit.se/#website",
+   "url": "https://fastminit.se/",
+   "name": "Fast Minit",
+   "creator": {
+    "@id": "https://hedbergwebb.se/#samuel"
+   }
+  },
+  {
+   "@type": "WebSite",
+   "@id": "https://thailamdee.se/#website",
+   "url": "https://thailamdee.se/",
+   "name": "Thai Lam-Dee",
+   "creator": {
+    "@id": "https://hedbergwebb.se/#samuel"
+   }
+  }
+ ]
+}
+</script>
 <meta property="og:type" content="website">
 <meta property="og:locale" content="sv_SE">
 <meta property="og:url" content="https://hedbergwebb.se/">
-<meta property="og:title" content="Samuel Hedberg – hemsidor åt små företag">
-<meta property="og:description" content="Jag pluggar teknik på gymnasiet och bygger hemsidor åt företag vid sidan av skolan.">
-<link rel="icon" href="favicon.svg" type="image/svg+xml">
+<meta property="og:site_name" content="Hedbergwebb">
+<meta property="og:title" content="Hedbergwebb – hemsidor åt små företag | Samuel Hedberg">
+<meta property="og:description" content="Hedbergwebb: Samuel Hedberg bygger hemsidor åt små företag, responsiva och SEO-optimerade, och hjälper till både före och efter lanseringen.">
+<meta property="og:image" content="https://hedbergwebb.se/og-bild.jpg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Hedbergwebb: hemsidor åt små företag, av Samuel Hedberg">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Hedbergwebb – hemsidor åt små företag | Samuel Hedberg">
+<meta name="twitter:description" content="Hedbergwebb: Samuel Hedberg bygger hemsidor åt små företag, responsiva och SEO-optimerade, och hjälper till både före och efter lanseringen.">
+<meta name="twitter:image" content="https://hedbergwebb.se/og-bild.jpg">
+<link rel="icon" href="favicon.ico" sizes="48x48">
+<link rel="icon" href="favicon.svg" type="image/svg+xml" sizes="any">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
 <link rel="preload" href="typsnitt/archivo.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="preload" href="typsnitt/plexmono-400.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="preload" href="typsnitt/caveat.woff2" as="font" type="font/woff2" crossorigin>

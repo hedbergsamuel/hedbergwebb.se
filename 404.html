@@ -1,0 +1,48 @@
+<!doctype html>
+<html lang="sv">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Sidan finns inte – Hedbergwebb</title>
+<meta name="robots" content="noindex">
+<meta name="theme-color" content="#F6EFDF">
+<link rel="icon" href="/favicon.ico" sizes="48x48">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml" sizes="any">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
+<link rel="preload" href="/typsnitt/archivo.woff2" as="font" type="font/woff2" crossorigin>
+<style>
+/* Absoluta sökvägar: 404-sidan visas på vilken adress som helst */
+@font-face{font-family:'Archivo';font-style:normal;font-weight:100 900;font-stretch:62% 125%;font-display:swap;src:url(/typsnitt/archivo.woff2) format('woff2')}
+@font-face{font-family:'IBM Plex Mono';font-style:normal;font-weight:400;font-display:swap;src:url(/typsnitt/plexmono-400.woff2) format('woff2')}
+:root{--paper:#F6EFDF;--ink:#1B2B52;--ink2:#4C5A7C;--red:#C2331F}
+@media (prefers-color-scheme:dark){:root{--paper:#0B1226;--ink:#EFE7D4;--ink2:#A9B2C9;--red:#E4694F}}
+*{box-sizing:border-box}
+html,body{height:100%}
+body{margin:0;background:var(--paper);color:var(--ink);font-family:'Archivo','Helvetica Neue',Arial,sans-serif;
+  display:flex;align-items:center;justify-content:center;
+  padding:24px max(16px,env(safe-area-inset-right,0px)) 24px max(16px,env(safe-area-inset-left,0px))}
+main{max-width:34rem;width:100%}
+.kod{font-family:'IBM Plex Mono',ui-monospace,Menlo,monospace;font-size:13px;letter-spacing:.1em;text-transform:uppercase;color:var(--ink2);margin:0 0 14px}
+h1{margin:0;font-weight:800;font-stretch:112%;font-size:clamp(40px,9vw,68px);line-height:.98;letter-spacing:-.02em;text-wrap:balance}
+svg{display:block;width:150px;max-width:60%;height:auto;margin:18px 0 22px}
+p{margin:0 0 24px;font-size:clamp(17px,2.2vw,20px);line-height:1.5;color:var(--ink2);max-width:30rem}
+.rad{display:flex;flex-wrap:wrap;gap:12px 20px;align-items:center}
+.knapp{display:inline-block;background:var(--ink);color:var(--paper);text-decoration:none;font-weight:700;padding:14px 22px;min-height:48px;line-height:20px;border-radius:4px}
+.knapp:hover{opacity:.88}
+a.text{color:var(--ink);font-weight:600;text-underline-offset:3px}
+a:focus-visible{outline:3px solid var(--red);outline-offset:3px}
+</style>
+</head>
+<body>
+<main>
+  <p class="kod">Fel 404</p>
+  <h1>Den här sidan finns inte.</h1>
+  <svg viewBox="0 0 120 24" aria-hidden="true"><path d="M3 14C21 3 33 3 45 12S75 21 90 10 110 6 117 9" stroke="var(--red)" stroke-width="4" fill="none" stroke-linecap="round"/></svg>
+  <p>Adressen kan vara felskriven, eller så har sidan flyttats. Startsidan har mina projekt och hur du når mig.</p>
+  <div class="rad">
+    <a class="knapp" href="/">Till startsidan</a>
+    <a class="text" href="mailto:samuel@hedbergwebb.se">samuel@hedbergwebb.se</a>
+  </div>
+</main>
+</body>
+</html>
