@@ -210,7 +210,6 @@
 <style>
 @font-face{font-family:'Archivo';font-style:normal;font-weight:100 900;font-stretch:62% 125%;font-display:swap;src:url(typsnitt/archivo.woff2) format('woff2')}
 @font-face{font-family:'IBM Plex Mono';font-style:normal;font-weight:400;font-display:swap;src:url(typsnitt/plexmono-400.woff2) format('woff2')}
-@font-face{font-family:'IBM Plex Mono';font-style:normal;font-weight:600;font-display:swap;src:url(typsnitt/plexmono-600.woff2) format('woff2')}
 @font-face{font-family:'Caveat';font-style:normal;font-weight:500 700;font-display:swap;src:url(typsnitt/caveat.woff2) format('woff2')}
 @font-face{font-family:'Syne';font-style:normal;font-weight:600 800;font-display:swap;src:url(typsnitt/syne.woff2) format('woff2')}
 @font-face{font-family:'DM Sans';font-style:normal;font-weight:400 500;font-display:swap;src:url(typsnitt/dmsans.woff2) format('woff2')}
@@ -233,7 +232,7 @@ a:focus-visible{outline:2px solid #C2331F;outline-offset:3px}
 @property --skiss{syntax:'<percentage>';inherits:false;initial-value:0%}
 [data-sketch]{--skiss:0%;-webkit-mask-image:linear-gradient(90deg,transparent calc(var(--skiss) - 36%),#000 var(--skiss));mask-image:linear-gradient(90deg,transparent calc(var(--skiss) - 36%),#000 var(--skiss))}
 
-.rita #hej:not(.skriven){color:transparent;animation:nodvisning 0s 9s forwards}
+.rita #hej:not(.skriven){color:transparent;animation:nodvisning 0s 4s forwards}
 @keyframes nodvisning{to{color:#1B2B52}}
 
 /* ---------- Sagoboken: varje kapitel har sin egen värld ---------- */
@@ -330,7 +329,7 @@ article[data-tema="ren"]{--paper:#120E0A;--paper2:#1C1612;--ink:#E4D3B4;--ink2:#
 
 /* Titelsidan */
 .vand{transition:opacity .6s}
-@media (prefers-reduced-motion:no-preference){.rita .vand.ritad{animation:gunga 2.6s ease-in-out 1.4s infinite}}
+@media (prefers-reduced-motion:no-preference){.rita .vand.ritad{animation:none}}
 @keyframes gunga{0%,100%{transform:translateY(0)}50%{transform:translateY(7px)}}
 @media (max-width:759px){.portratt{max-width:280px!important}.titelsida{min-height:0!important;padding-bottom:clamp(56px,8vw,96px)!important}.vand{display:none}}
 /* Ljuset från Renprodukters sida lyser ut i rummet */
@@ -341,7 +340,7 @@ article[data-tema="ren"] figure>div+div{box-shadow:0 40px 120px -10px rgba(255,1
   @supports (animation-timeline:view()){
     @keyframes rutnat-glid{to{transform:translateY(-1800px)}}
     #atmosfar>#rutnat{animation:rutnat-glid linear both;animation-timeline:scroll(root)}
-    @keyframes fokus{from{opacity:0;filter:blur(10px);transform:translateY(30px) scale(.97)}to{opacity:1;filter:none;transform:none}}
+    @keyframes fokus{from{opacity:0;transform:translateY(30px)}to{opacity:1;transform:none}}
     h2{animation:fokus linear both!important;animation-timeline:view()!important;animation-range:entry 0% cover 28%!important}
     @keyframes sida-in{from{opacity:0;transform:perspective(1400px) translateY(90px) rotateX(18deg) scale(.95)}to{opacity:1;transform:none}}
     @keyframes stig{from{opacity:0;transform:translateY(40px)}to{opacity:1;transform:none}}
@@ -390,6 +389,437 @@ article[data-tema="ren"] figure>div+div{box-shadow:0 40px 120px -10px rgba(255,1
   .rita [data-sketch]{--skiss:0%!important}
   .rita [data-color]{filter:none!important}
 }
+
+/* ---- Berättelsen: tjänstekapitlen ---- */
+.kap-text{position:relative;max-width:60ch;display:flex;flex-direction:column;gap:18px;font-size:clamp(18px,1.7vw,21px);line-height:1.5}
+.kap-text p{margin:0}
+.kap-text strong{font-weight:700}
+.marg{display:none}
+@media (min-width:1000px){
+  .marg{display:block;position:absolute;left:calc(100% + 28px);width:190px;font:600 26px/1.05 'Caveat',cursive;color:var(--graphite);transform:rotate(-2deg);filter:url(#blyerts)}
+}
+/* ---- Framstegslinjen i vänstermarginalen (bara när marginalen är bred nog) ---- */
+#trad{position:absolute;left:0;top:0;width:100%;pointer-events:none;overflow:visible;z-index:0;display:none}
+.trad-pa #trad{display:block}
+.trad-pa .vand{display:none}
+#trad path{fill:none;stroke:var(--graphite);stroke-width:1.6;stroke-linecap:round;stroke-linejoin:round;vector-effect:non-scaling-stroke}
+@keyframes trad{to{stroke-dashoffset:0}}
+@media (prefers-reduced-motion:no-preference){@supports (animation-timeline:scroll()){
+  #trad path{stroke-dasharray:1;stroke-dashoffset:1;animation:trad linear both;animation-timeline:scroll(root);animation-range:0% 100%}
+}}
+.kontaktord{position:absolute;top:clamp(14px,3vw,28px);right:0;z-index:2;font:400 12px/1 'IBM Plex Mono',ui-monospace,monospace;letter-spacing:.12em;text-transform:uppercase;color:var(--ink2);text-decoration:none;padding:16px 4px;min-height:44px;display:flex;align-items:center}
+@media (max-width:759px){.kontaktord{position:static;justify-content:flex-end;padding:10px 2px 0}}
+.kontaktord:hover,.kontaktord:focus-visible{color:var(--ink)}
+.kontaktord:focus-visible{outline:2px solid var(--ink);outline-offset:2px}
+
+/* ---- SKISS kapitel 1: reflow-filmen ---- */
+.k1-hojd{position:relative;height:360vh;padding:0!important;overflow-x:clip}
+.k1-scen{position:sticky;top:0;height:100vh;height:100svh;display:grid;grid-template-columns:minmax(0,1fr);grid-template-rows:auto minmax(0,1fr) auto;row-gap:8px;padding:clamp(14px,2.6vw,26px) 0 clamp(14px,2.4vw,22px);box-sizing:border-box}
+/* Rubriken finns kvar för skärmläsare och Google men syns inte: berättelsetexten är huvudsaken */
+.k1-topp{position:absolute;width:1px;height:1px;margin:-1px;padding:0;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap;border:0}
+.k1-topp h2{margin:0;font:inherit}
+.k1-text{grid-row:3;position:relative;align-self:end;font-size:clamp(23px,2.5vw,36px);min-height:3.8em;max-width:min(1040px,100%);width:100%;margin-inline:auto;text-align:center}
+.k1-text .beat{position:absolute;left:0;right:0;top:0;margin:0;font-size:1em;font-weight:600;font-stretch:104%;line-height:1.22;letter-spacing:-.012em;text-wrap:balance;color:var(--ink);opacity:0;transform:translateY(16px);transition:opacity .45s,transform .45s}
+.k1-text .beat.on{opacity:1;transform:none}
+.k1-bild{grid-row:2;position:relative;display:flex;flex-direction:column;align-items:center;justify-content:center;min-width:0;min-height:0;align-self:stretch}
+.ram{position:relative;border:1.5px solid var(--ink);background:#0b0907;overflow:visible;box-shadow:0 40px 80px -30px rgba(0,0,0,.55)}
+.ram-in{position:absolute;inset:0;overflow:hidden;border-radius:inherit}
+.ram-bar{height:30px;display:flex;align-items:center;gap:6px;padding:0 12px;background:#1b1612;border-bottom:1px solid rgba(228,211,180,.25);color:#B39E7E;font:400 11px/1 'IBM Plex Mono',monospace;white-space:nowrap;overflow:hidden}
+.ram-bar i{width:9px;height:9px;border-radius:50%;background:#B39E7E;opacity:.55;flex:none}
+.ram-bar span{margin-left:8px;opacity:.85;overflow:hidden;text-overflow:ellipsis}
+.ram canvas{display:block}
+.k1-pn{position:absolute;left:0;top:0;width:100%;height:100%;overflow:visible;pointer-events:none}
+.k1-pn path{fill:none;stroke:#F1E6C8;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;vector-effect:non-scaling-stroke;stroke-dasharray:1;stroke-dashoffset:1;transition:stroke-dashoffset .55s ease}
+.k1-pn .on path{stroke-dashoffset:0;transition-delay:.9s}
+.k1-pn text{font:600 24px 'Caveat',cursive;fill:#F1E6C8;opacity:0;transition:opacity .4s .25s}
+.k1-pn .on text{opacity:1;transition-delay:1.2s}
+.matt{margin-top:12px;color:var(--graphite);display:flex;flex-direction:column;align-items:center;gap:0;width:100%}
+.matt b{font:600 30px/1 'Caveat',cursive;transform:rotate(-2deg);margin-bottom:-2px}
+.matt svg{display:block;height:20px;overflow:visible}
+.matt svg path{fill:none;stroke:currentColor;stroke-width:1.4;stroke-linecap:round;stroke-linejoin:round;vector-effect:non-scaling-stroke}
+.grepp{position:absolute;right:-26px;top:50%;width:44px;height:92px;margin-top:-46px;border:0;background:transparent;cursor:ew-resize;touch-action:none;opacity:0;pointer-events:none;transition:opacity .4s;padding:0;color:var(--ink)}
+.grepp.on{opacity:1;pointer-events:auto}
+.grepp:focus-visible{outline:2px solid var(--ink);outline-offset:2px;border-radius:6px}
+.grepp svg{width:100%;height:100%;overflow:visible}
+.grepp svg path{fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;vector-effect:non-scaling-stroke}
+.k1-tips{position:absolute;left:calc(100% + 34px);top:calc(50% - 12px);font:600 24px/1 'Caveat',cursive;color:var(--graphite);opacity:0;transform:rotate(-3deg);transition:opacity .4s;white-space:nowrap;pointer-events:none}
+.k1-tips.on{opacity:1}
+@media (max-width:759px){
+  .k1-hojd{height:355vh}
+  .k1-text{font-size:21px;min-height:5.3em}
+  .grepp{right:-20px}
+  .k1-tips{display:none}
+  .k1-pn text,.k1-pn path[id$="p"]{display:none}
+}
+@media (prefers-reduced-motion:reduce){
+  .k1-hojd{height:auto}.k1-scen{position:relative;height:auto;min-height:100svh}
+  .k1-text{min-height:0}.k1-text .beat{position:static;opacity:1;transform:none;margin-bottom:12px;transition:none}
+}
+
+/* ---- SKISS kapitel 2: Googles röntgen ---- */
+.k2-hojd{position:relative;height:410vh;padding:0!important;overflow-x:clip}
+.k2-bild{grid-row:2;position:relative;display:flex;flex-direction:column;align-items:center;justify-content:center;min-width:0;min-height:0;align-self:stretch}
+.k2-ram{position:relative;border:1.5px solid var(--ink);background:#0b1226;overflow:hidden;border-radius:12px;box-shadow:0 40px 80px -30px rgba(0,0,0,.55)}
+.k2-bar{height:30px;display:flex;align-items:center;gap:6px;padding:0 12px;background:#121b36;border-bottom:1px solid rgba(232,225,207,.22);color:#A8B2CA;font:400 11px/1 'IBM Plex Mono',monospace;white-space:nowrap;overflow:hidden}
+.k2-bar i{width:9px;height:9px;border-radius:50%;background:#A8B2CA;opacity:.5;flex:none}
+.k2-bar span{margin-left:8px;overflow:hidden;text-overflow:ellipsis;transition:color .3s}
+.k2-bar span.hit{color:#FFD97A}
+.k2-vy{position:relative;overflow:hidden}
+.k2-strip{position:absolute;left:0;top:0;will-change:transform}
+.k2-shot{position:absolute;left:0;display:block}
+.k2-wf{position:absolute;inset:0}
+.k2-box{position:absolute;border:1.5px solid rgba(232,225,207,.5);border-radius:3px;overflow:hidden;box-sizing:border-box;transition:border-color .3s,background .3s,box-shadow .3s}
+.k2-box .lab{position:absolute;left:0;top:0;background:#E8E1CF;color:#0b1226;font:600 10px/1 'IBM Plex Mono',monospace;padding:2px 5px 2px 4px;border-radius:0 0 5px 0;white-space:nowrap;max-width:100%;overflow:hidden;text-overflow:ellipsis}
+.k2-box .tx{display:block;padding:15px 5px 3px;font:400 11px/1.3 'IBM Plex Mono',monospace;color:#E8E1CF;overflow:hidden;height:100%;box-sizing:border-box}
+.k2-box.s .tx{display:none}
+.k2-box.h .tx{font-weight:600;font-size:12px}
+.k2-box.hit{border-color:#FFD97A;background:rgba(255,217,122,.14);box-shadow:0 0 16px rgba(255,217,122,.4)}
+.k2-box.hit .lab{background:#FFD97A}
+.k2-box mark{background:none;color:#FFD97A;font-weight:700}
+.k2-term{position:absolute;inset:0;padding:14px 16px;font:400 12px/1.55 'IBM Plex Mono',monospace;color:#E8E1CF;white-space:pre-wrap;overflow:hidden;background:#0b1226}
+.k2-term .d{color:#A8B2CA}.k2-term .g{color:#FFD97A}.k2-term .gr{color:#7FD6A5}
+.k2-q{display:flex;align-items:center;gap:8px;padding:8px 14px;margin-bottom:10px;border-radius:999px;background:rgba(232,225,207,.1);border:1px solid rgba(232,225,207,.3);color:#E8E1CF;font:400 13px/1 'IBM Plex Mono',monospace;opacity:0;transition:opacity .4s;box-sizing:border-box;min-height:36px}
+.k2-wrap{position:relative}
+.k2-beam{position:absolute;left:0;right:0;top:0;height:3px;background:linear-gradient(90deg,transparent,#FFD97A 30%,#FFD97A 70%,transparent);box-shadow:0 0 26px 8px rgba(255,217,122,.5);z-index:4;opacity:0;pointer-events:none}
+.k2-q.on{opacity:1}
+.k2-side{position:absolute;top:0;left:calc(100% + 20px);width:210px;padding:0;font:400 11px/1.55 'IBM Plex Mono',monospace;color:#E8E1CF;opacity:0;transform:translateX(16px);transition:opacity .4s,transform .4s;z-index:2}
+.k2-side.in{top:auto;bottom:0;left:0;right:0;width:auto;height:46%;padding:12px 12px 10px 14px;background:#080c1c;border-top:1px solid rgba(232,225,207,.22);overflow:hidden;transform:translateY(16px)}
+.k2-side.on,.k2-side.in.on{opacity:1;transform:none}
+.k2-side .cap{display:block;font:600 22px/1.05 'Caveat',cursive;color:#F1E6C8;margin-bottom:8px}
+.k2-side .ln{display:block;white-space:pre-wrap;word-break:break-word;opacity:.35;transition:opacity .25s,color .25s}
+.k2-side .ln.on{opacity:1}
+.k2-side .ln.hit{color:#FFD97A;opacity:1}
+.k2-card{position:absolute;left:0;top:0;width:100%;height:100%;padding:14px 14px 12px;box-sizing:border-box;display:flex;flex-direction:column;justify-content:center;gap:4px}
+.k2-card .u{font:400 11px 'IBM Plex Mono',monospace;color:#A8B2CA}
+.k2-card .tt{font:700 16px/1.25 'Archivo',sans-serif;color:#F1E6C8}
+.k2-card .ds{font:400 12px/1.45 'Archivo',sans-serif;color:#C9D0E4}
+.k2-card b{color:#FFD97A}
+.k2-card .nt{margin-top:8px;font:600 22px/1 'Caveat',cursive;color:#F1E6C8;transform:rotate(-2deg)}
+.k2-tally{display:none!important;margin-top:10px;min-height:44px;text-align:center;font:600 22px/1.2 'Caveat',cursive;color:var(--graphite);max-width:92%;opacity:0;transition:opacity .4s}
+.k2-tally.on{opacity:1}
+.k2-tally em{font-style:normal;color:var(--ink)}
+@media (max-width:759px){
+  .k2-hojd{height:390vh}
+  .k2-tally{display:none}
+}
+@media (prefers-reduced-motion:reduce){
+  .k2-hojd{height:auto}
+}
+.k2-rm .k2-hojd{height:auto}
+
+/* ---- SKISS kapitel 3: Uppslaget (anteckningsboken) ---- */
+.k3-hojd{position:relative;height:375vh;padding:0!important;overflow-x:clip}
+.k3-bild{grid-row:2;position:relative;display:flex;align-items:center;justify-content:center;min-width:0;min-height:0;align-self:stretch;padding:44px 0 34px;box-sizing:border-box}
+#k3sek .k1-text{position:relative;z-index:8}
+.k3-vy{position:relative;--k:1}
+.k3-vy.pan{overflow:hidden}
+.pg{position:relative;width:calc(520px*var(--k));height:calc(680px*var(--k));background-color:#FBF6EA;background-image:linear-gradient(rgba(27,43,82,.09) 1px,transparent 1px),linear-gradient(90deg,rgba(27,43,82,.09) 1px,transparent 1px);background-size:calc(40px*var(--k)) calc(40px*var(--k));box-shadow:0 30px 60px -28px rgba(0,0,0,.45);flex:none;color:#1B2B52}
+.pg-in{position:absolute;left:0;top:0;width:520px;height:680px;transform:scale(var(--k));transform-origin:0 0;overflow:hidden}
+.pg .lbl{position:absolute;left:30px;top:20px;font:600 40px/1 'Caveat',cursive;transform:rotate(-2deg)}
+.pg .lbl2{position:absolute;left:32px;top:70px;font:600 25px/1 'Caveat',cursive;color:#4C5A7C}
+.pg .mono{position:absolute;left:30px;font:400 12px/1 'IBM Plex Mono',monospace;letter-spacing:.1em;text-transform:uppercase;color:#4C5A7C}
+.k3-strip{display:flex}
+.k3-bok{position:relative;display:none;perspective:4600px}
+.k3-vy.flip .k3-bok{display:block}.k3-vy.flip .k3-strip{display:none}
+.k3-bok>.pg.blank{position:absolute;left:0;top:0;background-color:#F2EBD8;box-shadow:inset -18px 0 24px -18px rgba(0,0,0,.28),0 30px 60px -28px rgba(0,0,0,.45)}
+.k3-bok>.pg.r{position:absolute;left:calc(520px*var(--k));top:0;box-shadow:inset 18px 0 24px -18px rgba(0,0,0,.28),0 30px 60px -28px rgba(0,0,0,.45)}
+.k3-leaf{position:absolute;left:calc(520px*var(--k));top:0;width:calc(520px*var(--k));height:calc(680px*var(--k));transform-origin:0 50%;transform-style:preserve-3d;will-change:transform}
+.k3-leaf .face{position:absolute;inset:0;backface-visibility:hidden;-webkit-backface-visibility:hidden}
+.k3-leaf .face.back{transform:rotateY(180deg)}
+.k3-leaf .shade{position:absolute;inset:0;background:linear-gradient(90deg,rgba(40,30,10,.38),rgba(40,30,10,0) 60%);opacity:var(--sh,0);pointer-events:none;z-index:3}
+.k3-leaf .face.back .shade{background:linear-gradient(270deg,rgba(40,30,10,.38),rgba(40,30,10,0) 60%)}
+.k3-veck{position:absolute;left:calc(520px*var(--k) - 2px);top:0;bottom:0;width:4px;background:linear-gradient(90deg,rgba(0,0,0,0),rgba(0,0,0,.22),rgba(0,0,0,0));pointer-events:none;z-index:5;display:none}
+.k3-vy.flip .k3-veck{display:block}
+.sk path,.sk line{fill:none;stroke:#1B2B52;stroke-width:1.5;stroke-linecap:round;stroke-linejoin:round;vector-effect:non-scaling-stroke}
+.sk .fine{stroke-width:1;opacity:.75}
+.sk .acc{stroke:#C2331F}
+.nt{position:absolute;font:600 27px/1.05 'Caveat',cursive;color:#1B2B52;white-space:nowrap;opacity:0;transform:rotate(var(--r,-3deg)) translateY(4px);transition:opacity .35s,transform .35s}
+.nt.on{opacity:1;transform:rotate(var(--r,-3deg))}
+.nt svg{position:absolute;overflow:visible;pointer-events:none}
+.nt svg path{fill:none;stroke:#C2331F;stroke-width:1.6;stroke-linecap:round;stroke-linejoin:round;vector-effect:non-scaling-stroke}
+.frame3{position:absolute;left:30px;top:84px;width:460px;border:1.5px solid #1B2B52;border-radius:8px;overflow:hidden;background:#0b1226;box-shadow:0 14px 30px -14px rgba(0,0,0,.5)}
+.frame3 .b{height:20px;background:#E9E1CC;border-bottom:1px solid rgba(27,43,82,.3);display:flex;align-items:center;gap:5px;padding:0 9px;font:400 9px/1 'IBM Plex Mono',monospace;color:#4C5A7C}
+.frame3 .b i{width:6px;height:6px;border-radius:50%;background:#4C5A7C;opacity:.5}
+.frame3 img{display:block;width:100%;height:auto}
+.launch-in{opacity:0;transform:translateY(10px);transition:opacity .45s,transform .45s}
+.launch-in.on{opacity:1;transform:none}
+.flagga{position:absolute;left:34px;top:404px;width:70px;height:96px;overflow:visible}
+.flagga path{fill:none;stroke:#C2331F;stroke-width:2.2;stroke-linecap:round;stroke-linejoin:round;vector-effect:non-scaling-stroke}
+.live{position:absolute;left:120px;top:408px;font:600 88px/1 'Caveat',cursive;transform:rotate(-3deg);color:#1B2B52}
+.live small{display:block;font:600 30px/1 'Caveat',cursive;color:#4C5A7C;margin:4px 0 0 6px;transform:rotate(1deg)}
+.fortsatt{position:absolute;left:34px;top:612px;font:600 30px/1 'Caveat',cursive;color:#4C5A7C;transform:rotate(-3deg)}
+.phone3{position:absolute;right:34px;top:378px;width:128px;border:1.5px solid #1B2B52;border-radius:18px;overflow:hidden;background:#0b1226;box-shadow:0 14px 30px -14px rgba(0,0,0,.55)}
+.phone3 img{display:block;width:100%;height:auto}
+.real{position:absolute;left:30px;top:108px;width:460px}
+.real .rad{display:flex;align-items:center;gap:12px;font:600 31px/1.1 'Caveat',cursive;opacity:0;transform:translateY(6px);transition:opacity .4s,transform .4s}
+.real .rad.on{opacity:1;transform:none}
+.real .rad svg{width:30px;height:30px;flex:none}
+.real .rad svg path{fill:none;stroke:#C2331F;stroke-width:3;stroke-linecap:round;stroke-linejoin:round}
+.real .sub{font:400 11px/1.2 'IBM Plex Mono',monospace;letter-spacing:.08em;text-transform:uppercase;color:#4C5A7C;margin:2px 0 0 42px;opacity:0;transition:opacity .4s .15s}
+.real .sub.on{opacity:1}
+.th{position:absolute;top:172px;width:170px;opacity:0;transform:translateY(8px);transition:opacity .45s .1s,transform .45s .1s}
+.th.on{opacity:1;transform:none}
+.th img{display:block;width:100%;height:auto;border:1.2px solid #1B2B52;border-radius:4px}
+.th em{display:block;margin-top:3px;font:400 10px/1 'IBM Plex Mono',monospace;letter-spacing:.1em;text-transform:uppercase;color:#4C5A7C;font-style:normal}
+.ideas{position:absolute;left:30px;top:318px;width:460px;height:352px;overflow:hidden}
+.ideas .col{position:absolute;top:0;width:215px}
+.idea{height:33px;font:600 25px/33px 'Caveat',cursive;white-space:nowrap;clip-path:inset(0 100% 0 0);color:#1B2B52}
+.idea:nth-child(odd){transform:rotate(-.4deg)}.idea:nth-child(even){transform:rotate(.3deg)}
+.k3-tip{position:absolute;width:11px;height:11px;border-radius:50%;background:#C2331F;box-shadow:0 0 0 3px rgba(194,51,31,.22);opacity:0;pointer-events:none;z-index:4;left:0;top:0}
+.k3-valj{display:none!important;position:fixed;left:max(10px,env(safe-area-inset-left,0px));bottom:max(10px,env(safe-area-inset-bottom,0px));z-index:30;display:flex;gap:0;font:400 11px/1 'IBM Plex Mono',monospace;background:#1B2B52;color:#F6EFDF;border-radius:4px;overflow:hidden}
+.k3-valj span{padding:7px 9px;opacity:.8}.k3-valj button{all:unset;cursor:pointer;padding:7px 10px;border-left:1px solid rgba(246,239,223,.3)}
+.k3-valj button[aria-pressed="true"]{background:#F6EFDF;color:#1B2B52;font-weight:700}.k3-valj button[aria-pressed="true"]::before{content:'● '}.k3-valj button:disabled{opacity:.4;cursor:default}
+.k3-stack .k3-hojd{height:auto}
+@media (max-width:759px){.k3-hojd{height:360vh}}
+@media (prefers-reduced-motion:reduce){.k3-hojd{height:auto}}
+
+/* ---- Bryggan före filmen (statisk, inga scrollanimationer) ---- */
+#trad{display:none!important}
+.bro{position:relative;padding:clamp(72px,12vw,160px) 0 clamp(48px,8vw,96px)!important;display:block!important}
+.bro-in{max-width:1000px;margin:0 auto}
+#bro h2,#bro .bro-lista li,#bro .bro-ut{animation:none!important}
+.bro h2{margin:0 0 clamp(40px,6vw,80px);max-width:20ch;font-weight:800;font-stretch:112%;font-size:clamp(34px,5.4vw,68px);line-height:1;letter-spacing:-.02em;text-wrap:balance}
+.bro-lista{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:clamp(28px,4vw,56px);counter-reset:b}
+.bro-lista li{display:flex;flex-direction:column;gap:12px;min-width:0;padding-top:20px;border-top:1.5px solid var(--ink)}
+.bro-et{font:400 12px/1.3 'IBM Plex Mono',ui-monospace,monospace;letter-spacing:.1em;text-transform:uppercase;color:var(--ink2)}
+.bro-lista strong{font-weight:800;font-stretch:108%;font-size:clamp(22px,2.3vw,30px);line-height:1.12;letter-spacing:-.01em}
+.bro-lista li>span:last-child{font-size:clamp(16px,1.45vw,18px);line-height:1.5;color:var(--ink2)}
+.bro-ut{margin:clamp(56px,8vw,112px) 0 0;max-width:22ch;font-weight:700;font-stretch:106%;font-size:clamp(26px,3.6vw,46px);line-height:1.12;letter-spacing:-.01em;text-wrap:balance}
+.bro-pil{display:block;margin:20px 0 0 4px;color:var(--graphite)}
+@media (max-width:759px){.bro-lista{grid-template-columns:1fr}.bro-lista li{padding-top:16px}}
+
+/* ---- Statisk topp: hero B (måttlinjen kant i kant) och Om mig. Inga scrollanimationer här. ---- */
+#hero2 *,#om2 *{animation:none!important}
+.hero2{min-height:100svh;display:flex!important;flex-direction:column;justify-content:center;padding:clamp(72px,10vh,120px) 0 clamp(48px,8vh,96px)!important;gap:0!important}
+.h2-topp{display:grid;grid-template-columns:minmax(0,1fr) auto;align-items:end;gap:clamp(24px,5vw,64px)}
+.h2-topp h1{align-self:center;padding-bottom:clamp(8px,2vw,32px)}
+.h2-por{margin:0;width:clamp(200px,26vw,330px)}
+.h2-valv{position:relative;aspect-ratio:3/4;border-radius:50% 50% 0 0/37.5% 37.5% 0 0;overflow:hidden;border:1.5px solid var(--ink);border-bottom:0;box-shadow:0 0 0 9px var(--paper),0 0 0 10.5px var(--ink);box-shadow:none;outline:1.5px solid var(--ink);outline-offset:8px}
+.h2-valv img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:50% 28%;display:block}
+.h2-matt{position:relative;margin-top:10px;color:var(--graphite);padding-top:0}
+.h2-matt svg{display:block;width:100%;height:26px;overflow:visible;filter:url(#blyerts)}
+.h2-18{position:absolute;left:22%;top:-38px;font:600 clamp(30px,3.2vw,44px)/1 'Caveat',cursive;transform:rotate(-2deg);filter:url(#blyerts)}
+.h2-rad{margin:clamp(20px,3vw,36px) 0 0;max-width:30ch;font-size:clamp(19px,1.9vw,24px);line-height:1.45}
+@media (max-width:759px){
+  .hero2{justify-content:flex-start;padding-top:clamp(64px,10vh,96px)!important}
+  .h2-topp{grid-template-columns:1fr;gap:20px}
+  .h2-por{width:min(52vw,210px);justify-self:end}
+  .h2-18{left:6%}
+}
+/* Om mig: 12 och 18 som stora strukturella siffror, citatet som gångjärn */
+.om2{display:block!important;padding:clamp(72px,12vw,160px) 0 clamp(56px,8vw,112px)!important}
+.om2-h2{margin:0 0 clamp(36px,5vw,72px)!important;font-weight:800;font-stretch:112%;font-size:clamp(34px,5vw,60px);line-height:1;letter-spacing:-.015em}
+.om2-rad{display:grid;grid-template-columns:clamp(110px,18vw,260px) minmax(0,60ch);gap:clamp(24px,5vw,72px);align-items:start}
+.om2-rad2{grid-template-columns:clamp(110px,18vw,260px) minmax(0,60ch) minmax(clamp(110px,18vw,260px),1fr);margin-top:clamp(40px,6vw,88px)}
+.om2-rad2 .om2-tal{justify-self:end}
+.om2-tal{font-weight:800;font-stretch:112%;font-size:clamp(88px,15vw,220px);line-height:.8;letter-spacing:-.04em;color:var(--ink);position:relative}
+.om2-tal small{display:block;margin-top:14px;font:400 13px/1 'IBM Plex Mono',monospace;letter-spacing:.14em;text-transform:uppercase;color:var(--ink2)}
+.om2-rad2 .om2-tal{text-align:right}
+.om2-text{display:flex;flex-direction:column;gap:20px;font-size:clamp(18px,1.7vw,21px);line-height:1.55}
+.om2-text p{margin:0}
+.om2-citat{margin:clamp(48px,7vw,104px) 0 0;max-width:30ch;margin-left:calc(clamp(110px,18vw,260px) + clamp(24px,5vw,72px));font-weight:800;font-stretch:108%;font-size:clamp(26px,3.1vw,44px);line-height:1.14;letter-spacing:-.015em;text-wrap:balance}
+@media (max-width:759px){
+  .om2-rad,.om2-rad2{grid-template-columns:1fr;gap:12px}
+  .om2-rad2>div[aria-hidden]:empty{display:none}
+  .om2-rad2 .om2-tal{order:2;text-align:left;justify-self:start}
+  .om2-tal{font-size:clamp(84px,30vw,140px)}
+  .om2-citat{margin-left:0}
+}
+.h3-wrap{  --natt:#0B1226;--natt2:#121B36;--natt-linje:#1B2750;--natt-ljus:#4F63A6;  --kram:#EFE7D4;--kram2:#A9B2C9;  --papper:#F6EFDF;--blak:#1B2B52;--blak2:#4C5A7C;  --g:clamp(16px,4vw,56px);          /* sidomarginal, samma som resten av sajten */  --rut:url("data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20width%3D%22160%22%20height%3D%22160%22%3E%3Cg%20fill%3D%22none%22%20stroke%3D%22%23000%22%20stroke-width%3D%220.7%22%3E%3Cpath%20d%3D%22M20%200%20Q20.9%2070%2020%20160%22/%3E%3Cpath%20d%3D%22M60%200%20Q59.2%2090%2060%20160%22/%3E%3Cpath%20d%3D%22M100%200%20Q100.7%2050%20100%20160%22/%3E%3Cpath%20d%3D%22M140%200%20Q139.3%20110%20140%20160%22/%3E%3Cpath%20d%3D%22M0%2020%20Q80%2020.8%20160%2020%22/%3E%3Cpath%20d%3D%22M0%2060%20Q70%2059.3%20160%2060%22/%3E%3Cpath%20d%3D%22M0%20100%20Q90%20100.8%20160%20100%22/%3E%3Cpath%20d%3D%22M0%20140%20Q60%20139.4%20160%20140%22/%3E%3C/g%3E%3Cg%20fill%3D%22%23000%22%20fill-opacity%3D%22.9%22%3E%3Ccircle%20cx%3D%2213%22%20cy%3D%2237%22%20r%3D%220.6%22/%3E%3Ccircle%20cx%3D%2271%22%20cy%3D%2212%22%20r%3D%220.5%22/%3E%3Ccircle%20cx%3D%22118%22%20cy%3D%2244%22%20r%3D%220.7%22/%3E%3Ccircle%20cx%3D%2233%22%20cy%3D%2291%22%20r%3D%220.5%22/%3E%3Ccircle%20cx%3D%2288%22%20cy%3D%2277%22%20r%3D%220.6%22/%3E%3Ccircle%20cx%3D%22151%22%20cy%3D%2296%22%20r%3D%220.5%22/%3E%3Ccircle%20cx%3D%2247%22%20cy%3D%22133%22%20r%3D%220.7%22/%3E%3Ccircle%20cx%3D%22109%22%20cy%3D%22121%22%20r%3D%220.5%22/%3E%3Ccircle%20cx%3D%228%22%20cy%3D%22151%22%20r%3D%220.6%22/%3E%3Ccircle%20cx%3D%22131%22%20cy%3D%22149%22%20r%3D%220.5%22/%3E%3C/g%3E%3C/svg%3E");}
+/* ================= HERO ================= */
+/* Två spalter från 740px: Hej! och texten till vänster, porträttet till höger på fållen.
+   Porträttet har en garanterad storlek (minst 300px, hela fotot i 2:3); Hej! skalas efter spalten som blir över.
+   Inga container-enheter: Safari räknade dem mot fönstret, så allt räknas från vw/svh med marginal. */
+.h3-hero{
+  --pad:max(var(--g),calc((100vw - 1680px)/2));
+  --cw:calc(100vw - 2*var(--pad));                 /* innehållsbredd */
+  --gap:clamp(24px,3.6vw,64px);
+  --bar:clamp(56px,8vh,80px);
+  --pw:clamp(300px,min(34vw,calc((100svh - var(--bar) - 100px)/1.5)),600px);
+  --ph:calc(var(--pw)*1.5);
+  /* Hej! = 1,86em brett; /2 ger ~7 % luft. Aldrig högre än 55 % av skärmen, och aldrig så stort att texten blir högre än porträttet */
+  --f:min(calc((var(--cw) - var(--gap) - var(--pw))/2),55svh,calc((var(--ph) - 160px)/1.05));
+  position:relative;isolation:isolate;overflow:clip;
+  /* ungefär en skärm, men aldrig högre än innehållet behöver: på höga smala fönster syns nästa sektion */
+  min-height:min(100svh,max(calc(var(--ph) + var(--bar) + 100px),600px));
+  background:var(--natt);color:var(--kram);
+  display:grid;
+  grid-template-columns:minmax(0,1fr) var(--pw);
+  grid-template-rows:var(--bar) minmax(clamp(24px,5svh,64px),1fr) auto;
+  column-gap:var(--gap);
+  padding:0 var(--pad);
+}
+/* rutnätet: samma handritade rutpapper som resten av sajten, fast i ljusare marin */
+.h3-hero::before,.h3-hero .h3-ljusnat{content:"";position:absolute;inset:0;z-index:-2;pointer-events:none;
+  -webkit-mask:var(--rut) 0 100%/160px 160px repeat;mask:var(--rut) 0 100%/160px 160px repeat}
+.h3-hero::before{background:var(--natt-linje)}
+/* lampan: där ljuset är syns rutorna lite tydligare */
+.h3-hero .h3-ljusnat{background:var(--natt-ljus);z-index:-1;opacity:var(--ljus,0);
+  -webkit-mask:var(--rut) 0 100%/160px 160px repeat,radial-gradient(circle calc(var(--f)*.75) at var(--mx,50%) var(--my,50%),#000,transparent);
+  -webkit-mask-composite:source-in;
+  mask:var(--rut) 0 100%/160px 160px repeat,radial-gradient(circle calc(var(--f)*.75) at var(--mx,50%) var(--my,50%),#000 0,transparent 100%);
+  mask-composite:intersect}
+.h3-hero .h3-sken{position:absolute;inset:0;z-index:-1;pointer-events:none;opacity:var(--ljus,0);
+  background:radial-gradient(circle calc(var(--f)*1.05) at var(--mx,50%) var(--my,50%),rgba(239,231,212,.07),rgba(239,231,212,.025) 45%,transparent 70%)}
+
+.h3-topp{grid-column:1/-1;grid-row:1;display:flex;justify-content:space-between;align-items:center;gap:16px}
+.h3-kontaktord{font:400 12px/1 'IBM Plex Mono',ui-monospace,monospace;letter-spacing:.14em;text-transform:uppercase;color:var(--kram2);text-decoration:none;padding:16px 0;min-height:44px;display:flex;align-items:center;transition:color .2s}
+.h3-kontaktord:hover,.h3-kontaktord:focus-visible{color:var(--kram)}
+
+/* textspalten är lika hög som valvet: Hej! uppe i höjd med valvets överkant, meningen står nere mot fållen som porträttet */
+.h3-text{grid-column:1;grid-row:3;align-self:stretch;min-width:0;display:flex;flex-direction:column;padding-bottom:clamp(36px,6svh,72px)}
+.h3-text h1{margin:0;font-weight:inherit;flex:1 0 auto;display:flex;flex-direction:column}
+/* Hej! – varje bokstav har en fast bredd, så att svällningen aldrig flyttar något */
+.h3-hej{display:flex;font-size:var(--f);line-height:.706;  /* radlådan = versalhöjd: överkant H = överkant valv */
+  font-weight:800;font-stretch:100%;letter-spacing:0;color:var(--kram);
+  margin:0 0 calc(var(--f)*.34) -.072em;user-select:none;-webkit-user-select:none;max-width:none}
+.h3-hej>span{display:block;flex:none;text-align:center;white-space:pre;
+  font-weight:var(--w,800);font-stretch:var(--s,100%);
+  transform:translateY(var(--y,0)) scale(var(--k,1));transform-origin:50% 100%;will-change:transform}
+.h3-hej>span::before{content:attr(data-b)}
+.h3-hej>span:nth-child(1){width:.74em}
+.h3-hej>span:nth-child(2){width:.615em}
+.h3-hej>span:nth-child(3){width:.28em}
+.h3-hej>span:nth-child(4){width:.30em}
+.h3-sub{display:block;margin-top:auto;max-width:20ch;font-weight:800;font-stretch:100%;
+  font-size:clamp(24px,min(3.6vw,calc(var(--f)*.2)),56px);line-height:1.08;letter-spacing:-.014em;color:var(--kram)}
+/* blyertsstreck under "småföretag": ritas en gång vid laddning */
+.h3-under{position:relative;white-space:nowrap}
+.h3-under::after{content:"";position:absolute;left:-.04em;bottom:-.2em;width:calc(100% + .1em);height:.3em;pointer-events:none;
+  background:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 10' preserveAspectRatio='none'%3E%3Cpath d='M1.5 6.4 C 18 4.6, 34 7.2, 52 5.6 S 84 4.4, 98.5 5.1' fill='none' stroke='%23D8CBAE' stroke-opacity='.85' stroke-width='1.7' stroke-linecap='round'/%3E%3C/svg%3E") no-repeat 0 0/100% 100%}
+@media (prefers-reduced-motion:no-preference){
+  .h3-under::after{clip-path:inset(0 100% 0 0);animation:rita .8s cubic-bezier(.55,.1,.35,1) .9s forwards}
+}
+@keyframes rita{to{clip-path:inset(0 0 0 0)}}
+
+/* Porträttet står på fållen: valvet växer upp ur kräm-golvet nedanför */
+.h3-portratt{grid-column:2;grid-row:3;align-self:end;justify-self:end;margin:0;position:relative;
+  width:var(--pw);height:var(--ph)}
+.h3-valv-bild{position:absolute;inset:var(--in,10px) var(--in,10px) 0;border-radius:999px 999px 0 0;overflow:hidden}
+.h3-valv-bild img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:50% 0;display:block}
+.h3-valv{position:absolute;inset:0;border-radius:999px 999px 0 0;pointer-events:none}
+
+/* --- ramvariant A: tunn kräm-linje runt fotot --- */
+[data-ram="a"] .h3-valv{border:1.5px solid rgba(239,231,212,.6);border-bottom:0}
+/* --- ramvariant B (vald): valvet är skuret ur kräm-papperet och går ihop med golvet --- */
+[data-ram="b"] .h3-valv{background:var(--papper)}
+[data-ram="b"] .h3-portratt{--in:12px}
+/* --- ramvariant C: ingen ram; varmt ljus bakom och skugga under kanten --- */
+[data-ram="c"] .h3-portratt{--in:0px}
+[data-ram="c"] .h3-valv{inset:-14% -22% 0;border-radius:50%;background:radial-gradient(closest-side,rgba(239,226,196,.16),rgba(239,226,196,.05) 60%,transparent)}
+[data-ram="c"] .h3-valv-bild{box-shadow:0 0 0 1px rgba(239,231,212,.18),0 30px 80px -10px rgba(0,0,0,.55)}
+
+/* ================= SMALT (under 740px): en spalt, porträttet sist på fållen ================= */
+@media (max-width:679px){
+  .h3-hero{
+    --cw:calc(100vw - 2*var(--g));
+    --pw:min(calc(var(--cw)*.74),260px);
+    --ph:calc(var(--pw)*1.2);
+    --f:min(calc(var(--cw)/2.12),30svh);
+    min-height:100vh;min-height:100svh;
+    grid-template-columns:minmax(0,1fr);
+    grid-template-rows:var(--bar) minmax(12px,1fr) auto minmax(28px,.6fr) auto;
+  }
+  .h3-text{grid-column:1;align-self:start;padding-bottom:0}
+  .h3-hej{margin-bottom:calc(var(--f)*.3)}
+  .h3-sub{margin-top:0;font-size:clamp(22px,6.6vw,32px)}
+  .h3-portratt{grid-column:1;grid-row:5;justify-self:end}
+  [data-ram="b"] .h3-portratt{--in:10px}
+}
+
+/* ================= OM MIG (vald variant A: kräm, lugn läsning, rubrik till vänster) ================= */
+.h3-om{position:relative;isolation:isolate;background:var(--papper);color:var(--blak);
+  padding:clamp(64px,10vw,140px) max(var(--g),calc((100vw - 1680px)/2)) clamp(72px,10vw,144px)}
+.h3-om::before{content:"";position:absolute;inset:0;z-index:-1;background:var(--blak);opacity:.12;-webkit-mask:var(--rut) 0 0/160px 160px repeat;mask:var(--rut) 0 0/160px 160px repeat}
+.h3-om-grid{display:grid;grid-template-columns:minmax(0,64ch);gap:clamp(24px,5vw,80px);align-items:start}
+.h3-om .h3-kropp{display:flex;flex-direction:column;gap:clamp(18px,2vw,28px)}
+.h3-om p{margin:0;line-height:1.5;font-size:clamp(18px,1.7vw,21px)}
+.h3-om p.h3-vandpunkt{font-weight:800;font-stretch:112%;letter-spacing:-.015em;line-height:1.12;font-size:clamp(26px,3.2vw,40px);padding:12px 0 12px clamp(16px,2vw,28px);border-left:3px solid var(--blak);margin:10px 0}
+
+/* ================= BRYGGAN (kräm, kort, bara text; blyertsstreck ritas vid scroll) ================= */
+.h3-bro{position:relative;isolation:isolate;background:var(--papper);color:var(--blak);
+  padding:clamp(24px,4vw,56px) max(var(--g),calc((100vw - 1680px)/2)) clamp(72px,10vw,150px)}
+.h3-bro::before{content:"";position:absolute;inset:0;z-index:-1;background:var(--blak);opacity:.12;-webkit-mask:var(--rut) 0 0/160px 160px repeat;mask:var(--rut) 0 0/160px 160px repeat}
+.h3-bro-in{border-top:1px dashed rgba(27,43,82,.35);padding-top:clamp(48px,7vw,104px);display:grid;grid-template-columns:clamp(140px,22vw,320px) minmax(0,64ch);gap:clamp(24px,5vw,80px)}
+.h3-bro h2{grid-column:1/-1;margin:0 0 clamp(28px,4vw,56px);max-width:24ch;text-wrap:balance;font-weight:800;font-stretch:112%;font-size:clamp(28px,3.8vw,44px);line-height:1.05;letter-spacing:-.015em}
+.h3-bro-text{grid-column:1/-1;margin:0;max-width:30ch;font-weight:700;font-stretch:104%;font-size:clamp(24px,3.4vw,48px);line-height:1.22;letter-spacing:-.018em;text-wrap:pretty}
+.h3-bro-text .h3-u{position:relative;white-space:nowrap}
+.h3-bro-text .h3-u::after{content:"";position:absolute;left:-.03em;bottom:-.14em;width:calc(100% + .06em);height:.22em;pointer-events:none;
+  background:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 10' preserveAspectRatio='none'%3E%3Cpath d='M1.5 6.4 C 18 4.6, 34 7.2, 52 5.6 S 84 4.4, 98.5 5.1' fill='none' stroke='%231B2B52' stroke-width='1.8' stroke-linecap='round'/%3E%3C/svg%3E") no-repeat 0 0/100% 100%}
+.h3-bro-ut{grid-column:1/-1;margin:clamp(24px,3vw,40px) 0 0;max-width:30ch;font-size:clamp(18px,1.7vw,21px);line-height:1.5;color:var(--blak2)}
+.h3-bro-pil{display:block;margin-top:clamp(28px,4vw,48px);color:var(--blak);width:44px;height:auto}
+@media (prefers-reduced-motion:no-preference){
+  .js .h3-bro-text .h3-u::after{clip-path:inset(0 100% 0 0);transition:clip-path .8s cubic-bezier(.55,.1,.35,1)}
+  .js .h3-bro.h3-in .h3-bro-text .h3-u::after{clip-path:inset(0 0 0 0)}
+  .js .h3-bro.h3-in .h3-bro-text .h3-u:nth-of-type(1)::after{transition-delay:.2s}
+  .js .h3-bro.h3-in .h3-bro-text .h3-u:nth-of-type(2)::after{transition-delay:.7s}
+  .js .h3-bro.h3-in .h3-bro-text .h3-u:nth-of-type(3)::after{transition-delay:1.2s}
+}
+@media (max-width:759px){.h3-bro-in{grid-template-columns:1fr}}
+
+/* Om mig: 12 och 18 som stora siffror till vänster, texten i läsbar bredd till höger, citatet som gångjärn. */
+.h3-om-rad{display:grid;grid-template-columns:minmax(0,1fr);gap:18px}
+.h3-om-tal{font-weight:800;font-stretch:112%;font-size:clamp(84px,30vw,140px);line-height:.8;letter-spacing:-.04em}
+.h3-om-tal small{display:block;margin-top:14px;font:400 13px/1 'IBM Plex Mono',ui-monospace,monospace;letter-spacing:.14em;text-transform:uppercase;color:var(--blak2)}
+.h3-om-text{display:flex;flex-direction:column;gap:clamp(18px,2vw,28px);max-width:64ch}
+.h3-om .h3-om-text p{font-size:clamp(18px,1.7vw,21px)}
+.h3-om p.h3-vandpunkt{margin:clamp(40px,6vw,72px) 0}
+@media (min-width:900px){
+  .h3-om{--kol:clamp(180px,28%,420px);--glapp:clamp(32px,5vw,96px)}
+  .h3-om-rad{grid-template-columns:var(--kol) minmax(0,1fr);column-gap:var(--glapp);align-items:start}
+  .h3-om-tal{font-size:clamp(130px,17vw,270px)}
+  .h3-om .h3-om-text p{font-size:clamp(19px,1.6vw,24px);line-height:1.52}
+  .h3-om p.h3-vandpunkt{margin:clamp(56px,7vw,112px) 0 clamp(56px,7vw,112px) calc(var(--kol) + var(--glapp));max-width:24ch;font-size:clamp(30px,3.5vw,58px);line-height:1.1;text-wrap:balance}
+}
+/* Bryggan: stor text över hela bredden, avslutningen och pilen till höger så att blicken går vänster till höger */
+@media (min-width:900px){
+  .h3-bro-in{grid-template-columns:repeat(12,minmax(0,1fr));column-gap:clamp(16px,2vw,32px)}
+  .h3-bro-text{grid-column:1/-1;max-width:none;font-size:clamp(34px,4.9vw,84px);line-height:1.1}
+  .h3-bro-ut{grid-column:7/-1;max-width:32ch;margin-top:clamp(48px,6vw,96px);font-size:clamp(20px,2vw,28px)}
+  .h3-bro-pil{grid-column:7/-1}
+}
+/* Övergång till filmen: bryggan är genomskinlig (världens eget rutpapper syns igenom) och byter färg som kapitlen gör sinsemellan */
+.h3-bro{background:transparent}
+.h3-bro::before{display:none}
+.h3-sr{position:absolute;width:1px;height:1px;margin:-1px;padding:0;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap;border:0}
+.h3-wrap,.h3-wrap *,.h3-wrap *::before,.h3-wrap *::after{box-sizing:border-box}
+.h3-wrap{--g:clamp(16px,4vw,56px);position:relative;color:var(--blak);font-family:'Archivo',system-ui,sans-serif}
+
+/* Så går det till + Kontakt */
+.sl-gang{padding:clamp(24px,4vw,56px) 0 clamp(72px,10vw,140px)}
+.sl-streck{height:1px;opacity:.6;transform-origin:left;margin-bottom:clamp(48px,7vw,104px);background-image:repeating-linear-gradient(90deg,var(--ink) 0 22px,transparent 22px 27px,var(--ink) 27px 30px,transparent 30px 35px)}
+.sl-gang h2{margin:0 0 clamp(40px,6vw,88px);font-weight:800;font-stretch:112%;font-size:clamp(40px,6.4vw,92px);line-height:1;letter-spacing:-.02em}
+.sl-steg{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:clamp(28px,4vw,64px)}
+.sl-steg li{display:flex;flex-direction:column;gap:clamp(8px,1.4vw,20px);min-width:0}
+.sl-nr{display:block;font:600 clamp(72px,9vw,140px)/1.35 'Caveat',cursive;color:var(--graphite);padding:0 .3em;margin:-.22em 0 -.18em -.3em;filter:url(#blyerts)}
+.sl-steg p{margin:0;font-weight:600;font-stretch:104%;font-size:clamp(22px,2.5vw,36px);line-height:1.2;letter-spacing:-.012em;text-wrap:balance;max-width:16ch}
+.sl-bana{display:block;width:100%;height:auto;margin-top:clamp(28px,4vw,56px);overflow:visible;color:var(--ink)}
+@media (max-width:899px){
+  .sl-gang{text-align:center}
+  .sl-gang h2{font-size:clamp(40px,11vw,72px)}
+  .sl-steg{grid-template-columns:1fr;gap:0;max-width:30rem;margin-inline:auto}
+  .sl-steg li{align-items:center;gap:6px;padding-bottom:0}
+  .sl-nr{font-size:clamp(84px,22vw,120px);margin:-.22em 0 -.18em}
+  .sl-steg p{max-width:none;font-size:clamp(24px,6.4vw,34px);text-wrap:balance}
+  /* blyertslinje mellan stegen, sista slutar i en bock */
+  .sl-steg li::after{content:"";display:block;width:2px;height:clamp(36px,9vw,56px);margin:clamp(14px,4vw,24px) auto clamp(8px,3vw,16px);background:var(--ink);opacity:.55;border-radius:2px}
+  .sl-steg li:last-child::after{content:"\2713";width:auto;height:auto;background:none;opacity:1;font:800 clamp(34px,9vw,48px)/1 'Archivo',sans-serif;color:var(--ink);margin:clamp(12px,3vw,20px) 0 0}
+  .sl-bana{display:none}
+}
+.sl-kontakt{min-height:100svh;display:grid;grid-template-columns:minmax(0,5fr) minmax(0,7fr);gap:clamp(32px,5vw,80px);align-items:end;padding:clamp(72px,12vh,140px) 0 clamp(56px,10vh,120px)}
+.sl-k-text h2{margin:0;max-width:11ch;font-weight:800;font-stretch:108%;font-size:clamp(44px,6.6vw,104px);line-height:1;letter-spacing:-.02em;text-wrap:balance;color:var(--ink)}
+.sl-k-text p{margin:clamp(20px,2.4vw,32px) 0 0;max-width:30ch;font-size:clamp(20px,2vw,28px);line-height:1.4;color:var(--ink2)}
+.sl-k-lank{display:flex;flex-direction:column;gap:clamp(18px,2.4vw,36px);align-items:flex-start}
+.sl-k-lank a{display:inline-flex;flex-direction:column;gap:2px;padding:6px 0;color:var(--ink);text-decoration:none;font-size:clamp(26px,3.3vw,48px);font-weight:700;font-stretch:106%;letter-spacing:-.015em;white-space:nowrap}
+.sl-k-lank a svg{display:block;width:0;min-width:100%;height:12px;overflow:visible;transform-origin:left;filter:url(#blyerts)}
+.sl-k-lank a:focus-visible{outline:2px solid var(--ink);outline-offset:4px}
+@media (max-width:899px){
+  .sl-kontakt{grid-template-columns:1fr;min-height:min(100svh,760px);align-content:center;justify-items:center;text-align:center;gap:clamp(32px,7vw,56px);padding:clamp(64px,12vw,120px) 0 clamp(48px,9vw,96px)}
+  .sl-k-text h2{max-width:none;font-size:clamp(44px,12.5vw,92px)}
+  .sl-k-text p{margin-inline:auto;max-width:24ch;font-size:clamp(20px,5.2vw,28px)}
+  .sl-k-lank{align-items:center;gap:clamp(14px,4vw,28px)}
+  .sl-k-lank a{align-items:center;font-size:clamp(20px,6.2vw,40px)}
+}
 </style>
 <script>
 if(!matchMedia('(prefers-reduced-motion: reduce)').matches&&'IntersectionObserver' in window)document.documentElement.classList.add('rita');
@@ -409,257 +839,143 @@ if(!matchMedia('(prefers-reduced-motion: reduce)').matches&&'IntersectionObserve
 
 <div style="position: relative; min-height: 100vh; box-sizing: border-box;">
 
-<main style="max-width: 1120px; margin: 0 auto; padding: 0 clamp(16px, 4vw, 56px);">
+<div class="h3-wrap" data-ram="b">
+<header class="h3-hero" data-tema="natt" id="hero" aria-labelledby="hej-rubrik">
+  <div class="h3-ljusnat" aria-hidden="true"></div>
+  <div class="h3-sken" aria-hidden="true"></div>
+  <div class="h3-topp"><a class="h3-kontaktord" href="#">Hedbergwebb</a><a class="h3-kontaktord" href="#kontakt">Kontakt</a></div>
 
+  <div class="h3-text">
+    <h1 id="hej-rubrik">
+      <span class="h3-hej" aria-hidden="true"><span data-b="H"></span><span data-b="e"></span><span data-b="j"></span><span data-b="!"></span></span><span class="h3-sr">Hej! </span>
+      <span class="h3-sub">Jag heter Samuel och bygger hemsidor åt <span class="h3-under">småföretag</span>.</span>
+    </h1>
+  </div>
 
-<section data-tema="papper" aria-labelledby="hej" class="titelsida" style="position: relative; display: flex; flex-wrap: wrap; align-items: center; gap: 28px 48px; min-height: 100vh; min-height: 100svh; box-sizing: border-box; padding: clamp(40px, 6vw, 72px) 0 clamp(96px, 12vh, 140px);">
-<div style="flex: 999 1 560px; min-width: 0;">
-<div style="display: flex; flex-wrap: wrap; gap: 40px 56px; align-items: center;">
-<div style="flex: 1 1 300px; min-width: 0;">
-<h1 id="hej" style="margin: 0 0 24px; font-weight: 800; font-stretch: 112%; font-size: clamp(48px, 5.4vw, 72px); line-height: .96; letter-spacing: -.02em;">Hej! Jag heter<br>Samuel.</h1>
-<div role="img" aria-label="Handritat mått: 18 år" style="max-width: 420px; color: var(--graphite);">
-<div data-note="efter" style="text-align: center; font-family: 'Caveat', cursive; font-size: 30px; line-height: 1; font-weight: 600; transform: rotate(-2deg); margin-bottom: -2px; filter: url(#blyerts);">18 år</div>
-<svg viewBox="0 0 420 26" width="100%" height="26" preserveAspectRatio="none" aria-hidden="true" style="display: block; overflow: visible; filter: url(#blyerts);"><path data-draw="path" pathLength="1" d="M3 13.4 C 90 11.6, 180 14.6, 262 12.6 S 380 13.9, 417 12.6" fill="none" stroke-width="1.4" stroke-linecap="round" vector-effect="non-scaling-stroke" style="stroke: var(--graphite)"></path><path d="M12 7.6 L3 13.4 L12.6 18.8 M408 6.9 L417 12.6 L407.4 18.2 M2.2 2.6 L3.4 23.6 M418.4 2.2 L417.4 24" fill="none" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round" vector-effect="non-scaling-stroke" style="stroke: var(--graphite)"></path></svg>
-</div>
-<p style="margin: 20px 0 0; font-size: clamp(19px, 1.9vw, 23px); line-height: 1.45; max-width: 30ch;">Jag pluggar teknik på gymnasiet och bygger hemsidor åt företag vid sidan av skolan.</p>
-</div>
+  <figure class="h3-portratt">
+    <div class="h3-valv" aria-hidden="true"></div>
+    <div class="h3-valv-bild"><img src="bilder/portratt-600.webp" srcset="bilder/portratt-600.webp 600w, bilder/portratt-900.webp 900w" sizes="(max-width: 599px) 330px, 440px" width="900" height="1350" fetchpriority="high" decoding="async" alt="Porträtt av Samuel Hedberg"></div>
+  </figure>
+</header>
 
-<figure class="portratt" style="margin: 0 auto; flex: 0 1 340px; min-width: 220px; max-width: 340px;">
-<div style="position: relative; aspect-ratio: 3 / 4; border-radius: 50% 50% 8px 8px / 37.5% 37.5% 8px 8px; overflow: hidden; border: 1.5px solid var(--ink); box-shadow: 0 0 0 9px var(--paper), 0 0 0 10.5px var(--ink), 0 40px 80px -20px rgba(27, 43, 82, .35);">
-<img src="bilder/portratt-600.webp" srcset="bilder/portratt-600.webp 600w, bilder/portratt-900.webp 900w" sizes="(min-width: 760px) 340px, 70vw" width="900" height="1350" fetchpriority="high" decoding="async" alt="Porträtt av Samuel Hedberg" style="position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: 50% 30%; display: block;">
-</div>
-</figure>
-</div>
-</div>
-<svg class="vand" aria-hidden="true" viewBox="0 0 40 90" width="28" height="64" style="position: absolute; left: 50%; bottom: clamp(24px, 4vh, 44px); margin-left: -14px; overflow: visible; color: var(--graphite); filter: url(#blyerts);"><path data-draw="path" pathLength="1" d="M20 2 C 14 20, 26 34, 19 52 S 21 74, 20 86 M10 72 C 14 77, 17 82, 20 87 C 23 81, 26 77, 31 71" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"></path></svg>
+<section class="h3-om" data-tema="papper" aria-label="Om mig">
+  <div class="h3-om-rad">
+    <div class="h3-om-tal" aria-hidden="true">12<small>år</small></div>
+    <div class="h3-om-text">
+      <p>Jag byggde min första hemsida när jag var 12. Pappa hade precis startat sin arboristfirma och behövde en sida, och jag blev helt överlycklig när jag fick sitta och klura ut hur man gjorde.</p>
+      <p>Allt fick jag lära mig från grunden, från hur en sida ska se ut till hur den ska vara uppbyggd för att vara lätt att använda.</p>
+    </div>
+  </div>
+  <p class="h3-vandpunkt">Sen insåg jag att en snygg hemsida inte räcker för att den ska uppfylla sitt syfte, den måste synas på Google också.</p>
+  <div class="h3-om-rad">
+    <div class="h3-om-tal" aria-hidden="true">18<small>år</small></div>
+    <div class="h3-om-text">
+      <p>Här lärde jag mig mycket om SEO och konsten att skapa värdefullt innehåll, som faktiskt syns i sökresultat. Jag byggde om hemsidan. Den här gången räckte det inte att pappa var nöjd, jag behövde imponera på Google också.</p>
+      <p>Idag pluggar jag teknik på gymnasiet med digitalt skapande som inriktning. Men mina planer tar inte slut efter studenten. Intresset finns kvar, och jag vill fortsätta bygga bättre och bättre hemsidor!</p>
+    </div>
+  </div>
+</section>
+<section class="h3-bro" data-tema="papper" aria-label="Det som spelar roll för en modern hemsida">
+  <div class="h3-bro-in">
+    <p class="h3-bro-text">En modern hemsida ska <span class="h3-u">fungera på alla skärmar</span>, <span class="h3-u">synas på Google</span> och <span class="h3-u">tas om hand efter lanseringen</span>.</p>
+    <p class="h3-bro-ut">Det är lättare att visa än att förklara, så här är tre sidor jag har byggt.</p>
+    <svg class="h3-bro-pil" viewBox="0 0 60 120" aria-hidden="true" width="44" height="88"><path d="M30 4 C 24 30, 36 54, 29 80 S 31 100, 30 112 M14 98 C 20 104, 26 110, 30 114 C 34 108, 40 104, 48 97" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+  </div>
 </section>
 
-<section aria-labelledby="projekt" style="display: flex; flex-wrap: wrap; gap: 28px 48px; padding: 0 0 clamp(56px, 8vw, 96px);">
-<div aria-hidden="true" data-draw="line" style="flex: 1 1 100%; height: 1px; opacity: .6; transform-origin: left; background-image: repeating-linear-gradient(90deg, var(--ink) 0 22px, transparent 22px 27px, var(--ink) 27px 30px, transparent 30px 35px);"></div>
-<div style="flex: 999 1 560px; min-width: 0; display: flex; flex-direction: column; gap: 40px;">
-<h2 data-tema="papper" id="projekt" style="margin: 0; font-weight: 800; font-stretch: 112%; font-size: clamp(34px, 5vw, 60px); line-height: 1; letter-spacing: -.015em;">Projekt</h2>
-<p style="margin: -22px 0 0; max-width: 38ch; font-size: clamp(18px, 1.7vw, 21px); line-height: 1.45;">Här är ett urval av mina senaste projekt.</p>
 
-<!-- ============ RENPRODUKTER BOHUSLÄN ============ -->
-<article data-tema="ren" aria-labelledby="p3" style="position: relative;">
-<div style="display: flex; flex-direction: column; gap: 14px; padding: 20px 16px 0;">
-<figure style="margin: 0; display: flex; flex-direction: column; gap: 8px;">
-<div data-draw="dim" aria-hidden="true" style="display: flex; align-items: center; gap: 6px; height: 14px; border-left: 1px solid var(--ink); border-right: 1px solid var(--ink);">
-<svg width="9" height="7" viewBox="0 0 9 7" style="display: block; flex: none;"><path d="M0 3.5L9 0V7Z" style="fill: var(--ink)"></path></svg>
-<div data-draw="line" style="flex: 1; height: 1px; background: var(--ink); transform-origin: right;"></div>
-<span style="font-family: 'IBM Plex Mono', monospace; font-size: 10px; letter-spacing: .06em; text-transform: uppercase; color: var(--ink2); padding: 0 3px;">Dator</span>
-<div data-draw="line" style="flex: 1; height: 1px; background: var(--ink); transform-origin: left;"></div>
-<svg width="9" height="7" viewBox="0 0 9 7" style="display: block; flex: none;"><path d="M9 3.5L0 0V7Z" style="fill: var(--ink)"></path></svg>
 </div>
-<div style="border: 1.5px solid var(--ink); border-radius: 6px; overflow: hidden; background: var(--paper2);">
-<div aria-hidden="true" style="display: flex; align-items: center; gap: 4px; height: 16px; padding: 0 7px; border-bottom: 1px solid var(--ink);">
-<span style="width: 6px; height: 6px; box-sizing: border-box; border: 1px solid var(--ink); border-radius: 50%;"></span>
-<span style="width: 6px; height: 6px; box-sizing: border-box; border: 1px solid var(--ink); border-radius: 50%;"></span>
-<span style="width: 6px; height: 6px; box-sizing: border-box; border: 1px solid var(--ink); border-radius: 50%;"></span>
-<span style="flex: 0 1 45%; height: 7px; margin-left: 10px; box-sizing: border-box; border: 1px solid var(--ink); border-radius: 4px;"></span>
-</div>
-<div style="position: relative; aspect-ratio: 16 / 10;">
-<svg viewBox="0 0 160 100" preserveAspectRatio="none" aria-hidden="true" style="position: absolute; inset: 0; width: 100%; height: 100%; filter: url(#blyerts);">
-<g fill="none" stroke-linecap="round" stroke-linejoin="round" style="stroke: var(--graphite)">
-<path d="M0.5 0.8 L159.3 99.2 M159.4 0.6 L0.7 99.4" stroke-width="0.8" opacity=".35" vector-effect="non-scaling-stroke"></path>
-<path d="M6 2.4 Q7.5 1.2 9 2.6 M7.5 2 L7.6 6" stroke-width="1.2" vector-effect="non-scaling-stroke"></path>
-<path d="M86 4.3 L92 4.2 M96 4.4 L104 4.3 M108 4.3 L115 4.5 M119 4.2 L127 4.4 M131 4.4 L137 4.3 M141 4.3 L152 4.5" stroke-width="1.2" vector-effect="non-scaling-stroke"></path>
-<path d="M52 38.3 L60 38.2 M64 38.4 L96 38.2 M100 38.3 L108 38.4" stroke-width="1.2" vector-effect="non-scaling-stroke"></path>
-<path d="M46 50 Q80 49 114 50.4 M52 62 Q80 61.2 108 62.3" stroke-width="8" vector-effect="non-scaling-stroke"></path>
-<path d="M54 71.8 L106 72 M62 75.2 L98 75" stroke-width="1" vector-effect="non-scaling-stroke"></path>
-<path d="M56 81 L79.3 80.8 L79.1 87.2 L55.8 87 Z M81.2 80.9 L104.3 81.1 L104 87.1 L81 86.9 Z" stroke-width="1.2" vector-effect="non-scaling-stroke"></path>
-<path d="M58 86.6 L62 81.4 M62.5 86.7 L66.5 81.3 M67 86.6 L71 81.4 M71.5 86.8 L75.5 81.3" stroke-width="0.8" vector-effect="non-scaling-stroke"></path>
-</g>
-</svg>
-<img src="bilder/renprodukter-dator-800.webp" srcset="bilder/renprodukter-dator-800.webp 800w, bilder/renprodukter-dator-1400.webp 1400w, bilder/renprodukter-dator-2000.webp 2000w" sizes="(min-width: 1180px) 980px, 90vw" width="1400" height="875" loading="lazy" decoding="async" data-sketch alt="Renprodukter Bohusläns startsida på dator" style="position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: top; display: block;">
-</div>
-</div>
-</figure>
-</div>
-<div style="margin: 20px 16px 16px; background: #1A1410; border: 1px solid var(--ink); border-top: 6px solid #C9A96E; padding: clamp(28px, 4vw, 44px) clamp(20px, 4vw, 44px) 0; display: flex; flex-wrap: wrap; align-items: flex-start; gap: 36px 48px; overflow: hidden; color: #F7F3EE;">
-<div style="flex: 1 1 280px; min-width: 0; display: flex; flex-direction: column; gap: 18px; padding-bottom: clamp(28px, 4vw, 44px);">
-<h3 id="p3" style="margin: 0; font-family: 'Cormorant Garamond', Georgia, serif; font-weight: 500; font-size: clamp(34px, 4.6vw, 56px); line-height: 1; letter-spacing: -.005em;"><span style="font-style: italic;">Renprodukter</span> <span style="color: #C9A96E;">Bohuslän</span></h3>
-<p style="margin: 0; max-width: 46ch; font-family: 'Jost', sans-serif; font-weight: 300; font-size: 17px; line-height: 1.55; color: rgba(247, 243, 238, .9);">Hemsida för en viltvagn med äkta samiska renprodukter – kött, skinn och hantverk.</p>
-<span aria-hidden="true" style="width: 32px; height: 2px; background: #C9A96E;"></span>
-<p style="margin: 0; max-width: 42ch; font-family: 'Jost', sans-serif; font-weight: 300; font-size: 16px; line-height: 1.6; color: rgba(247, 243, 238, .75);">Visar produkterna, berättelsen bakom och var man hittar dem.</p>
-<a href="https://renprodukterbohuslan.se" style="align-self: flex-start; display: inline-block; padding: 10px 0; margin: -6px 0 -10px; font-family: 'Jost', sans-serif; font-size: 15px; color: #C9A96E; overflow-wrap: anywhere; text-underline-offset: 4px;">renprodukterbohuslan.se</a>
-</div>
-<figure style="margin: 0 auto; flex: 0 0 auto; width: clamp(200px, 64vw, 290px); max-width: 100%; aspect-ratio: 7 / 11; align-self: flex-end; display: flex; flex-direction: column; gap: 10px; overflow: hidden;">
-<div data-draw="dim" aria-hidden="true" style="display: flex; align-items: center; gap: 6px; height: 14px; flex: none; border-left: 1px solid #C9A96E; border-right: 1px solid #C9A96E;">
-<svg width="9" height="7" viewBox="0 0 9 7" style="display: block; flex: none;"><path d="M0 3.5L9 0V7Z" fill="#C9A96E"></path></svg>
-<div data-draw="line" style="flex: 1; height: 1px; background: #C9A96E; transform-origin: right;"></div>
-<span style="font-family: 'IBM Plex Mono', monospace; font-size: 10px; letter-spacing: .06em; text-transform: uppercase; color: rgba(247, 243, 238, .75); padding: 0 3px;">Mobil</span>
-<div data-draw="line" style="flex: 1; height: 1px; background: #C9A96E; transform-origin: left;"></div>
-<svg width="9" height="7" viewBox="0 0 9 7" style="display: block; flex: none;"><path d="M9 3.5L0 0V7Z" fill="#C9A96E"></path></svg>
-</div>
-<div style="flex: 1; min-height: 0; display: flex; flex-direction: column; align-items: center; gap: 8px; padding: 11px 10px 0; box-sizing: border-box; border: 1.5px solid var(--ink); border-bottom: 0; border-radius: 32px 32px 0 0; background: var(--paper2);">
-<span aria-hidden="true" style="flex: none; width: 26%; height: 6px; box-sizing: border-box; border: 1px solid var(--ink); border-radius: 3px;"></span>
-<div style="position: relative; flex: 1; width: 100%; box-sizing: border-box; border: 1px solid var(--ink); border-bottom: 0; border-radius: 14px 14px 0 0; overflow: hidden;">
-<img src="bilder/renprodukter-mobil-600.webp" srcset="bilder/renprodukter-mobil-300.webp 300w, bilder/renprodukter-mobil-600.webp 600w, bilder/renprodukter-mobil-900.webp 900w" sizes="(min-width: 760px) 270px, 62vw" width="900" height="1948" loading="lazy" decoding="async" data-color alt="Renprodukter Bohusläns startsida i mobilen" style="position: absolute; top: 0; left: 0; width: 100%; height: auto; display: block;">
-</div>
-</div>
-</figure>
-</div>
-</article>
+<main style="max-width: 1120px; margin: 0 auto; padding: 0 clamp(16px, 4vw, 56px); position: relative;">
 
-<!-- ============ FLER PROJEKT ============ -->
-<h3 data-tema="skymning" style="margin: 16px 0 -16px; font-weight: 800; font-stretch: 112%; font-size: clamp(22px, 2.4vw, 28px); line-height: 1.1; letter-spacing: -.01em;">Fler projekt</h3>
-<div data-tema="skymning" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 300px), 1fr)); gap: 28px;">
-<article aria-labelledby="p1" style="min-width: 0; display: flex; flex-direction: column;">
-<div style="position: relative; padding: 16px 16px 0; overflow: hidden;">
-<div style="width: 80%; margin-bottom: 16px; border: 1.5px solid var(--ink); border-radius: 6px; overflow: hidden; background: var(--paper2);">
-<div aria-hidden="true" style="display: flex; align-items: center; gap: 4px; height: 14px; padding: 0 6px; border-bottom: 1px solid var(--ink);">
-<span style="width: 5px; height: 5px; box-sizing: border-box; border: 1px solid var(--ink); border-radius: 50%;"></span>
-<span style="width: 5px; height: 5px; box-sizing: border-box; border: 1px solid var(--ink); border-radius: 50%;"></span>
-<span style="width: 5px; height: 5px; box-sizing: border-box; border: 1px solid var(--ink); border-radius: 50%;"></span>
-<span style="flex: 0 1 45%; height: 6px; margin-left: 8px; box-sizing: border-box; border: 1px solid var(--ink); border-radius: 3px;"></span>
-</div>
-<div style="position: relative; aspect-ratio: 16 / 10;">
-<svg viewBox="0 0 160 100" preserveAspectRatio="none" aria-hidden="true" style="position: absolute; inset: 0; width: 100%; height: 100%; filter: url(#blyerts);">
-<g fill="none" stroke-linecap="round" stroke-linejoin="round" style="stroke: var(--graphite)">
-<path d="M0.5 0.8 L159.3 99.2 M159.4 0.6 L0.7 99.4" stroke-width="0.8" opacity=".35" vector-effect="non-scaling-stroke"></path>
-<path d="M10 6.3 Q27 5.3 44 6.4" stroke-width="5" vector-effect="non-scaling-stroke"></path>
-<path d="M100 6.6 L110 6.3 M114 6.5 L124 6.7 M128 6.4 L138 6.6" stroke-width="1.4" vector-effect="non-scaling-stroke"></path>
-<path d="M142.8 3.6 L152.2 3.4 L152.4 9.3 L142.6 9.1 Z" stroke-width="1.2" vector-effect="non-scaling-stroke"></path>
-<path d="M12 31 L62 30.8 Q64.5 33.2 62 35.6 L12 35.7 Q9.6 33.3 12 31 Z" stroke-width="1.1" vector-effect="non-scaling-stroke"></path>
-<path d="M10 44.5 Q70 43.2 128 44.8 M10 55 Q40 54.2 70 55.3" stroke-width="7" vector-effect="non-scaling-stroke"></path>
-<path d="M10 63.2 L80 62.8 M10 67.1 L77 67.4 M10 71 L74 70.7 M10 74.8 L40 74.9" stroke-width="1" vector-effect="non-scaling-stroke"></path>
-<path d="M10 80.2 L34.4 79.9 L34.1 86.3 L9.8 86.1 Z M37.2 80 L59.3 80.3 L59 86.2 L37 86 Z" stroke-width="1.2" vector-effect="non-scaling-stroke"></path>
-<path d="M12 85.6 L16 80.6 M16 85.8 L20 80.5 M20 85.7 L24 80.6 M24 85.9 L28 80.4 M28 85.8 L32 80.7" stroke-width="0.8" vector-effect="non-scaling-stroke"></path>
-</g>
-</svg>
-<img src="bilder/fastminit-dator-800.webp" srcset="bilder/fastminit-dator-800.webp 800w, bilder/fastminit-dator-1400.webp 1400w" sizes="(min-width: 1180px) 380px, (min-width: 700px) 38vw, 72vw" width="1400" height="875" loading="lazy" decoding="async" data-sketch alt="Fast Minits startsida på dator" style="position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: top; display: block;">
-</div>
-</div>
-<div style="position: absolute; right: 16px; top: 24%; bottom: 0; width: 32%; display: flex; flex-direction: column; align-items: center; gap: 5px; padding: 7px 6px 0; box-sizing: border-box; border: 1.5px solid var(--ink); border-bottom: 0; border-radius: 20px 20px 0 0; background: var(--paper2); box-shadow: -6px 0 16px rgba(27, 43, 82, .12);">
-<span aria-hidden="true" style="flex: none; width: 26%; height: 4px; box-sizing: border-box; border: 1px solid var(--ink); border-radius: 2px;"></span>
-<div style="position: relative; flex: 1; width: 100%; box-sizing: border-box; border: 1px solid var(--ink); border-bottom: 0; border-radius: 9px 9px 0 0; overflow: hidden;">
-<img src="bilder/fastminit-mobil-600.webp" srcset="bilder/fastminit-mobil-300.webp 300w, bilder/fastminit-mobil-600.webp 600w" sizes="(min-width: 1180px) 150px, (min-width: 700px) 15vw, 32vw" width="900" height="1948" loading="lazy" decoding="async" data-color alt="Fast Minits startsida i mobilen" style="position: absolute; top: 0; left: 0; width: 100%; height: auto; display: block;">
-</div>
-</div>
-</div>
-<div style="flex: 1; display: flex; flex-direction: column; gap: 12px; margin: 0 16px 16px; padding: 22px 22px 24px; background: #F5F3F0; border: 1px solid var(--ink); border-top: 5px solid #4E3BAF;">
-<h4 id="p1" style="margin: 0; font-family: 'Syne', sans-serif; font-weight: 800; font-size: clamp(24px, 2.6vw, 30px); line-height: 1; letter-spacing: .01em; text-transform: uppercase; color: #3B2D8F;">Fast Minit</h4>
-<p style="margin: 0; max-width: 46ch; font-family: 'DM Sans', sans-serif; font-size: 16px; line-height: 1.5; color: #2A2540;">Hemsida för en skomakare som lagar skor, väskor och klockor.</p>
-<a href="https://fastminit.se" style="align-self: flex-start; display: inline-block; padding: 10px 0; margin: auto 0 -10px; font-family: 'DM Sans', sans-serif; font-size: 15px; font-weight: 500; color: #3B2D8F; text-underline-offset: 4px;">fastminit.se</a>
-</div>
-</article>
-<article aria-labelledby="p2" style="min-width: 0; display: flex; flex-direction: column;">
-<div style="position: relative; padding: 16px 16px 0; overflow: hidden;">
-<div style="width: 80%; margin-bottom: 16px; border: 1.5px solid var(--ink); border-radius: 6px; overflow: hidden; background: var(--paper2);">
-<div aria-hidden="true" style="display: flex; align-items: center; gap: 4px; height: 14px; padding: 0 6px; border-bottom: 1px solid var(--ink);">
-<span style="width: 5px; height: 5px; box-sizing: border-box; border: 1px solid var(--ink); border-radius: 50%;"></span>
-<span style="width: 5px; height: 5px; box-sizing: border-box; border: 1px solid var(--ink); border-radius: 50%;"></span>
-<span style="width: 5px; height: 5px; box-sizing: border-box; border: 1px solid var(--ink); border-radius: 50%;"></span>
-<span style="flex: 0 1 45%; height: 6px; margin-left: 8px; box-sizing: border-box; border: 1px solid var(--ink); border-radius: 3px;"></span>
-</div>
-<div style="position: relative; aspect-ratio: 16 / 10;">
-<svg viewBox="0 0 160 100" preserveAspectRatio="none" aria-hidden="true" style="position: absolute; inset: 0; width: 100%; height: 100%; filter: url(#blyerts);">
-<g fill="none" stroke-linecap="round" stroke-linejoin="round" style="stroke: var(--graphite)">
-<path d="M0.5 8.6 L159.3 99.2 M159.4 8.4 L0.7 99.4" stroke-width="0.8" opacity=".35" vector-effect="non-scaling-stroke"></path>
-<path d="M0 8.2 Q80 7.6 160 8.4" stroke-width="1.2" vector-effect="non-scaling-stroke"></path>
-<path d="M12 2 L30.5 2.2 L30.3 6.4 L11.8 6.2 Z M126 2.3 L141 2.1 Q143 4.3 141 6.6 L126 6.5 Q124 4.4 126 2.3 Z" stroke-width="1.2" vector-effect="non-scaling-stroke"></path>
-<path d="M88 4.4 L96 4.2 M99 4.5 L107 4.3 M110 4.4 L118 4.6" stroke-width="1.4" vector-effect="non-scaling-stroke"></path>
-<path d="M12 51.8 L32 51.6 M12 55.4 L38 55.6" stroke-width="1.4" vector-effect="non-scaling-stroke"></path>
-<path d="M12 61 Q36 60.2 58 61.3 M12 68.4 Q40 67.6 70 68.6" stroke-width="7" vector-effect="non-scaling-stroke"></path>
-<path d="M12 74.2 L60 73.9 M12 77.4 L58 77.6 M12 80.6 L40 80.4" stroke-width="1" vector-effect="non-scaling-stroke"></path>
-<path d="M12 84 L27.3 83.8 L27.1 89.4 L11.9 89.2 Z M29.2 84 L41.4 84.2 L41.2 89.3 L29 89.1 Z" stroke-width="1.2" vector-effect="non-scaling-stroke"></path>
-<path d="M13.5 89 L17 84.2 M17.5 89.1 L21 84.1 M21.5 89 L25 84.3" stroke-width="0.8" vector-effect="non-scaling-stroke"></path>
-<path d="M12 92.6 L38 92.4" stroke-width="1.2" vector-effect="non-scaling-stroke"></path>
-</g>
-</svg>
-<img src="bilder/thailamdee-dator-800.webp" srcset="bilder/thailamdee-dator-800.webp 800w, bilder/thailamdee-dator-1400.webp 1400w" sizes="(min-width: 1180px) 380px, (min-width: 700px) 38vw, 72vw" width="1400" height="875" loading="lazy" decoding="async" data-sketch alt="Thai Lam-Dees startsida på dator" style="position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: top; display: block;">
-</div>
-</div>
-<div style="position: absolute; right: 16px; top: 24%; bottom: 0; width: 32%; display: flex; flex-direction: column; align-items: center; gap: 5px; padding: 7px 6px 0; box-sizing: border-box; border: 1.5px solid var(--ink); border-bottom: 0; border-radius: 20px 20px 0 0; background: var(--paper2); box-shadow: -6px 0 16px rgba(27, 43, 82, .12);">
-<span aria-hidden="true" style="flex: none; width: 26%; height: 4px; box-sizing: border-box; border: 1px solid var(--ink); border-radius: 2px;"></span>
-<div style="position: relative; flex: 1; width: 100%; box-sizing: border-box; border: 1px solid var(--ink); border-bottom: 0; border-radius: 9px 9px 0 0; overflow: hidden;">
-<img src="bilder/thailamdee-mobil-600.webp" srcset="bilder/thailamdee-mobil-300.webp 300w, bilder/thailamdee-mobil-600.webp 600w" sizes="(min-width: 1180px) 150px, (min-width: 700px) 15vw, 32vw" width="900" height="1948" loading="lazy" decoding="async" data-color alt="Thai Lam-Dees startsida i mobilen" style="position: absolute; top: 0; left: 0; width: 100%; height: auto; display: block;">
-</div>
-</div>
-</div>
-<div style="flex: 1; display: flex; flex-direction: column; gap: 12px; margin: 0 16px 16px; padding: 22px 22px 24px; background: #081F52; border: 1px solid var(--ink); border-top: 5px solid #D6A22E; color: #FBF7EF;">
-<h4 id="p2" style="margin: 0; font-family: 'Newsreader', Georgia, serif; font-weight: 500; font-size: clamp(26px, 2.8vw, 32px); line-height: 1; letter-spacing: -.01em;">Thai <span style="font-style: italic; color: #D6A22E;">Lam-Dee</span></h4>
-<p style="margin: 0; max-width: 46ch; font-family: 'Barlow', sans-serif; font-size: 16px; line-height: 1.5; color: rgba(251, 247, 239, .9);">Hemsida för ett thaikök, med meny och öppettider.</p>
-<a href="https://thailamdee.se" style="align-self: flex-start; display: inline-block; padding: 10px 0; margin: auto 0 -10px; font-family: 'Barlow', sans-serif; font-size: 15px; font-weight: 500; color: #D6A22E; text-underline-offset: 4px;">thailamdee.se</a>
-</div>
-</article>
-</div>
-</div>
-</section>
 
-<section data-tema="papper" aria-labelledby="om" style="display: flex; flex-wrap: wrap; gap: 28px 48px; padding: 0 0 clamp(56px, 8vw, 96px);">
-<div aria-hidden="true" data-draw="line" style="flex: 1 1 100%; height: 1px; opacity: .6; transform-origin: left; background-image: repeating-linear-gradient(90deg, var(--ink) 0 22px, transparent 22px 27px, var(--ink) 27px 30px, transparent 30px 35px);"></div>
-<div class="spalt" style="flex: 999 1 560px; min-width: 0; display: flex; flex-direction: column; gap: 28px;">
-<h2 id="om" style="margin: 0; font-weight: 800; font-stretch: 112%; font-size: clamp(34px, 5vw, 60px); line-height: 1; letter-spacing: -.015em;">Om mig</h2>
-<div style="display: flex; gap: clamp(40px, 6vw, 88px); align-items: stretch;">
-<div style="max-width: 60ch; display: flex; flex-direction: column; gap: 18px; font-size: clamp(18px, 1.7vw, 21px); line-height: 1.5;">
-<p style="margin: 0;">Jag byggde min första hemsida när jag var 12. Pappa hade precis startat sin arboristfirma och behövde en sida, och jag blev helt överlycklig när jag fick sitta och klura ut hur man gjorde.</p>
-<p style="margin: 0;">Allt fick jag lära mig från grunden, från hur en sida ska se ut till hur den ska vara uppbyggd för att vara lätt att använda.</p>
-<p style="margin: 0;">Sen insåg jag att en snygg hemsida inte räcker för att den ska uppfylla sitt syfte, den måste synas på Google också. Här lärde jag mig mycket om SEO och konsten att skapa värdefullt innehåll, som faktiskt syns i sökresultat. Jag byggde om hemsidan. Den här gången räckte det inte att pappa var nöjd, jag behövde imponera på Google också.</p>
-<p style="margin: 0;">Idag pluggar jag teknik på gymnasiet med digitalt skapande som inriktning. Men mina planer tar inte slut efter studenten. Intresset finns kvar, och jag vill fortsätta bygga bättre och bättre hemsidor!</p>
-</div>
-<div class="tidslinje" aria-hidden="true" style="flex: 0 0 auto; display: none; flex-direction: column; align-items: center; gap: 6px; padding: 4px 0; color: var(--graphite);">
-<div data-note style="font-family: 'Caveat', cursive; font-size: 30px; font-weight: 600; line-height: 1; transform: rotate(-3deg); filter: url(#blyerts);">12 år</div>
-<div style="position: relative; flex: 1; min-height: 120px; width: 26px;">
-<svg viewBox="0 0 26 100" preserveAspectRatio="none" style="position: absolute; inset: 0; width: 100%; height: 100%; overflow: visible; filter: url(#blyerts);"><path data-draw="path" pathLength="1" d="M13 2 C 12 30, 14.5 60, 12.6 98" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" vector-effect="non-scaling-stroke"></path><path d="M4 2.4 L22 1.6 M4.6 98.2 L21.4 98.8 M8 9 L13 2 L18 9.4 M8.4 91.6 L12.6 98 L17.6 91" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round" vector-effect="non-scaling-stroke"></path></svg>
-</div>
-<div data-note style="font-family: 'Caveat', cursive; font-size: 30px; font-weight: 600; line-height: 1; transform: rotate(-2deg); filter: url(#blyerts);">18 år</div>
-</div>
-</div>
-</div>
-</section>
 
-<section data-tema="papper" aria-labelledby="gang" style="display: flex; flex-wrap: wrap; gap: 28px 48px; padding: 0 0 clamp(56px, 8vw, 96px);">
-<div aria-hidden="true" data-draw="line" style="flex: 1 1 100%; height: 1px; opacity: .6; transform-origin: left; background-image: repeating-linear-gradient(90deg, var(--ink) 0 22px, transparent 22px 27px, var(--ink) 27px 30px, transparent 30px 35px);"></div>
-<div class="spalt" style="flex: 999 1 560px; min-width: 0; display: flex; flex-direction: column; gap: 36px;">
-<h2 id="gang" style="margin: 0; font-weight: 800; font-stretch: 112%; font-size: clamp(34px, 5vw, 60px); line-height: 1; letter-spacing: -.015em;">Så går det till</h2>
-<div class="process">
-<ol style="list-style: none; margin: 0; padding: 0;">
-<li style="min-width: 0;">
-<span aria-hidden="true" class="steg-nr" style="display: block; font-family: 'Caveat', cursive; font-size: 34px; font-weight: 600; line-height: 1; color: var(--graphite); filter: url(#blyerts);">1</span>
-<p style="margin: 8px 0 0; font-size: clamp(19px, 1.8vw, 23px); line-height: 1.4; font-weight: 500;">Vi pratar och bollar lite idéer.</p>
-</li>
-<li style="min-width: 0;">
-<span aria-hidden="true" class="steg-nr" style="display: block; font-family: 'Caveat', cursive; font-size: 34px; font-weight: 600; line-height: 1; color: var(--graphite); filter: url(#blyerts);">2</span>
-<p style="margin: 8px 0 0; font-size: clamp(19px, 1.8vw, 23px); line-height: 1.4; font-weight: 500;">Jag bygger sidan.</p>
-</li>
-<li style="min-width: 0;">
-<span aria-hidden="true" class="steg-nr" style="display: block; font-family: 'Caveat', cursive; font-size: 34px; font-weight: 600; line-height: 1; color: var(--graphite); filter: url(#blyerts);">3</span>
-<p style="margin: 8px 0 0; font-size: clamp(19px, 1.8vw, 23px); line-height: 1.4; font-weight: 500;">Du tittar och vi justerar tills du är nöjd.</p>
-</li>
-</ol>
-<svg class="process-linje" viewBox="0 0 1000 64" aria-hidden="true" style="display: block; width: 100%; height: auto; margin-top: 22px; overflow: visible; color: var(--ink); filter: url(#blyerts);">
-<path data-draw="path" pathLength="1" d="M8 34 C 120 30, 240 38, 360 34 S 600 31, 712 34 C 770 35, 806 36, 818 18 C 828 0, 788 -6, 784 14 C 781 32, 812 38, 852 35 S 920 33, 948 34" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" vector-effect="non-scaling-stroke"></path>
-<circle cx="8" cy="34" r="6" style="fill: var(--ink)"></circle>
-<circle cx="360" cy="34" r="6" style="fill: var(--ink)"></circle>
-<circle cx="712" cy="34" r="6" style="fill: var(--ink)"></circle>
-<path data-draw="path" pathLength="1" d="M956 34 L 968 46 L 994 12" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" vector-effect="non-scaling-stroke"></path>
+<section id="k1sek" class="k1-hojd" data-tema="ren" aria-labelledby="k1">
+<div class="k1-scen">
+<div class="k1-topp"><h2 id="k1">Renprodukter Bohuslän: en responsiv hemsida</h2></div>
+<div class="k1-text" id="k1text">
+<p class="beat" data-a="0" data-b=".16">Samma sida ska fungera på alla skärmar.</p>
+<p class="beat" data-a=".16" data-b=".5">På en mindre skärm flyttar menyn och knapparna på sig, så att allt går att läsa utan att zooma.</p>
+<p class="beat" data-a=".5" data-b="1.01">Många tittar på telefon, och Google utgår från mobilversionen.</p>
+</div>
+<div class="k1-bild">
+<div class="ram" id="k1ram">
+<div class="ram-in"><div class="ram-bar" id="k1bar"><i></i><i></i><i></i><span>renprodukterbohuslan.se</span></div><canvas id="k1c" aria-label="Renprodukter Bohusläns startsida som formar om sig från dator till telefon" role="img"></canvas></div>
+<svg class="k1-pn" id="k1pn" aria-hidden="true">
+<g id="a1"><path pathLength="1" id="a1e"/><path pathLength="1" id="a1p"/><text id="a1t">menyn ligger på rad</text></g>
+<g id="a2"><path pathLength="1" id="a2e"/><path pathLength="1" id="a2p"/><text id="a2t">här blir menyn en knapp</text></g>
+<g id="a3"><path pathLength="1" id="a3e"/><path pathLength="1" id="a3p"/><text id="a3t">knapparna hamnar under varandra</text></g>
 </svg>
 </div>
 </div>
-</section>
-
-<section data-tema="natt" aria-labelledby="kontakt" class="sista-sidan" style="display: flex; flex-wrap: wrap; gap: 28px 48px; padding: 0 0 clamp(56px, 8vw, 96px);">
-<div class="spalt" style="flex: 999 1 560px; min-width: 0;">
-<h2 id="kontakt" style="margin: 0; max-width: 18ch; font-weight: 600; font-stretch: 108%; font-size: clamp(32px, 4.4vw, 54px); line-height: 1.14; letter-spacing: -.01em;">Låt oss bygga en hemsida du kan vara stolt över.</h2>
-<p style="margin: clamp(16px, 2vw, 24px) 0 0; max-width: 40ch; font-size: clamp(18px, 1.8vw, 22px); line-height: 1.5; color: var(--ink2);">Ring eller mejla gärna, så tar vi det därifrån:)</p>
-<div style="margin-top: clamp(32px, 5vw, 56px); display: flex; flex-direction: column; gap: clamp(14px, 2vw, 22px);">
-<a href="mailto:samuel@hedbergwebb.se" style="align-self: flex-start; display: inline-flex; flex-direction: column; gap: 2px; padding: 6px 0; color: var(--ink); text-decoration: none; font-size: clamp(26px, 4vw, 44px); font-weight: 700; font-stretch: 106%; letter-spacing: -.01em; overflow-wrap: anywhere;">
-<span>samuel@hedbergwebb.se</span>
-<svg viewBox="0 0 400 12" preserveAspectRatio="none" aria-hidden="true" data-draw="line" style="transform-origin: left; display: block; width: 0; min-width: 100%; height: 12px; overflow: visible; filter: url(#blyerts);"><path d="M2 7 C 60 4.5, 140 9, 220 6 S 360 4.8, 398 7.4" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" vector-effect="non-scaling-stroke"></path></svg>
-</a>
-<a href="tel:+46725202993" style="align-self: flex-start; display: inline-flex; flex-direction: column; gap: 2px; padding: 6px 0; color: var(--ink); text-decoration: none; font-size: clamp(26px, 4vw, 44px); font-weight: 700; font-stretch: 106%; letter-spacing: -.01em; overflow-wrap: anywhere;">
-<span>072-520 29 93</span>
-<svg viewBox="0 0 240 12" preserveAspectRatio="none" aria-hidden="true" data-draw="line" style="transform-origin: left; display: block; width: 0; min-width: 100%; height: 12px; overflow: visible; filter: url(#blyerts);"><path d="M2 6.5 C 50 8.6, 110 4.2, 170 6.6 S 230 7.8, 238 5.6" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" vector-effect="non-scaling-stroke"></path></svg>
-</a>
-</div>
 </div>
 </section>
 
-<footer data-tema="natt" aria-label="Företagsuppgifter" style="padding: 0 0 clamp(24px, 4vw, 40px); text-align: center; font-family: 'IBM Plex Mono', monospace; font-size: 11px; line-height: 1.8; letter-spacing: .08em; text-transform: uppercase; color: var(--ink2);"><span style="white-space: nowrap;">Samuel Hedberg</span> · <span style="white-space: nowrap;">Enskild firma</span> · <span style="white-space: nowrap;">Godkänd för F-skatt</span></footer>
-
+<section id="k2sek" class="k2-hojd" data-tema="skymning" aria-labelledby="k2">
+<div class="k1-scen">
+<div class="k1-topp"><h2 id="k2">Fast Minit: sökmotoroptimering</h2></div>
+<div class="k1-text" id="k2text">
+<p class="beat" data-a="0" data-b=".2">Först måste Google hitta sidan.</p>
+<p class="beat" data-a=".2" data-b=".5">Sedan läser Google rubriker, text och bildernas alt-text.</p>
+<p class="beat" data-a=".5" data-b=".74">Strukturerad data berättar vad företaget är och var det finns.</p>
+<p class="beat" data-a=".74" data-b="1.01">Så hittas sidan när någon söker. Jag SEO-optimerar alla sidor jag bygger.</p>
+</div>
+<div class="k2-bild">
+<div class="k2-q" id="k2q" aria-hidden="true"><span>⌕</span><span id="k2qt"></span></div>
+<div class="k2-wrap" id="k2wrap">
+<div class="k2-ram" id="k2ram">
+<div class="k2-bar" id="k2bar"><i></i><i></i><i></i><span id="k2tab">fastminit.se</span></div>
+<div class="k2-vy" id="k2vy">
+<div class="k2-strip" id="k2strip"><img class="k2-shot" id="k2shot" alt="" decoding="async"><div class="k2-wf" id="k2wf"></div></div>
+<div class="k2-term" id="k2term" aria-hidden="true"></div>
+<div class="k2-beam" id="k2beam"></div>
+</div>
+</div>
+<div class="k2-side" id="k2side" aria-hidden="true"></div>
+</div>
+<div class="k2-tally" id="k2tally" aria-hidden="true"></div>
+</div>
+</div>
+</section>
+<section id="k3sek" class="k3-hojd" data-tema="papper" aria-labelledby="k3">
+<div class="k1-scen">
+<div class="k1-topp"><h2 id="k3">Thai Lam-Dee: hjälp före och efter lanseringen</h2></div>
+<div class="k1-text" id="k3text">
+<p class="beat" data-a="0" data-b=".24">Före lanseringen: ett samtal, idéer, skiss och bygge.</p>
+<p class="beat" data-a=".24" data-b=".6">Sedan är sidan live, på dator och telefon.</p>
+<p class="beat" data-a=".6" data-b=".82">Men en sida är inte klar när den publiceras. Efteråt kommer nya idéer, till exempel en ny bild på kockens val.</p>
+<p class="beat" data-a=".82" data-b="1.01">Jag följer gärna en sida över tid.</p>
+</div>
+<div class="k3-bild" id="k3bild">
+<div class="k3-vy pan" id="k3vy">
+<div class="k3-strip" id="k3strip"></div>
+<div class="k3-bok" id="k3bok"><div class="pg blank" id="k3blank"></div><div class="pg r" id="k3right"></div><div class="k3-leaf" id="k3leaf"><div class="face front" id="k3front"><span class="shade"></span></div><div class="face back" id="k3back"><span class="shade"></span></div></div><div class="k3-veck"></div></div>
+</div>
+</div>
+</div>
+</section>
+<div class="k3-valj" id="k3valj"><span>PROTOTYP</span><button id="k3b-pan" type="button" aria-pressed="false">panorering</button><button id="k3b-flip" type="button" aria-pressed="true">vändning</button></div>
+<section class="sl-gang" data-tema="papper" aria-labelledby="gang">
+  <div aria-hidden="true" data-draw="line" class="sl-streck"></div>
+  <h2 id="gang">Så går det till</h2>
+  <ol class="sl-steg">
+    <li><span class="sl-nr" aria-hidden="true">1</span><p>Vi pratar och bollar lite idéer.</p></li>
+    <li><span class="sl-nr" aria-hidden="true">2</span><p>Jag bygger sidan.</p></li>
+    <li><span class="sl-nr" aria-hidden="true">3</span><p>Du tittar och vi justerar tills du är nöjd.</p></li>
+  </ol>
+  <svg class="sl-bana" viewBox="0 0 1000 64" aria-hidden="true" style="filter:url(#blyerts)"><path data-draw="path" pathLength="1" d="M8 34 C 120 30, 240 38, 360 34 S 600 31, 712 34 C 770 35, 806 36, 818 18 C 828 0, 788 -6, 784 14 C 781 32, 812 38, 852 35 S 920 33, 948 34" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" vector-effect="non-scaling-stroke"></path><circle cx="8" cy="34" r="6" style="fill:var(--ink)"></circle><circle cx="360" cy="34" r="6" style="fill:var(--ink)"></circle><circle cx="712" cy="34" r="6" style="fill:var(--ink)"></circle><path data-draw="path" pathLength="1" d="M956 34 L 968 46 L 994 12" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" vector-effect="non-scaling-stroke"></path></svg>
+</section>
+<section class="sl-kontakt" data-tema="natt" aria-labelledby="kontakt">
+  <div class="sl-k-text">
+    <h2 id="kontakt">Mejla eller ring mig.</h2>
+    <p>Berätta om ditt företag och dina idéer. Jag ser fram emot att lyssna!</p>
+  </div>
+  <div class="sl-k-lank">
+    <a href="mailto:samuel@hedbergwebb.se"><span>samuel@hedbergwebb.se</span><svg viewBox="0 0 400 12" preserveAspectRatio="none" aria-hidden="true" data-draw="line"><path d="M2 7 C 60 4.5, 140 9, 220 6 S 360 4.8, 398 7.4" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" vector-effect="non-scaling-stroke"></path></svg></a>
+    <a href="tel:+46725202993"><span>072-520 29 93</span><svg viewBox="0 0 240 12" preserveAspectRatio="none" aria-hidden="true" data-draw="line"><path d="M2 6.5 C 50 8.6, 110 4.2, 170 6.6 S 230 7.8, 238 5.6" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" vector-effect="non-scaling-stroke"></path></svg></a>
+  </div>
+</section>
 </main>
+<footer data-tema="natt" aria-label="Företagsuppgifter" style="padding: 0 16px clamp(24px, 4vw, 40px); text-align: center; font-family: 'IBM Plex Mono', monospace; font-size: 12px; line-height: 1.8; letter-spacing: .08em; text-transform: uppercase; color: var(--ink2);"><span style="white-space: nowrap;">Samuel Hedberg</span> · <span style="white-space: nowrap;">Enskild firma</span> · <span style="white-space: nowrap;">Godkänd för F-skatt</span></footer>
 </div>
 </div>
 <script>
@@ -858,6 +1174,401 @@ if(!matchMedia('(prefers-reduced-motion: reduce)').matches&&'IntersectionObserve
 if (/[?&]utm_/.test(location.search)) addEventListener('load', function () {
   setTimeout(function () { try { history.replaceState(null, '', location.pathname + location.hash); } catch (e) {} }, 2000);
 });
+</script>
+<script>
+/* Framstegslinjen: byggs av riktiga ankare (h1, kapitelrubriker, mejlens understrykning). Av om marginalen är smal. */
+(function(){
+  var NS='http://www.w3.org/2000/svg',root=document.documentElement;
+  var svg=document.createElementNS(NS,'svg'),path=document.createElementNS(NS,'path');
+  svg.id='trad';svg.setAttribute('aria-hidden','true');path.setAttribute('pathLength','1');svg.appendChild(path);document.body.appendChild(svg);
+  function Y(el){var y=0;while(el){y+=el.offsetTop;el=el.offsetParent}return y}
+  function build(){
+    var h1=document.getElementById('hej');if(!h1)return;
+    var cl=h1.getBoundingClientRect().left;
+    if(cl<64){root.classList.remove('trad-pa');return}
+    path.setAttribute('d','M0 0');svg.setAttribute('height',0);
+    var gx=Math.round(cl/2),H=document.documentElement.scrollHeight;
+    svg.setAttribute('height',H);svg.setAttribute('viewBox','0 0 '+innerWidth+' '+H);
+    var y0=Y(h1)+h1.offsetHeight*0.5,d='M'+gx+' '+y0,cy=y0,s=[];
+    function down(y){var m=(y-cy);d+=' C'+(gx+7)+' '+(cy+m*.33)+' '+(gx-7)+' '+(cy+m*.66)+' '+gx+' '+y;cy=y}
+    s.forEach(function(q){var e=document.querySelector(q);if(!e)return;var y=Y(e)+e.offsetHeight*0.5;down(y-16);
+      d+=' C'+(gx+17)+' '+(y-24)+' '+(gx+17)+' '+(y+12)+' '+gx+' '+(y+8)+' C'+(gx-15)+' '+(y+4)+' '+(gx-9)+' '+(y-14)+' '+(gx+3)+' '+(y-6)+' C'+(gx+9)+' '+(y-1)+' '+(gx+3)+' '+(y+14)+' '+gx+' '+(y+20);cy=y+20});
+    var m=document.querySelector('a[href^="mailto"]');
+    if(m){var r=m.getBoundingClientRect(),ey=Y(m)+m.offsetHeight-12,ex=r.left-6;
+      d+=' C'+gx+' '+(ey-40)+' '+(gx+(ex-gx)*.35)+' '+(ey+8)+' '+ex+' '+ey}
+    path.setAttribute('d',d);root.classList.add('trad-pa');
+  }
+  var tm;function re(){clearTimeout(tm);tm=setTimeout(build,120)}
+  addEventListener('resize',re);addEventListener('load',function(){build();setTimeout(build,1500)});
+  if(document.fonts&&document.fonts.ready)document.fonts.ready.then(build);
+})();
+</script>
+<script>
+/* SKISS kapitel 1: sidan formar om sig på riktigt (46 verkliga bildrutor), styrd av scroll, och dragbar kant på slutet */
+(function(){
+  var FR=[{"w":1440,"nav":[786,22,602,28],"burger":null,"cta":[[502,711,211,56],[733,710,205,58]]},{"w":1428,"nav":[774,22,602,28],"burger":null,"cta":[[496,711,211,56],[727,710,205,58]]},{"w":1416,"nav":[762,22,602,28],"burger":null,"cta":[[490,711,211,56],[721,710,205,58]]},{"w":1404,"nav":[750,22,602,28],"burger":null,"cta":[[484,711,211,56],[715,710,205,58]]},{"w":1392,"nav":[738,22,602,28],"burger":null,"cta":[[478,711,211,56],[709,710,205,58]]},{"w":1380,"nav":[726,22,602,28],"burger":null,"cta":[[472,711,211,56],[703,710,205,58]]},{"w":1368,"nav":[714,22,602,28],"burger":null,"cta":[[466,711,211,56],[697,710,205,58]]},{"w":1356,"nav":[702,22,602,28],"burger":null,"cta":[[460,711,211,56],[691,710,205,58]]},{"w":1344,"nav":[690,22,602,28],"burger":null,"cta":[[454,711,211,56],[685,710,205,58]]},{"w":1332,"nav":[678,22,602,28],"burger":null,"cta":[[448,711,211,56],[679,710,205,58]]},{"w":1320,"nav":[666,22,602,28],"burger":null,"cta":[[442,711,211,56],[673,710,205,58]]},{"w":1308,"nav":[654,22,602,28],"burger":null,"cta":[[436,711,211,56],[667,710,205,58]]},{"w":1296,"nav":[642,22,602,28],"burger":null,"cta":[[430,711,211,56],[661,710,205,58]]},{"w":1284,"nav":[630,22,602,28],"burger":null,"cta":[[424,711,211,56],[655,710,205,58]]},{"w":1272,"nav":[618,22,602,28],"burger":null,"cta":[[418,711,211,56],[649,710,205,58]]},{"w":1260,"nav":[606,22,602,28],"burger":null,"cta":[[412,711,211,56],[643,710,205,58]]},{"w":1248,"nav":[594,22,602,28],"burger":null,"cta":[[406,711,211,56],[637,710,205,58]]},{"w":1236,"nav":[582,22,602,28],"burger":null,"cta":[[400,711,211,56],[631,710,205,58]]},{"w":1224,"nav":[570,22,602,28],"burger":null,"cta":[[394,711,211,56],[625,710,205,58]]},{"w":1212,"nav":[558,22,602,28],"burger":null,"cta":[[388,711,211,56],[619,710,205,58]]},{"w":1200,"nav":[546,22,602,28],"burger":null,"cta":[[382,711,211,56],[613,710,205,58]]},{"w":1188,"nav":[534,22,602,28],"burger":null,"cta":[[376,711,211,56],[607,710,205,58]]},{"w":1176,"nav":[522,22,602,28],"burger":null,"cta":[[370,711,211,56],[601,710,205,58]]},{"w":1164,"nav":[510,22,602,28],"burger":null,"cta":[[364,711,211,56],[595,710,205,58]]},{"w":1152,"nav":[498,22,602,28],"burger":null,"cta":[[358,711,211,56],[589,710,205,58]]},{"w":1140,"nav":[486,22,602,28],"burger":null,"cta":[[352,711,211,56],[583,710,205,58]]},{"w":1128,"nav":[474,22,602,28],"burger":null,"cta":[[346,711,211,56],[577,710,205,58]]},{"w":1116,"nav":[462,22,602,28],"burger":null,"cta":[[340,711,211,56],[571,710,205,58]]},{"w":1104,"nav":[450,22,602,28],"burger":null,"cta":[[334,711,211,56],[565,710,205,58]]},{"w":1092,"nav":[438,22,602,28],"burger":null,"cta":[[328,711,211,56],[559,710,205,58]]},{"w":1080,"nav":[426,22,602,28],"burger":null,"cta":[[322,711,211,56],[553,710,205,58]]},{"w":1068,"nav":[414,22,602,28],"burger":null,"cta":[[316,711,211,56],[547,710,205,58]]},{"w":1056,"nav":[402,22,602,28],"burger":null,"cta":[[310,711,211,56],[541,710,205,58]]},{"w":1044,"nav":[390,22,602,28],"burger":null,"cta":[[304,711,211,56],[535,710,205,58]]},{"w":1032,"nav":[378,22,602,28],"burger":null,"cta":[[298,711,211,56],[529,710,205,58]]},{"w":1020,"nav":[366,22,602,28],"burger":null,"cta":[[292,711,211,56],[523,710,205,58]]},{"w":1008,"nav":[354,22,602,28],"burger":null,"cta":[[286,711,211,56],[517,710,205,58]]},{"w":996,"nav":[342,22,602,28],"burger":null,"cta":[[280,711,211,56],[511,710,205,58]]},{"w":984,"nav":[330,22,602,28],"burger":null,"cta":[[274,711,211,56],[505,710,205,58]]},{"w":972,"nav":[318,22,602,28],"burger":null,"cta":[[268,711,211,56],[499,710,205,58]]},{"w":960,"nav":[306,22,602,28],"burger":null,"cta":[[262,711,211,56],[493,710,205,58]]},{"w":948,"nav":[294,22,602,28],"burger":null,"cta":[[256,711,211,56],[487,710,205,58]]},{"w":936,"nav":[282,22,602,28],"burger":null,"cta":[[250,711,211,56],[481,710,205,58]]},{"w":924,"nav":[270,22,602,28],"burger":null,"cta":[[244,711,211,56],[475,710,205,58]]},{"w":912,"nav":[258,22,602,28],"burger":null,"cta":[[238,711,211,56],[469,710,205,58]]},{"w":900,"nav":[246,22,602,28],"burger":null,"cta":[[232,711,211,56],[463,710,205,58]]},{"w":888,"nav":[234,22,602,28],"burger":null,"cta":[[226,711,211,56],[457,710,205,58]]},{"w":876,"nav":[222,22,602,28],"burger":null,"cta":[[220,711,211,56],[451,710,205,58]]},{"w":864,"nav":[210,22,602,28],"burger":null,"cta":[[214,711,211,56],[445,710,205,58]]},{"w":852,"nav":[0,71,852,329],"burger":[800,22,28,28],"cta":[[208,711,211,56],[439,710,205,58]]},{"w":840,"nav":[0,71,840,329],"burger":[788,22,28,28],"cta":[[202,711,211,56],[433,710,205,58]]},{"w":828,"nav":[0,71,828,329],"burger":[776,22,28,28],"cta":[[196,711,211,56],[427,710,205,58]]},{"w":816,"nav":[0,71,816,329],"burger":[764,22,28,28],"cta":[[190,711,211,56],[421,710,205,58]]},{"w":804,"nav":[0,71,804,329],"burger":[752,22,28,28],"cta":[[184,711,211,56],[415,710,205,58]]},{"w":792,"nav":[0,71,792,329],"burger":[740,22,28,28],"cta":[[178,711,211,56],[409,710,205,58]]},{"w":780,"nav":[0,71,780,329],"burger":[728,22,28,28],"cta":[[172,711,211,56],[403,710,205,58]]},{"w":768,"nav":[0,71,768,329],"burger":[716,22,28,28],"cta":[[166,711,211,56],[397,710,205,58]]},{"w":756,"nav":[0,71,756,329],"burger":[704,22,28,28],"cta":[[160,711,211,56],[391,710,205,58]]},{"w":744,"nav":[0,71,744,329],"burger":[692,22,28,28],"cta":[[154,711,211,56],[385,710,205,58]]},{"w":732,"nav":[0,71,732,329],"burger":[680,22,28,28],"cta":[[148,711,211,56],[379,710,205,58]]},{"w":720,"nav":[0,71,720,329],"burger":[668,22,28,28],"cta":[[142,711,211,56],[373,710,205,58]]},{"w":708,"nav":[0,71,708,329],"burger":[656,22,28,28],"cta":[[136,711,211,56],[367,710,205,58]]},{"w":696,"nav":[0,71,696,329],"burger":[644,22,28,28],"cta":[[130,711,211,56],[361,710,205,58]]},{"w":684,"nav":[0,71,684,329],"burger":[632,22,28,28],"cta":[[124,711,211,56],[355,710,205,58]]},{"w":672,"nav":[0,71,672,329],"burger":[620,22,28,28],"cta":[[118,711,211,56],[349,710,205,58]]},{"w":660,"nav":[0,71,660,329],"burger":[608,22,28,28],"cta":[[112,711,211,56],[343,710,205,58]]},{"w":648,"nav":[0,71,648,329],"burger":[596,22,28,28],"cta":[[106,711,211,56],[337,710,205,58]]},{"w":636,"nav":[0,71,636,329],"burger":[584,22,28,28],"cta":[[100,711,211,56],[331,710,205,58]]},{"w":624,"nav":[0,71,624,329],"burger":[572,22,28,28],"cta":[[94,711,211,56],[325,710,205,58]]},{"w":612,"nav":[0,71,612,329],"burger":[560,22,28,28],"cta":[[88,711,211,56],[319,710,205,58]]},{"w":600,"nav":[0,71,600,329],"burger":[548,22,28,28],"cta":[[195,650,211,56],[198,726,205,58]]},{"w":588,"nav":[0,71,588,329],"burger":[536,22,28,28],"cta":[[189,650,211,56],[192,726,205,58]]},{"w":576,"nav":[0,71,576,329],"burger":[524,22,28,28],"cta":[[183,650,211,56],[186,726,205,58]]},{"w":564,"nav":[0,71,564,329],"burger":[512,22,28,28],"cta":[[177,650,211,56],[180,726,205,58]]},{"w":552,"nav":[0,71,552,329],"burger":[500,22,28,28],"cta":[[171,650,211,56],[174,726,205,58]]},{"w":540,"nav":[0,71,540,329],"burger":[488,22,28,28],"cta":[[165,650,211,56],[168,726,205,58]]},{"w":528,"nav":[0,71,528,329],"burger":[476,22,28,28],"cta":[[159,650,211,56],[162,726,205,58]]},{"w":516,"nav":[0,71,516,329],"burger":[464,22,28,28],"cta":[[153,650,211,56],[156,726,205,58]]},{"w":504,"nav":[0,71,504,329],"burger":[452,22,28,28],"cta":[[147,650,211,56],[150,726,205,58]]},{"w":492,"nav":[0,71,492,329],"burger":[440,22,28,28],"cta":[[141,650,211,56],[144,726,205,58]]},{"w":480,"nav":[0,71,480,329],"burger":[428,22,28,28],"cta":[[135,650,211,56],[138,726,205,58]]},{"w":468,"nav":[0,71,468,329],"burger":[416,22,28,28],"cta":[[129,650,211,56],[132,726,205,58]]},{"w":456,"nav":[0,71,456,329],"burger":[404,22,28,28],"cta":[[123,650,211,56],[126,726,205,58]]},{"w":444,"nav":[0,71,444,329],"burger":[392,22,28,28],"cta":[[117,650,211,56],[120,726,205,58]]},{"w":432,"nav":[0,71,432,329],"burger":[380,22,28,28],"cta":[[111,650,211,56],[114,726,205,58]]},{"w":420,"nav":[0,71,420,329],"burger":[368,22,28,28],"cta":[[105,650,211,56],[108,726,205,58]]},{"w":408,"nav":[0,71,408,329],"burger":[356,22,28,28],"cta":[[99,650,211,56],[102,726,205,58]]},{"w":396,"nav":[0,71,396,329],"burger":[344,22,28,28],"cta":[[93,650,211,56],[96,726,205,58]]},{"w":384,"nav":[0,71,384,329],"burger":[332,22,28,28],"cta":[[87,650,211,56],[90,726,205,58]]},{"w":372,"nav":[0,71,372,329],"burger":[320,22,28,28],"cta":[[81,650,211,56],[84,726,205,58]]},{"w":360,"nav":[0,71,360,329],"burger":[308,22,28,28],"cta":[[75,650,211,56],[78,726,205,58]]}],N=FR.length,BAR=30,H0=880;
+  var sec=document.getElementById('k1sek');if(!sec)return;
+  var c=document.getElementById('k1c'),ctx=c.getContext('2d'),ram=document.getElementById('k1ram'),bar=document.getElementById('k1bar');
+  var pn=document.getElementById('k1pn');
+  var beats=[].slice.call(document.querySelectorAll('#k1text .beat'));
+  var mob=matchMedia('(max-width:759px)'),rm=matchMedia('(prefers-reduced-motion: reduce)');
+  var cwL=0,chL=0,imgs=[],loaded=0,start=0,K=1,fpos=0,manual=false,dragging=false,lastY=0,bildRef=document.querySelector('.k1-bild');
+  function pad(i){return(i<10?'0':'')+i}
+  function load(){if(imgs.length)return;layout();for(var i=start;i<N;i++){(function(i){var im=new Image();im.onload=function(){loaded++;render()};im.src='film-ram/f'+pad(i)+'.webp';imgs[i]=im})(i)}}
+  new IntersectionObserver(function(e){if(e[0].isIntersecting)load()},{rootMargin:'1600px 0px'}).observe(sec);
+  function layout(){
+    var vw=bildRef.clientWidth||innerWidth;
+    start=mob.matches?FR.findIndex(function(f){return f.w<=900}):0;
+    var avH=(bildRef.clientHeight||innerHeight*0.55)-24-BAR,avW=vw-(mob.matches?64:90);
+    K=Math.max(0.12,Math.min(avH/H0,avW/FR[start].w));
+  }
+  function clamp(x,a,b){return Math.max(a,Math.min(b,x))}
+  /* tempo: vikt per sträcka (gammalt p) tar bort tomgång utan att ändra något annat */
+  function warp(u,W){var tot=0,i,w,acc=0;for(i=0;i<W.length;i++)tot+=W[i][2];for(i=0;i<W.length;i++){w=W[i][2]/tot;if(u<=acc+w||i===W.length-1)return W[i][0]+(w>0?clamp((u-acc)/w,0,1):1)*(W[i][1]-W[i][0]);acc+=w}return 1}
+  var WK=[[0,0,.05],[0,.16,.16],[.16,.16,.05],[.16,.5,.34],[.5,.5,.05],[.5,.8,.3],[.8,1,.1]];
+  function prog(){var r=sec.getBoundingClientRect(),tot=sec.offsetHeight-innerHeight;return tot>0?warp(clamp(-r.top/tot,0,1),WK):0}
+  function ell(x,y,w,h){var cx=x+w/2,cy=y+h/2,rx=w/2+9,ry=h/2+7;
+    return 'M'+(cx-rx*0.1)+' '+(cy-ry)+' C'+(cx+rx*0.9)+' '+(cy-ry*1.05)+' '+(cx+rx*1.08)+' '+(cy+ry*0.5)+' '+(cx+rx*0.3)+' '+(cy+ry*0.98)+' C'+(cx-rx*0.7)+' '+(cy+ry*1.1)+' '+(cx-rx*1.12)+' '+(cy-ry*0.3)+' '+(cx-rx*0.2)+' '+(cy-ry*1.04)+' C'+(cx+rx*0.4)+' '+(cy-ry*1.15)+' '+(cx+rx*0.8)+' '+(cy-ry*0.8)+' '+(cx+rx*0.85)+' '+(cy-ry*0.5)}
+  function note(g,tx,ty,anchor,r,txt){// r = [x,y,w,h] i ramens px
+    var e=document.getElementById(g+'e'),p=document.getElementById(g+'p'),t=document.getElementById(g+'t');
+    e.setAttribute('d',ell(r[0],r[1],r[2],r[3]));
+    t.setAttribute('x',tx);t.setAttribute('y',ty);t.setAttribute('text-anchor',anchor);
+    var ax=anchor==='end'?tx-6:anchor==='middle'?tx:tx-6,ay=ty-9;
+    var tx2=clamp(tx,r[0],r[0]+r[2]);var ty2=r[1]+r[3]+8;
+    p.setAttribute('d','M'+ax+' '+(ty-26)+' C'+ax+' '+(ty-40)+' '+(tx2+4)+' '+(ty2+14)+' '+tx2+' '+ty2);
+  }
+  function render(){
+    if(!FR[start])return;
+    var i0=Math.floor(fpos),i1=Math.min(i0+1,N-1),tt=fpos-i0;
+    var wc=FR[i0].w+(FR[i1].w-FR[i0].w)*tt,D=Math.round(wc*K),Hd=Math.round(H0*K),dpr=Math.min(2,devicePixelRatio||1);
+    ram.style.width=D+'px';ram.style.height=(Hd+BAR)+'px';
+    var rad=clamp(10+(900-wc)/510*22,10,32);ram.style.borderRadius=rad+'px';
+    bar.style.height=BAR+'px';bar.querySelector('span').style.display=D<300?'none':'';
+    var cw2=Math.round(D*dpr),ch2=Math.round(Hd*dpr);if(cw2!==cwL||ch2!==chL){c.width=cw2;c.height=ch2;cwL=cw2;chL=ch2;c.style.width=D+'px';c.style.height=Hd+'px'}
+    var ni=Math.round(fpos);if(imgs[ni]&&imgs[ni].complete&&imgs[ni].naturalWidth){ctx.drawImage(imgs[ni],0,0,c.width,c.height)}else{var k=ni;while(k>=0&&!(imgs[k]&&imgs[k].complete&&imgs[k].naturalWidth))k--;if(k>=0)ctx.drawImage(imgs[k],0,0,c.width,c.height)}
+    pn.setAttribute('viewBox','0 0 '+D+' '+(Hd+BAR));pn.setAttribute('width',D);pn.setAttribute('height',Hd+BAR);
+    var f=FR[Math.round(fpos)],sc=K,off=BAR,out=(bildRef.clientWidth-D)/2>200;
+    // 1. menyn på rad
+    var a1=document.getElementById('a1'),a2=document.getElementById('a2'),a3=document.getElementById('a3');
+    var on1=!!(f.nav&&!f.burger&&f.w>880),on2=!!(f.burger&&f.w<=860&&f.w>=520),on3=!!(f.cta.length>1&&f.cta[1][1]>f.cta[0][1]+20&&f.w>=360);
+    var side=D<380;
+    function put(g,r,mode,tx,ty,anch){var e=document.getElementById(g+'e'),pp=document.getElementById(g+'p'),t=document.getElementById(g+'t');
+      e.setAttribute('d',ell(r[0],r[1],r[2],r[3]));t.setAttribute('x',tx);t.setAttribute('y',ty);t.setAttribute('text-anchor',anch);
+      if(mode==='side'){pp.setAttribute('d','M'+(tx-8)+' '+(ty-8)+' C'+(tx-30)+' '+(ty-12)+' '+(r[0]+r[2]+30)+' '+(r[1]+r[3]/2)+' '+(r[0]+r[2]+12)+' '+(r[1]+r[3]/2))}
+      else{var ax=anch==='end'?tx-6:anch==='middle'?tx:tx-6,tx2=clamp(tx,r[0],r[0]+r[2]),ty2=r[1]+r[3]+8;pp.setAttribute('d','M'+ax+' '+(ty-26)+' C'+ax+' '+(ty-40)+' '+(tx2+4)+' '+(ty2+14)+' '+tx2+' '+ty2)}}
+    if(on1){var n=f.nav,r1=[n[0]*sc,n[1]*sc+off,n[2]*sc,n[3]*sc];put('a1',r1,'in',(n[0]+n[2]/2)*sc,r1[1]+r1[3]+62,'middle')}
+    if(on2){var b=f.burger,r2=[b[0]*sc,b[1]*sc+off,b[2]*sc,b[3]*sc];if(side)put('a2',r2,'side',D+16,r2[1]+r2[3]/2+6,'start');else put('a2',r2,'in',Math.min(D-10,r2[0]+r2[2]+10),r2[1]+r2[3]+72,'end')}
+    if(on3){var q=f.cta,uni=[Math.min(q[0][0],q[1][0]),q[0][1],Math.max(q[0][2],q[1][2]),q[1][1]+q[1][3]-q[0][1]],r3=[uni[0]*sc,uni[1]*sc+off,uni[2]*sc,uni[3]*sc];if(side)put('a3',r3,'side',D+16,r3[1]+r3[3]/2+6,'start');else put('a3',r3,'in',D/2,r3[1]+r3[3]+44,'middle')}
+    a1.classList.toggle('on',on1);a2.classList.toggle('on',on2);a3.classList.toggle('on',on3);
+  }
+  function update(){
+    var p=prog(),span=N-1-start;
+    fpos=start+clamp(p/0.8,0,1)*span
+    beats.forEach(function(b){var a=+b.dataset.a,e=+b.dataset.b;b.classList.toggle('on',p>=a&&p<e)});
+    render();
+  }
+  var tick=false;function onScroll(){if(!tick){tick=true;requestAnimationFrame(function(){tick=false;update()})}}
+  addEventListener('scroll',onScroll,{passive:true});
+  addEventListener('resize',function(){layout();update()});
+  mob.addEventListener&&mob.addEventListener('change',function(){layout();update()});
+  function init(){layout();fpos=start;update()}
+  if(document.fonts&&document.fonts.ready)document.fonts.ready.then(init);else init();
+  addEventListener('load',init);
+})();
+</script>
+<script>
+/* SKISS kapitel 2: Googles röntgen. Allt innehåll kommer ur Fast Minits riktiga sida. */
+(function(){
+  var DATA={"head":"Fast Minit – Skomakare i Uddevalla | Omsulning av klätterskor","desc":"Skomakare i Uddevalla på Torp Köpcentrum. Vi lagar skor, väskor, klockor och nycklar – och sular om klätterskor för dig som klättrar i Bohuslän. Välkommen till Fast Minit!","d":{"pw":1440,"stripH":1980,"headH":230,"els":[{"tag":"li","text":"Tjänster","r":[952,30,54,26]},{"tag":"li","text":"Klätterskor","r":[1047,30,73,26]},{"tag":"li","text":"Om oss","r":[1160,30,51,26]},{"tag":"li","text":"Kontakt","r":[1251,30,117,26]},{"tag":"h1","text":"När något går sönder fixar vi det.","r":[72,285,620,137]},{"tag":"p","text":"Skor, väskor, klockor och nycklar – vi lagar, vårdar och kopierar på Torp Köpcentrum. Kom förbi så tar vi en titt direkt.","r":[72,445,500,62]},{"tag":"img","text":"Fast Minit skomakare på Torp Köpcentrum i Uddevalla","r":[790,130,578,669]},{"tag":"h2","text":"Omsulning av klätterskor","r":[72,750,650,112]},{"tag":"p","text":"Bohuslän är ett av norra Europas mest kända klätterområden – och graniten sliter hårt på gummit. Istället för att köpa nya kan du sula om dina klätter","r":[72,882,650,121]},{"tag":"p","text":"Vi byter slitna sulor och lagar randen innan slitaget når skons ovandel. Lämna in dina skor hos oss på Torp Köpcentrum – vi tar en titt direkt och ger","r":[72,1023,650,91]},{"tag":"li","text":"Omsulning & sulbyte","r":[72,1141,321,43]},{"tag":"li","text":"Randlagning","r":[401,1141,321,43]},{"tag":"li","text":"Tåskydd","r":[72,1192,321,43]},{"tag":"li","text":"Sömmar & mindre lagningar","r":[401,1192,321,43]},{"tag":"img","text":"Klätterskor med sliten sula på granitklippa i Bohuslän – omsulning av klätterskor hos Fast Minit i Uddevalla","r":[802,840,566,424]},{"tag":"h2","text":"Vi finns här – kom in","r":[370,1410,700,102]},{"tag":"p","text":"Ingen bokning krävs. Ta med det som behöver fixas så tar vi en titt direkt – utan kostnad och utan förbehåll. Vi hittar alltid en lösning.","r":[370,1532,700,62]},{"tag":"a","text":"Ring oss","r":[757,1634,121,57]},{"tag":"h2","text":"Vi finns på Torp Köpcentrumi Uddevalla","r":[270,1930,640,224]}],"img":"film-ram/k2-d.webp"},"m":{"pw":390,"stripH":2700,"headH":230,"els":[{"tag":"h1","text":"När något går sönder fixar vi det.","r":[20,160,351,126]},{"tag":"p","text":"Skor, väskor, klockor och nycklar – vi lagar, vårdar och kopierar på Torp Köpcentrum. Kom förbi så tar vi en titt direkt.","r":[20,310,351,92]},{"tag":"li","text":"Ingen bokning behövs","r":[20,634,154,23]},{"tag":"li","text":"Kostnadsfri bedömning","r":[206,634,164,23]},{"tag":"li","text":"Öppet alla dagar","r":[20,667,121,23]},{"tag":"img","text":"Fast Minit skomakare på Torp Köpcentrum i Uddevalla","r":[20,737,351,263]},{"tag":"h2","text":"Omsulning av klätterskor","r":[20,990,351,106]},{"tag":"p","text":"Bohuslän är ett av norra Europas mest kända klätterområden – och graniten sliter hårt på gummit. Istället för att köpa nya kan du sula om dina klätter","r":[20,1116,351,211]},{"tag":"p","text":"Vi byter slitna sulor och lagar randen innan slitaget når skons ovandel. Lämna in dina skor hos oss på Torp Köpcentrum – vi tar en titt direkt och ger","r":[20,1347,351,151]},{"tag":"li","text":"Omsulning & sulbyte","r":[20,1526,172,43]},{"tag":"li","text":"Randlagning","r":[199,1526,172,43]},{"tag":"li","text":"Tåskydd","r":[20,1576,172,65]},{"tag":"li","text":"Sömmar & mindre lagningar","r":[199,1576,172,65]},{"tag":"h2","text":"Vi finns här – kom in","r":[20,1890,351,64]},{"tag":"p","text":"Ingen bokning krävs. Ta med det som behöver fixas så tar vi en titt direkt – utan kostnad och utan förbehåll. Vi hittar alltid en lösning.","r":[20,1974,351,123]},{"tag":"a","text":"Ring oss","r":[232,2137,121,57]},{"tag":"h2","text":"Vi finns på Torp Köpcentrumi Uddevalla","r":[20,2433,351,141]},{"tag":"p","text":"Kom förbi när du är i närheten – du behöver inte boka i förväg. Vi tar en snabb titt på ditt ärende utan kostnad och berättar vad vi kan göra.","r":[20,2594,351,127]}],"img":"film-ram/k2-m.webp"}};
+  var sec=document.getElementById('k2sek');if(!sec)return;
+  var wrap=document.getElementById('k2wrap'),beam=document.getElementById('k2beam'),ram=document.getElementById('k2ram'),vy=document.getElementById('k2vy'),strip=document.getElementById('k2strip'),shot=document.getElementById('k2shot'),wf=document.getElementById('k2wf'),term=document.getElementById('k2term'),side=document.getElementById('k2side'),q=document.getElementById('k2q'),qt=document.getElementById('k2qt'),tally=document.getElementById('k2tally'),tab=document.getElementById('k2tab');
+  var beats=[].slice.call(document.querySelectorAll('#k2text .beat')),bild=document.querySelector('.k2-bild'),mob=matchMedia('(max-width:759px)');
+  var rmq=matchMedia('(prefers-reduced-motion: reduce)'),S={},BAR=30,mode='d',M,k=1,Wf=600,Hf=400,boxes=[],stripTot=0,built='',loadedImg='';
+  var TERM=[['$ GET /robots.txt','g'],['User-agent: *','d'],['Allow: /','gr'],['Sitemap: https://fastminit.se/sitemap.xml','d'],['',''],['$ GET /sitemap.xml','g'],['<loc>https://fastminit.se/</loc>','d'],['<lastmod>2026-08-30</lastmod>','d'],['',''],['$ GET /','g'],['200 OK  ·  hämtar sidan …','gr']];
+  var LD=[['"@type": ["LocalBusiness", "ShoeRepairShop"],','typ'],['"name": "Fast Minit Uddevalla AB",',''],['"streetAddress": "Torp Köpcentrum 100",',''],['"addressLocality": "Uddevalla",','Uddevalla'],['"opens": "10:00",',''],['"closes": "20:00",',''],['"areaServed": "Uddevalla", "Bohuslän"','Uddevalla'],['"name": "Omsulning av klätterskor"','klätterskor']];
+  var QUERY='klätterskor uddevalla',TERMS=['klätterskor','uddevalla'];
+  function clamp(x,a,b){return Math.max(a,Math.min(b,x))}
+  function seg(p,a,b){return clamp((p-a)/(b-a),0,1)}
+  function ease(x){return x<.5?2*x*x:1-Math.pow(-2*x+2,2)/2}
+  var DESK=[{tag:'title',text:"Fast Minit – Skomakare i Uddevalla | Omsulning av klätterskor"},{tag:'meta',text:"Skomakare i Uddevalla på Torp Köpcentrum. Vi lagar skor, väskor, klockor och nycklar – och sular om klätterskor för dig som klättrar i Bohuslän. Välkommen till Fast Minit!"}].concat(DATA.d.els.filter(function(e){return e.tag!=='a'}).map(function(e){return {tag:(e.tag==='li'&&e.r[1]<100)?'nav':e.tag,text:e.text}}));
+  var src={title:'<title>'+"Fast Minit – Skomakare i Uddevalla | Omsulning av klätterskor"+'</title>',desc:'<meta name="description" content="'+"Skomakare i Uddevalla på Torp Köpcentrum. Vi lagar skor, väskor, klockor och nycklar – och sular om klätterskor för dig som klättrar i Bohuslän. Välkommen till Fast Minit!"+'">'};
+  function srcLabel(tag){return tag==='title'?'i titeln':tag==='meta'?'i beskrivningen':/^h\d$/.test(tag)?'i en rubrik':tag==='img'?'i bildens alt-text':tag==='nav'?'i menyn':'i texten'}
+  function build(){
+    mode=mob.matches?'m':'d';M=DATA[mode];
+    if(built===mode)return;built=mode;wf.innerHTML='';boxes=[];
+    function add(tag,lab,text,r,head){var d=document.createElement('div');d.className='k2-box'+(/^h\d$/.test(tag)?' h':'');var l=document.createElement('span');l.className='lab';l.textContent=(tag==='li'||tag==='a')?lab+' · '+text:lab;var x=document.createElement('span');x.className='tx';x.textContent=text;d.appendChild(l);d.appendChild(x);wf.appendChild(d);boxes.push({d:d,x:x,tag:tag,text:text,r:r,head:head,raw:text})}
+    add('title','title',src.title,[M.pw*0.05,18,M.pw*0.9,70],true);
+    add('meta','meta description',src.desc,[M.pw*0.05,100,M.pw*0.9,mode==='m'?120:100],true);
+    var nav=M.els.filter(function(e){return e.tag==='li'&&e.r[1]<100&&mode==='d'});
+    if(nav.length){var x0=Math.min.apply(0,nav.map(function(e){return e.r[0]})),x1=Math.max.apply(0,nav.map(function(e){return e.r[0]+e.r[2]}));add('nav','meny',nav.map(function(e){return e.text}).join(' · '),[x0-6,nav[0].r[1]+M.headH-4,x1-x0+12,nav[0].r[3]+8],false)}
+    M.els.forEach(function(e){if(nav.indexOf(e)>-1)return;var lab=e.tag==='img'?'bild · alt':e.tag==='li'?'punkt':e.tag==='a'?'länk':e.tag==='p'?'text':e.tag.toUpperCase();add(e.tag,lab,e.text,[e.r[0],e.r[1]+M.headH,e.r[2],e.r[3]],false)});
+    
+    boxes.forEach(function(b){b.stack=-1;b.fin=TERMS.some(function(t){return b.text.toLowerCase().indexOf(t)>-1})});
+    if(mode==='m'){var sm=boxes.filter(function(b){return b.fin&&(b.tag==='title'||b.tag==='meta'||b.tag==='img'||/^h[12]$/.test(b.tag))&&b.tag!=='h1'}).sort(function(a,c){return a.r[1]-c.r[1]});sm.forEach(function(b,i){b.stack=i})}
+    if(loadedImg!==M.img){shot.src=M.img;loadedImg=M.img}
+  }
+  function layout(){
+    build();var vw=bild.clientWidth||innerWidth;
+    Wf=Math.min(mode==='m'?vw-24:660,vw-24);k=Wf/M.pw;
+    var availH=(bild.clientHeight||innerHeight*.5)-BAR-46-(mode==='m'?58:52);Hf=rmq.matches?(mode==='m'?420:460):clamp(availH,220,mode==='m'?400:460);q.style.width=Wf+'px';
+    stripTot=(M.headH+M.stripH)*k;
+    ram.style.width=Wf+'px';vy.style.width=Wf+'px';vy.style.height=Hf+'px';
+    strip.style.width=Wf+'px';strip.style.height=stripTot+'px';
+    shot.style.top=(M.headH*k)+'px';shot.style.width=Wf+'px';shot.style.height=(M.stripH*k)+'px';
+    S.zk=null;
+    boxes.forEach(function(b){b.d.classList.toggle('s',b.r[3]*k<34&&(b.tag==='li'||b.tag==='a'));var s=b.d.style;s.left=(b.r[0]*k)+'px';s.top=(b.r[1]*k)+'px';s.width=Math.max(18,b.r[2]*k)+'px';s.height=Math.max(16,b.r[3]*k)+'px'});
+    var gut=((bild.clientWidth||innerWidth)-Wf)/2,inside=mode==='m'||gut<236;(inside?vy:wrap).appendChild(side);side.classList.toggle('in',inside);
+    tab.textContent="Fast Minit – Skomakare i Uddevalla | Omsulning av klätterskor";
+  }
+  /* tempo: sträckor utan nytt innehåll (mellan terminal och sida, före utzoomning, före slutkortet) får mindre scroll */
+  function warp(u,W){var tot=0,i,w,acc=0;for(i=0;i<W.length;i++)tot+=W[i][2];for(i=0;i<W.length;i++){w=W[i][2]/tot;if(u<=acc+w||i===W.length-1)return W[i][0]+(w>0?clamp((u-acc)/w,0,1)*(W[i][1]-W[i][0]):(W[i][1]-W[i][0]));acc+=w}return 1}
+  var WK=[[0,0,.05],[0,.12,.12],[.12,.2,.044],[.2,.2,.05],[.2,.5,.3],[.5,.5,.05],[.5,.68,.18],[.68,.74,.03],[.74,.74,.05],[.74,.86,.12],[.86,.9,.02],[.9,1,.08]];
+  function prog(){if(rmq.matches)return 1;var r=sec.getBoundingClientRect(),tot=sec.offsetHeight-innerHeight;return tot>0?warp(clamp(-r.top/tot,0,1),WK):0}
+  function typeLines(lines,n){var out='',used=0;lines.forEach(function(l){var t=l[0];if(used>=n)return;var take=t.slice(0,n-used);used+=t.length+1;out+='<span class="'+(l[1]||'')+'">'+take.replace(/</g,'&lt;')+'</span>\n'});return out}
+  var termTotal=TERM.reduce(function(a,l){return a+l[0].length+1},0);
+  function hitBoxes(terms){var found={};DESK.forEach(function(t){terms.forEach(function(w){if(t.text.toLowerCase().indexOf(w)>-1)(found[w]=found[w]||{})[srcLabel(t.tag)]=1})});boxes.forEach(function(b){var low=b.text.toLowerCase(),hits=terms.filter(function(t){return low.indexOf(t)>-1});b.hit=hits.length>0;if(b.hit){hits.forEach(function(t){(found[t]=found[t]||{})[srcLabel(b.tag)]=1})}});return found}
+  function markText(text,terms){var out=text.replace(/&/g,'&amp;').replace(/</g,'&lt;');terms.forEach(function(t){out=out.replace(new RegExp('('+t+')','ig'),'<mark>$1</mark>')});return out}
+  function update(){
+    var p=prog(),first=true;
+    beats.forEach(function(b){var a=+b.dataset.a,e=+b.dataset.b;b.classList.toggle('on',p>=a&&p<e)});
+    // 1. terminal -> sidan hämtas
+    var tp=seg(p,.0,.12),pageIn=seg(p,.16,.2),termOut=seg(p,.13,.16);
+    var tn=Math.round(tp*termTotal);if(tn!==S.tn){S.tn=tn;term.innerHTML=typeLines(TERM,tn)}term.style.opacity=1-termOut;term.style.display=termOut>=1?'none':'block';
+    // 2. röntgen
+    var r=ease(seg(p,.22,.38));
+    // 3. scroll: först upp till huvudet, sedan ner genom sidan
+    var ty0=-M.headH*k,maxTy=-(stripTot-Hf),ty;
+    if(p<.22)ty=ty0;else if(p<.3)ty=ty0*(1-ease(seg(p,.22,.3)));else ty=maxTy*ease(seg(p,.3,.5));
+    var zo=ease(seg(p,.74,.86)),fit=Hf/stripTot,sc=1-(1-fit)*zo;
+    // utzoomning: transform-origin överkant, mitt; skala ner hela remsan så att allt får plats
+    strip.style.transformOrigin='50% 0';
+    if(mode==='m'){strip.style.transform='translate3d(0,'+ty+'px,0)';var zk=Math.round(zo*100);if(S.zk!==zk){S.zk=zk;var nS=boxes.filter(function(b){return b.stack>=0}).length,rowH=32,gap=4;boxes.forEach(function(b){if(b.stack<0)return;var s2=b.d.style,tl=4+b.stack*(rowH+gap),oL=b.r[0]*k,oT=b.r[1]*k,oW=Math.max(18,b.r[2]*k),oH=Math.max(16,b.r[3]*k);s2.left=(oL+(8-oL)*zo)+'px';s2.top=(oT+((-ty+tl)-oT)*zo)+'px';s2.width=(oW+((Wf-16)-oW)*zo)+'px';s2.height=(oH+(rowH-oH)*zo)+'px'})}}
+    else strip.style.transform='translate3d(0,'+(ty*(1-zo))+'px,0) scale('+sc+')';
+    // scan-strålen: ovanför den är sidan Googles vy, nedanför den är den som besökaren ser
+    var beamY=r*Hf,beamStrip=r>0?beamY-ty:-1e9;
+    beam.style.top=(beamY-1)+'px';beam.style.opacity=(r>0&&r<1)?1:0;
+    shot.style.opacity=pageIn;shot.style.display=r>=1?'none':'block';
+    shot.style.clipPath='inset('+Math.max(0,beamStrip-M.headH*k)+'px 0 0 0)';
+    vy.style.background=r>0?'#0b1226':'#fff';
+    boxes.forEach(function(b){b.vis=b.r[1]*k<beamStrip;b.d.style.opacity=b.vis?((mode==='m'&&b.stack<0)?(1-zo):1):0});
+    // 4. strukturerad data
+    var lp=seg(p,.5,.66),ldOn=p>=.5&&p<.8;
+    var h='<span class="cap">ur sidans strukturerade data (förkortat)</span>';
+    var nLines=Math.round(lp*LD.length),ldKey=nLines+'|'+(p>=.66)+'|'+(p>=.74);
+    if(ldKey!==S.ld){S.ld=ldKey;LD.forEach(function(l,i){var on=i<nLines,hit=(p>=.66&&l[1]==='Uddevalla')||(p>=.74&&l[1]&&TERMS.some(function(t){return l[0].toLowerCase().indexOf(t)>-1}));h+='<span class="ln'+(on?' on':'')+(hit&&on?' hit':'')+'">'+l[0].replace(/</g,'&lt;')+'</span>'});S.h=h}else h=S.h;
+    // 5. sökning + träffar
+    var qOn=p>=.74;q.classList.toggle('on',qOn);
+    var typed=QUERY.slice(0,Math.round(seg(p,.74,.82)*QUERY.length)),qs=typed+(qOn&&typed.length<QUERY.length?'|':'');if(qs!==S.q){S.q=qs;qt.textContent=qs}
+    var terms=p>=.82?TERMS:(p>=.62?['uddevalla']:[]);
+    var tkey=terms.join(',');var found=S.found;if(tkey!==S.t||!found){S.t=tkey;found=hitBoxes(terms);TERMS.forEach(function(t){if(LD.some(function(l){return l[0].toLowerCase().indexOf(t)>-1})){(found[t]=found[t]||{})['i datan']=1}});S.found=found;S.boxHtml=boxes.map(function(b){return b.hit&&terms.length?markText(b.text,terms):b.text.replace(/&/g,'&amp;').replace(/</g,'&lt;')});S.dirty=true}
+    var hk=boxes.map(function(b){return !!b.hit&&b.vis&&r>=1?1:0}).join('');if(hk!==S.hk||S.dirty){S.hk=hk;boxes.forEach(function(b,i){b.d.classList.toggle('hit',hk[i]==='1');if(S.dirty)b.x.innerHTML=S.boxHtml[i]});S.dirty=false}
+    tab.classList.toggle('hit',p>=.82&&TERMS.some(function(t){return "Fast Minit – Skomakare i Uddevalla | Omsulning av klätterskor".toLowerCase().indexOf(t)>-1}));
+    // sidopanel: kod, sedan resultat
+    var cardOn=p>=.9;
+    var sk=cardOn?'card':h;if(sk!==S.side){S.side=sk;if(cardOn){var t2="Fast Minit – Skomakare i Uddevalla | Omsulning av klätterskor",d2="Skomakare i Uddevalla på Torp Köpcentrum. Vi lagar skor, väskor, klockor och nycklar – och sular om klätterskor för dig som klättrar i Bohuslän. Välkommen till Fast Minit!".slice(0,150)+'…';
+      side.innerHTML='<div class="k2-card" style="position:static;padding:0"><span class="cap">så kan resultatet se ut</span><div class="u">fastminit.se</div><div class="tt">'+markText(t2,TERMS)+'</div><div class="ds">'+markText(d2,TERMS)+'</div></div>'}
+    else side.innerHTML=h}
+    side.classList.toggle('on',(ldOn&&p>=.5)||cardOn);
+    // sammanställning under ramen
+    if(p>=.84){if(!S.tal){S.tal=1;var parts=TERMS.map(function(t){var s=found&&found[t]?Object.keys(found[t]):[];return '<em>'+t+'</em> finns '+(s.length?s.join(', '):'ingenstans')});tally.innerHTML=parts.join('<br>')}tally.classList.add('on')}
+    else{tally.classList.remove('on')}
+    var small=boxes;
+  }
+  var tick=false;function on(){if(!tick){tick=true;requestAnimationFrame(function(){tick=false;update()})}}
+  addEventListener('scroll',on,{passive:true});
+  addEventListener('resize',function(){built='';layout();update()});
+  mob.addEventListener&&mob.addEventListener('change',function(){built='';layout();update()});
+  function init(){layout();update()}
+  if(document.fonts&&document.fonts.ready)document.fonts.ready.then(init);else init();addEventListener('load',init);
+})();
+</script>
+<script>
+/* SKISS kapitel 3: Uppslaget. Två varianter: panorering och riktig 3D-bladvändning (bara dator). */
+(function(){
+  var sec=document.getElementById('k3sek');if(!sec)return;
+  var vy=document.getElementById('k3vy'),strip=document.getElementById('k3strip'),bok=document.getElementById('k3bok'),leaf=document.getElementById('k3leaf'),front=document.getElementById('k3front'),back=document.getElementById('k3back'),right=document.getElementById('k3right'),blank=document.getElementById('k3blank'),bild=document.getElementById('k3bild');
+  var tmp=document.createElement('div');tmp.innerHTML="\n<div class=\"pg\" id=\"k3p1\" aria-hidden=\"true\"><div class=\"pg-in\">\n  <span class=\"lbl\">före</span><span class=\"lbl2\">lanseringen</span>\n  <svg class=\"sk\" id=\"k3sk\" width=\"520\" height=\"680\" viewBox=\"0 0 520 680\" style=\"position:absolute;left:0;top:0\"></svg>\n  <span class=\"nt\" data-a=\".02\" style=\"left:318px;top:30px;--r:-4deg\">ett samtal</span>\n  <span class=\"nt\" data-a=\".08\" style=\"left:352px;top:146px;--r:3deg\">idéer</span>\n  <span class=\"nt\" data-a=\".13\" style=\"left:30px;top:632px;--r:-2deg\">skiss, text och bild</span>\n  <span class=\"nt\" data-a=\".17\" style=\"left:290px;top:634px;--r:2deg\">så bygger jag sidan</span>\n</div></div>\n<div class=\"pg\" id=\"k3p2\" aria-hidden=\"true\"><div class=\"pg-in\">\n  <span class=\"lbl\">lansering</span>\n  <div class=\"frame3 launch-in\" id=\"k3fr\"><div class=\"b\"><i></i><i></i><i></i><span style=\"margin-left:6px\">thailamdee.se</span></div><img src=\"film-ram/k3-launch.webp\" alt=\"\" width=\"920\" height=\"\" decoding=\"async\"></div>\n  <svg class=\"flagga launch-in\" id=\"k3flag\" viewBox=\"0 0 70 96\"><path d=\"M12 92 L12 6\"/><path d=\"M12 8 C28 2 38 18 62 8 L58 36 C38 44 28 28 12 36\"/></svg>\n  <div class=\"phone3 launch-in\" id=\"k3ph\"><img src=\"film-ram/k3-mobil.webp\" alt=\"\" width=\"390\" height=\"844\" decoding=\"async\"></div>\n  <span class=\"live launch-in\" id=\"k3live\">live<small>dator och telefon</small></span>\n  <span class=\"fortsatt launch-in\" id=\"k3fort\">sen då? →</span>\n</div></div>\n<div class=\"pg\" id=\"k3p3\" aria-hidden=\"true\"><div class=\"pg-in\">\n  <span class=\"lbl\">efter</span><span class=\"lbl2\" style=\"top:66px\">idéer som kan komma efter lanseringen</span>\n  <div class=\"real\" id=\"k3real\">\n    <div class=\"rad\" id=\"k3r1\"><svg viewBox=\"0 0 30 30\"><path d=\"M4 16 L12 25 L27 4\"/></svg><span>ny bild på kockens val</span></div>\n  </div>\n  <div class=\"th\" id=\"k3t1\" style=\"left:30px\"><img src=\"film-ram/k3-fore.webp\" alt=\"\" width=\"364\" height=\"240\"><em>före</em></div>\n  <div class=\"th\" id=\"k3t2\" style=\"left:215px\"><img src=\"film-ram/k3-efter.webp\" alt=\"\" width=\"364\" height=\"240\"><em>efter</em></div>\n  <div class=\"ideas\" id=\"k3ideas\"><div class=\"col\" style=\"left:0\"></div><div class=\"col\" style=\"left:245px\"></div></div>\n  <span class=\"k3-tip\" id=\"k3tip\"></span>\n</div></div>\n";
+  var P1=tmp.querySelector('#k3p1'),P2=tmp.querySelector('#k3p2'),P3=tmp.querySelector('#k3p3');
+  var beats=[].slice.call(document.querySelectorAll('#k3text .beat')),mob=matchMedia('(max-width:759px)'),rmq=matchMedia('(prefers-reduced-motion: reduce)');
+  var can3d=!!(window.CSS&&CSS.supports&&CSS.supports('transform-style','preserve-3d'));
+  var params=new URLSearchParams(location.search),mode=(params.get('v')==='pan')?'pan':'flip',S={},K=1,PW=520,PH=680,vw=0;
+  var IDEAS=['en ny rubrik','ett presentkort','en nyhetsruta','nya foton','en kampanj en vecka','öppettider som ändras','ett nyhetsbrev','en bokningsknapp','ett säsongserbjudande','en sida för företag','en fråga och svar-sida','tydligare knappar','en berättande text','uppdaterade priser','ett litet bildspel','en knapp för att dela','ett filmklipp','en ny färg','en karta','en sida för frågor','storbeställningar','ett jullov','en bild varje månad','och så vidare …'];
+  var cols=bok.parentNode&&P3.querySelectorAll('.ideas .col'),lines=[];
+  IDEAS.forEach(function(s,i){var d=document.createElement('div');d.className='idea';d.textContent=s;cols[i<12?0:1].appendChild(d);lines.push(d)});
+  // ---- skiss i penna (ritas av scrollen) ----
+  var sk=P1.querySelector('#k3sk'),skp=[];
+  (function(){var seed=7;function rnd(){seed=(seed*9301+49297)%233280;return seed/233280}
+    function j(v){return v+(rnd()-.5)*2.4}
+    function add(d,cls){var p=document.createElementNS('http://www.w3.org/2000/svg','path');p.setAttribute('d',d);p.setAttribute('pathLength','1');p.setAttribute('class',cls||'');p.style.strokeDasharray='1';p.style.strokeDashoffset='1';sk.appendChild(p);skp.push(p)}
+    function rect(x,y,w,h,cls){add('M'+j(x)+' '+j(y)+' L'+j(x+w)+' '+j(y)+' L'+j(x+w)+' '+j(y+h)+' L'+j(x)+' '+j(y+h)+' Z',cls)}
+    function xbox(x,y,w,h){rect(x,y,w,h);add('M'+j(x)+' '+j(y)+' L'+j(x+w)+' '+j(y+h),'fine');add('M'+j(x+w)+' '+j(y)+' L'+j(x)+' '+j(y+h),'fine')}
+    function hatch(x,y,w,n,gap,cls){var d='';for(var i=0;i<n;i++){var ww=i===n-1?w*.6:w;d+='M'+j(x)+' '+j(y+i*gap)+' L'+j(x+ww)+' '+j(y+i*gap)+' '}add(d,cls||'fine')}
+    rect(30,100,460,30);rect(40,108,34,14);hatch(300,112,150,1,0,'fine');add('M'+j(330)+' 112 L'+j(346)+' 112 M'+j(360)+' 112 L'+j(376)+' 112 M'+j(390)+' 112 L'+j(406)+' 112','fine');rect(420,106,64,18);
+    xbox(30,138,460,238);
+    hatch(52,262,250,2,28,'');add('M52 258 L300 258','');rect(52,332,92,26);rect(154,332,92,26);hatch(52,300,230,2,10,'fine');
+    hatch(30,402,200,1,0,'');xbox(30,424,220,108);hatch(266,436,210,4,14,'fine');rect(266,500,82,22,'acc');
+    xbox(30,544,140,52);xbox(190,544,140,52);xbox(350,544,140,52);hatch(30,606,130,1,0,'fine');hatch(190,606,130,1,0,'fine');hatch(350,606,130,1,0,'fine');
+  })();
+  function setSketch(p){var n=skp.length;skp.forEach(function(el,i){var a=i/n*.82,v=1-Math.max(0,Math.min(1,(p-a)/.18));v=Math.round(v*40)/40;if(S['s'+i]!==v){S['s'+i]=v;el.style.strokeDashoffset=v}});}
+  var NT=[].slice.call(P1.querySelectorAll('.nt'));
+  function setNotes(p){NT.forEach(function(e,i){var on=p>=+e.dataset.a*5;if(S['n'+i]!==on){S['n'+i]=on;e.classList.toggle('on',on)}})}
+  // ---- lansering ----
+  var L=['k3fr','k3flag','k3ph','k3live','k3fort'].map(function(id){return P2.querySelector('#'+id)});
+  function setLaunch(p){L.forEach(function(e,i){var on=p>=i*.18+.02;if(S['l'+i]!==on){S['l'+i]=on;e.classList.toggle('on',on)}});
+}
+  // ---- efter ----
+  var rr=[P3.querySelector('#k3r1'),P3.querySelector('#k3t1'),P3.querySelector('#k3t2')],tip=P3.querySelector('#k3tip'),lw=[];
+  function setIdeas(p){// p 0..1: först den riktiga raden, sedan idéerna som accelererar
+    var rp=Math.max(0,Math.min(1,p/.14));[0,1,2].forEach(function(i){var on=rp>=(i===0?.2:i===1?.5:.7);if(S['r'+i]!==on){S['r'+i]=on;rr[i].classList.toggle('on',on)}});
+    var q=Math.max(0,Math.min(1,(p-.14)/.86)),f=lines.length*Math.pow(q,1.55),last=-1,tipY=0,tipX=0;
+    lines.forEach(function(el,i){var v=Math.max(0,Math.min(1,f-i));v=Math.round(v*24)/24;if(S['i'+i]!==v){S['i'+i]=v;el.style.clipPath='inset(0 '+((1-v)*100)+'% 0 0)'}if(v>0&&v<1){last=i}});
+    if(last>=0){var el=lines[last],v=S['i'+last],w=lw[last]||(lw[last]=el.scrollWidth||120),ix=el.parentNode.style.left==='0px'?0:245;tip.style.opacity=1;tip.style.transform='translate('+(30+ix+w*v+4)+'px,'+(318+el.offsetTop+11)+'px)'}else{tip.style.opacity=0}}
+  // ---- layout ----
+  function place(){
+    var two=!mob.matches;vw=bild.clientWidth||innerWidth;var availH=Math.max(260,((bild.clientHeight||innerHeight*.6))-78);
+    var maxW=(mode==='flip'||two)?(vw-20)/2:vw-20;K=Math.min(maxW/PW,availH/PH,1.15);K=Math.max(.3,K);vy.style.setProperty('--k',K);
+    vy.className='k3-vy '+mode;
+    var pgW=PW*K,pgH=PH*K;
+    if(mode==='pan'){vy.style.width=(two?pgW*2:pgW)+'px';vy.style.height=pgH+'px';[P1,P2,P3].forEach(function(p){strip.appendChild(p)})}
+    else{vy.style.width=(pgW*2)+'px';vy.style.height=pgH+'px';bok.style.width=(pgW*2)+'px';bok.style.height=pgH+'px';front.appendChild(P1);back.appendChild(P2);right.appendChild(P3);blank.style.width=pgW+'px';blank.style.height=pgH+'px'}
+    document.getElementById('k3b-pan').setAttribute('aria-pressed',mode==='pan');document.getElementById('k3b-flip').setAttribute('aria-pressed',mode==='flip');
+    lw=[];S={};
+  }
+  function ease(x){return x<.5?2*x*x:1-Math.pow(-2*x+2,2)/2}
+  function seg(p,a,b){return Math.max(0,Math.min(1,(p-a)/(b-a)))}
+  /* tempo: idésträckan (länge) och tomgången mellan skiss och vändning får mindre scroll */
+  function clamp(x,a,b){return Math.max(a,Math.min(b,x))}
+  function warp(u,W){var tot=0,i,w,acc=0;for(i=0;i<W.length;i++)tot+=W[i][2];for(i=0;i<W.length;i++){w=W[i][2]/tot;if(u<=acc+w||i===W.length-1)return W[i][0]+(w>0?clamp((u-acc)/w,0,1)*(W[i][1]-W[i][0]):(W[i][1]-W[i][0]));acc+=w}return 1}
+  var WD=[[0,0,.05],[0,.22,.198],[.22,.24,.02],[.24,.24,.05],[.24,.6,.36],[.6,.6,.05],[.6,.95,.2275],[.95,1,.07]],WM=[[0,0,.05],[0,.2,.18],[.2,.24,.04],[.24,.24,.05],[.24,.56,.32],[.56,.6,.04],[.6,.6,.05],[.6,.95,.2275],[.95,1,.07]];
+  function prog(){if(rmq.matches)return 1;var r=sec.getBoundingClientRect(),tot=sec.offsetHeight-innerHeight;return tot>0?warp(clamp(-r.top/tot,0,1),mob.matches?WM:WD):0}
+  function update(){
+    var p=prog(),two=!mob.matches,pgW=PW*K;
+    beats.forEach(function(b,i){var a=+b.dataset.a,e=+b.dataset.b,on=p>=a&&p<e;if(S['b'+i]!==on){S['b'+i]=on;b.classList.toggle('on',on)}});
+    if(mode==='flip'){
+      setSketch(seg(p,0,.22));setNotes(seg(p,0,.22));
+      var t=ease(seg(p,.24,.44)),ang=-180*t;
+      leaf.style.transform='rotateY('+ang+'deg)';leaf.style.setProperty('--sh',Math.sin(t*Math.PI)*.9);
+      front.querySelector('.shade').style.opacity=Math.sin(t*Math.PI)*.9;back.querySelector('.shade').style.opacity=Math.sin(t*Math.PI)*.9;
+      setLaunch(seg(p,.42,.58));setIdeas(seg(p,.6,.95));
+    }else{
+      setSketch(seg(p,0,.2));setNotes(seg(p,0,.2));
+      var x;
+      if(two){setLaunch(seg(p,.18,.34));x=-pgW*ease(seg(p,.34,.48));setIdeas(seg(p,.48,.95))}
+      else{x=-pgW*ease(seg(p,.2,.3))-pgW*ease(seg(p,.46,.56));setLaunch(seg(p,.3,.46));setIdeas(seg(p,.56,.95))}
+      strip.style.transform='translate3d('+x+'px,0,0)';
+    }
+  }
+  var tick=false;function on(){if(!tick){tick=true;requestAnimationFrame(function(){tick=false;update()})}}
+  function setMode(m){if(m==='flip'&&(!can3d||mob.matches))return;mode=m;place();update()}
+  var bp=document.getElementById('k3b-pan'),bf=document.getElementById('k3b-flip');
+  bp.addEventListener('click',function(){setMode('pan')});bf.addEventListener('click',function(){setMode('flip')});
+  function init(){if(mode==='flip'&&(!can3d||mob.matches))mode='pan';bf.disabled=!can3d||mob.matches;place();update()}
+  addEventListener('scroll',on,{passive:true});addEventListener('resize',function(){if(mode==='flip'&&mob.matches)mode='pan';bf.disabled=!can3d||mob.matches;place();update()});
+  if(rmq.matches){document.documentElement.classList.add('k3-stack')}
+  if(document.fonts&&document.fonts.ready)document.fonts.ready.then(init);else init();addEventListener('load',init);
+})();
+</script>
+<script>
+
+(function(){
+  document.documentElement.classList.add('js');(function(){var b=document.querySelector('.h3-bro');if(!b)return;if(!('IntersectionObserver' in window)){b.classList.add('h3-in');return}var io=new IntersectionObserver(function(e){if(e[0].isIntersecting){b.classList.add('h3-in');io.disconnect()}},{threshold:.5});io.observe(b)})();
+  /* Skyddsnät: om Hej! ändå skulle bli bredare än sin spalt (annan motor, annat typsnittsläge) skalas det ned tills det ryms.
+     En läsning och en skrivning per gång, bara vid laddning, typsnitt klara och storleksändring. */
+  var hej=document.querySelector('.h3-hej'), text=document.querySelector('.h3-text'), vantar=0;
+  function anpassa(){
+    vantar=0;
+    hej.style.fontSize='';
+    for(var varv=0;varv<3;varv++){
+      var s=hej.children, r=-Infinity;
+      for(var i=0;i<s.length;i++)r=Math.max(r,s[i].getBoundingClientRect().right);
+      var t=text.getBoundingClientRect(), kant=Math.min(t.right,document.documentElement.clientWidth-4);
+      if(r<=kant)break;
+      var f=parseFloat(getComputedStyle(hej).fontSize);   /* Hej! slutar vid ca 1,863em från spaltens vänsterkant */
+      hej.style.fontSize=Math.min(f*0.985,(kant-t.left)/1.88).toFixed(2)+'px';
+    }
+    if(window.__hero3&&window.__hero3.matt)window.__hero3.matt();
+  }
+  function snart(){if(!vantar)vantar=requestAnimationFrame(anpassa)}
+  addEventListener('resize',snart,{passive:true});
+  addEventListener('load',snart);
+  if(document.fonts&&document.fonts.ready)document.fonts.ready.then(snart);
+  snart();
+})();
+(function(){
+  var hero=document.getElementById('hero');
+  var bokst=[].slice.call(hero.querySelectorAll('.h3-hej>span'));
+  var lugn=matchMedia('(prefers-reduced-motion: reduce)');
+  if(lugn.matches)return;                         /* slutläget gäller direkt: inget rör sig */
+  var fas=new URLSearchParams(location.search).get('fas'); /* testkrok: frys vågen, 0–1 */
+  var PERIOD=7000, FORSTA=700, SVEP=1700, PULS=1050;
+  var t0=performance.now(), synlig=true, kor=false, raf=0, senast=t0;
+  var mus=null, musLjus=0, ljus=0, lx=0, ly=0;
+  var s=bokst.map(function(){return 0}), skrivet=bokst.map(function(){return ''});
+  var mitt=[], fsize=0, hr=null;
+
+  function matt(){
+    hr=hero.getBoundingClientRect();
+    fsize=parseFloat(getComputedStyle(bokst[0]).fontSize);
+    mitt=bokst.map(function(b){var r=b.getBoundingClientRect();return{x:r.left+r.width/2-hr.left,y:r.top+r.height*.5-hr.top}});
+  }
+  function puls(x){ /* mjuk kulle 0→1→0 över x∈[0,1] */
+    return x<=0||x>=1?0:Math.pow(Math.sin(Math.PI*x),2);
+  }
+  function vagLage(now){ /* var befinner sig vågens krön, i tid sedan den startade */
+    if(fas!==null)return parseFloat(fas)*SVEP;
+    var t=now-t0-FORSTA; if(t<0)return -1;
+    return t%PERIOD;
+  }
+  function ruta(now){
+    raf=0;
+    var dt=Math.min(64,now-senast);senast=now;
+    var v=vagLage(now), k=1-Math.exp(-dt/110);
+    var krX=0,krY=0,krV=0;
+    for(var i=0;i<bokst.length;i++){
+      var w=0;
+      if(v>=0){var start=i*(SVEP-PULS)/(bokst.length-1);w=puls((v-start)/PULS)}
+      if(w>krV){krV=w;krX=mitt[i].x;krY=mitt[i].y}
+      var h=0;
+      if(mus){var dx=mus.x-mitt[i].x,dy=(mus.y-mitt[i].y)*.8,d=Math.sqrt(dx*dx+dy*dy),R=fsize*.62;
+        h=Math.max(0,1-d/R);h=h*h*(3-2*h)}
+      var mal=Math.max(w,h);
+      s[i]+=(mal-s[i])*(fas!==null?1:k);
+      var x=s[i];
+      /* tyngre men inte bredare: vikten upp, bredden ned lika mycket, så bokstaven sväller inåt och lyfter */
+      var wght=Math.round(800+100*x), wdth=(100-7*x).toFixed(1), y=(-0.045*x).toFixed(4), sk=(1+0.025*x).toFixed(4);
+      var nyckel=wght+'|'+wdth+'|'+y+'|'+sk;
+      if(nyckel!==skrivet[i]){skrivet[i]=nyckel;var st=bokst[i].style;
+        st.setProperty('--w',wght);st.setProperty('--s',wdth+'%');st.setProperty('--y',y+'em');st.setProperty('--k',sk)}
+    }
+    /* ljuset: följer musen; utan mus rider det på vågens krön */
+    var malLjus, tx, ty;
+    if(mus){malLjus=1;tx=mus.x;ty=mus.y}
+    else{malLjus=krV*.9;tx=krX;ty=krY}
+    if(malLjus>0.01||ljus>0.01){
+      if(ljus<0.02&&malLjus>0){lx=tx;ly=ty}
+      lx+=(tx-lx)*Math.min(1,k*1.4);ly+=(ty-ly)*Math.min(1,k*1.4);
+      ljus+=(malLjus-ljus)*k;
+      hero.style.setProperty('--mx',lx.toFixed(1)+'px');hero.style.setProperty('--my',ly.toFixed(1)+'px');
+      hero.style.setProperty('--ljus',ljus.toFixed(3));
+    }
+    if(kor)raf=requestAnimationFrame(ruta);
+  }
+  function starta(){if(!kor&&synlig&&!document.hidden){kor=true;senast=performance.now();matt();raf=requestAnimationFrame(ruta)}}
+  function stoppa(){kor=false;if(raf)cancelAnimationFrame(raf);raf=0}
+  function pos(x,y){if(!hr)matt();mus={x:x-hr.left,y:y-hr.top}}
+
+  new IntersectionObserver(function(e){synlig=e[0].isIntersecting;synlig?starta():stoppa()}).observe(hero);
+  document.addEventListener('visibilitychange',function(){document.hidden?stoppa():starta()});
+  addEventListener('resize',matt,{passive:true});
+  addEventListener('scroll',function(){hr=hero.getBoundingClientRect()},{passive:true});
+  hero.addEventListener('pointermove',function(e){if(e.pointerType==='mouse')pos(e.clientX,e.clientY)},{passive:true});
+  hero.addEventListener('pointerleave',function(e){if(e.pointerType==='mouse')mus=null},{passive:true});
+  hero.addEventListener('touchmove',function(e){var t=e.touches[0];pos(t.clientX,t.clientY)},{passive:true});
+  hero.addEventListener('touchend',function(){mus=null},{passive:true});
+  document.fonts.ready.then(function(){matt();starta()});
+  window.__hero3={matt:matt,s:s};
+})();
+
 </script>
 </body>
 </html>
