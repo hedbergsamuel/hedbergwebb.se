@@ -4,16 +4,29 @@
 <script>
   window.dataLayer = window.dataLayer || [];
   function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
-  gtag('config', 'G-J9WCFJR78B');
-  /* Analytics laddas först efter att sidan visats, så den inte konkurrerar med rubriken och porträttet */
-  addEventListener('load', function(){
-    (window.requestIdleCallback || function(f){setTimeout(f, 1)})(function(){
+  /* Analytics räknar bara riktiga besökare: rätt domän, ingen automatisering, känd robot eller testverktyg,
+     och först när någon rör sig på sidan. Robotar och skannrar som bara läser sidan räknas därför inte. */
+  (function(){
+    var ua = navigator.userAgent || '';
+    var host = location.hostname.replace(/^www\./, '');
+    var robot = navigator.webdriver === true ||
+      host !== 'hedbergwebb.se' ||
+      /bot|crawl|spider|slurp|headless|lighthouse|pagespeed|gtmetrix|pingdom|prerender|phantom|selenium|puppeteer|playwright|python|curl|wget|httpclient|facebookexternalhit|ahrefs|semrush|screaming/i.test(ua) ||
+      !(navigator.languages && navigator.languages.length);
+    if (robot) return;
+    var handelser = ['pointermove', 'scroll', 'touchstart', 'keydown', 'click'], klar = false;
+    function start(e){
+      if (klar || (e && e.isTrusted === false)) return;
+      klar = true;
+      handelser.forEach(function(t){ removeEventListener(t, start); });
+      gtag('js', new Date());
+      gtag('config', 'G-J9WCFJR78B');
       var s = document.createElement('script'); s.async = true;
       s.src = 'https://www.googletagmanager.com/gtag/js?id=G-J9WCFJR78B';
       document.head.appendChild(s);
-    });
-  });
+    }
+    handelser.forEach(function(t){ addEventListener(t, start, {passive: true}); });
+  })();
 </script>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
