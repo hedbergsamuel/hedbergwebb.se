@@ -763,11 +763,13 @@ article[data-tema="ren"] figure>div+div{box-shadow:0 40px 120px -10px rgba(255,1
 .h3-om-tal small{display:block;margin-top:14px;font:400 13px/1 'IBM Plex Mono',ui-monospace,monospace;letter-spacing:.14em;text-transform:uppercase;color:var(--blak2)}
 .h3-om-text{display:flex;flex-direction:column;gap:clamp(18px,2vw,28px);max-width:64ch}
 .h3-om .h3-om-text p{font-size:clamp(18px,1.7vw,21px)}
+.h3-om-rad+.h3-om-rad{margin-top:clamp(40px,6vw,88px)}
 .h3-om p.h3-vandpunkt{margin:clamp(40px,6vw,72px) 0}
 @media (min-width:900px){
   .h3-om{--kol:clamp(180px,28%,420px);--glapp:clamp(32px,5vw,96px)}
   .h3-om-rad{grid-template-columns:var(--kol) minmax(0,1fr);column-gap:var(--glapp);align-items:start}
   .h3-om-tal{font-size:clamp(130px,17vw,270px)}
+  .h3-om-sol .h3-om-text{grid-column:2}
   .h3-om .h3-om-text p{font-size:clamp(19px,1.6vw,24px);line-height:1.52}
   .h3-om p.h3-vandpunkt{margin:clamp(56px,7vw,112px) 0 clamp(56px,7vw,112px) calc(var(--kol) + var(--glapp));max-width:24ch;font-size:clamp(30px,3.5vw,58px);line-height:1.1;text-wrap:balance}
 }
@@ -859,18 +861,21 @@ if(!matchMedia('(prefers-reduced-motion: reduce)').matches&&'IntersectionObserve
 </header>
 
 <section class="h3-om" data-tema="papper" aria-label="Om mig">
-  <div class="h3-om-rad">
-    <div class="h3-om-tal" aria-hidden="true">12<small>år</small></div>
+  <div class="h3-om-rad h3-om-sol">
     <div class="h3-om-text">
       <p>Jag byggde min första hemsida när jag var 12. Pappa hade precis startat sin arboristfirma och behövde en sida, och jag blev helt överlycklig när jag fick sitta och klura ut hur man gjorde.</p>
       <p>Allt fick jag lära mig från grunden, från hur en sida ska se ut till hur den ska vara uppbyggd för att vara lätt att använda.</p>
     </div>
   </div>
   <p class="h3-vandpunkt">Sen insåg jag att en snygg hemsida inte räcker för att den ska uppfylla sitt syfte, den måste synas på Google också.</p>
+  <div class="h3-om-rad h3-om-sol">
+    <div class="h3-om-text">
+      <p>Här lärde jag mig mycket om SEO och konsten att skapa värdefullt innehåll, som faktiskt syns i sökresultat. Jag byggde om hemsidan. Den här gången räckte det inte att pappa var nöjd, jag behövde imponera på Google också.</p>
+    </div>
+  </div>
   <div class="h3-om-rad">
     <div class="h3-om-tal" aria-hidden="true">18<small>år</small></div>
     <div class="h3-om-text">
-      <p>Här lärde jag mig mycket om SEO och konsten att skapa värdefullt innehåll, som faktiskt syns i sökresultat. Jag byggde om hemsidan. Den här gången räckte det inte att pappa var nöjd, jag behövde imponera på Google också.</p>
       <p>Idag pluggar jag teknik på gymnasiet med digitalt skapande som inriktning. Men mina planer tar inte slut efter studenten. Intresset finns kvar, och jag vill fortsätta bygga bättre och bättre hemsidor!</p>
     </div>
   </div>
