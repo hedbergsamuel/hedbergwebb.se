@@ -773,6 +773,17 @@ article[data-tema="ren"] figure>div+div{box-shadow:0 40px 120px -10px rgba(255,1
   .h3-om .h3-om-text p{font-size:clamp(19px,1.6vw,24px);line-height:1.52}
   .h3-om p.h3-vandpunkt{margin:clamp(56px,7vw,112px) 0 clamp(56px,7vw,112px) calc(var(--kol) + var(--glapp));max-width:24ch;font-size:clamp(30px,3.5vw,58px);line-height:1.1;text-wrap:balance}
 }
+/* Smal skärm: bryggan centrerad och större så att texten fyller bredden i stället för att hänga till vänster */
+@media (max-width:899px){
+  .h3-bro-in{display:flex;flex-direction:column;align-items:center;text-align:center}
+  .h3-bro-text{max-width:none;font-size:clamp(30px,7.6vw,66px);line-height:1.12;text-wrap:balance}
+  .h3-bro-ut{max-width:28ch;margin:clamp(28px,6vw,52px) auto 0;font-size:clamp(19px,3.4vw,28px)}
+  .h3-bro-pil{margin:clamp(24px,5vw,40px) auto 0}
+  .h3-bro{padding-bottom:clamp(40px,7vw,72px)}
+  /* orden får brytas rad; understrykningen blir vanlig text-decoration så att den följer texten */
+  .h3-bro-text .h3-u{white-space:normal;text-decoration:underline;text-decoration-thickness:max(2px,.045em);text-underline-offset:.14em;text-decoration-skip-ink:none}
+  .h3-bro-text .h3-u::after{display:none}
+}
 /* Bryggan: stor text över hela bredden, avslutningen och pilen till höger så att blicken går vänster till höger */
 @media (min-width:900px){
   .h3-bro-in{grid-template-columns:repeat(12,minmax(0,1fr));column-gap:clamp(16px,2vw,32px)}
