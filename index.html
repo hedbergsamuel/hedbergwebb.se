@@ -15,12 +15,17 @@
       !(navigator.languages && navigator.languages.length);
     if (robot) return;
     var handelser = ['pointermove', 'scroll', 'touchstart', 'keydown', 'click'], klar = false;
+    /* Kampanjen sparas direkt vid laddning: adressfältet rensas efter 2 s, men Analytics startar först vid första rörelsen */
+    var kampanj = {}, q = new URLSearchParams(location.search);
+    [['source', 'campaign_source'], ['medium', 'campaign_medium'], ['campaign', 'campaign_name']].forEach(function(p){
+      if (q.get('utm_' + p[0])) kampanj[p[1]] = q.get('utm_' + p[0]);
+    });
     function start(e){
       if (klar || (e && e.isTrusted === false)) return;
       klar = true;
       handelser.forEach(function(t){ removeEventListener(t, start); });
       gtag('js', new Date());
-      gtag('config', 'G-J9WCFJR78B');
+      gtag('config', 'G-J9WCFJR78B', kampanj);
       var s = document.createElement('script'); s.async = true;
       s.src = 'https://www.googletagmanager.com/gtag/js?id=G-J9WCFJR78B';
       document.head.appendChild(s);
