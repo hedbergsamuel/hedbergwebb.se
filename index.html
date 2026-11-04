@@ -5,19 +5,28 @@
   window.dataLayer = window.dataLayer || [];
   function gtag(){dataLayer.push(arguments);}
   /* Analytics räknar bara riktiga besökare: rätt domän, ingen automatisering, känd robot eller testverktyg,
-     och först när någon rör sig på sidan. Robotar och skannrar som bara läser sidan räknas därför inte. */
+     och först när någon rör sig på sidan. Robotar och skannrar som bara läser sidan räknas därför inte.
+     Egna besök: öppna hedbergwebb.se/?intern=1 en gång i varje webbläsare så räknas de inte (?intern=0 slår på igen). */
   (function(){
     var ua = navigator.userAgent || '';
     var host = location.hostname.replace(/^www\./, '');
-    var robot = navigator.webdriver === true ||
+    var intern = false;
+    try {
+      var iq = new URLSearchParams(location.search).get('intern');
+      if (iq === '1') localStorage.setItem('ht_intern', '1');
+      if (iq === '0') localStorage.removeItem('ht_intern');
+      intern = localStorage.getItem('ht_intern') === '1';
+    } catch (e) {}
+    var robot = intern || navigator.webdriver === true ||
       host !== 'hedbergwebb.se' ||
       /bot|crawl|spider|slurp|headless|lighthouse|pagespeed|gtmetrix|pingdom|prerender|phantom|selenium|puppeteer|playwright|python|curl|wget|httpclient|facebookexternalhit|ahrefs|semrush|screaming/i.test(ua) ||
       !(navigator.languages && navigator.languages.length);
     if (robot) return;
-    var handelser = ['pointermove', 'scroll', 'touchstart', 'keydown', 'click'], klar = false;
+    var handelser = ['pointermove', 'scroll', 'touchstart', 'keydown', 'click'], klar = false, vantande = [];
     /* Kampanjen sparas direkt vid laddning: adressfältet rensas efter 2 s, men Analytics startar först vid första rörelsen */
     var kampanj = {}, q = new URLSearchParams(location.search);
-    [['source', 'campaign_source'], ['medium', 'campaign_medium'], ['campaign', 'campaign_name']].forEach(function(p){
+    [['source', 'campaign_source'], ['medium', 'campaign_medium'], ['campaign', 'campaign_name'],
+     ['content', 'campaign_content'], ['term', 'campaign_term']].forEach(function(p){
       if (q.get('utm_' + p[0])) kampanj[p[1]] = q.get('utm_' + p[0]);
     });
     function start(e){
@@ -29,8 +38,47 @@
       var s = document.createElement('script'); s.async = true;
       s.src = 'https://www.googletagmanager.com/gtag/js?id=G-J9WCFJR78B';
       document.head.appendChild(s);
+      vantande.forEach(function(v){ gtag('event', v[0], v[1]); });
+      vantande = [];
     }
     handelser.forEach(function(t){ addEventListener(t, start, {passive: true}); });
+
+    /* Egna händelser. Klick på kontaktlänkar startar Analytics direkt; övriga väntar tills besökaren rört sig. */
+    function skicka(namn, par, direkt){
+      if (direkt) start();
+      if (klar) gtag('event', namn, par); else vantande.push([namn, par]);
+    }
+    function plats(el){
+      var s = el.closest && el.closest('section,header,footer');
+      return s ? (s.id || s.getAttribute('aria-label') || s.tagName.toLowerCase()) : 'sidan';
+    }
+    document.addEventListener('click', function(e){
+      var a = e.target && e.target.closest && e.target.closest('a[href]');
+      if (!a || e.isTrusted === false) return;
+      var h = a.getAttribute('href') || '';
+      if (/^mailto:/i.test(h)) skicka('kontakt_mejl', {plats: plats(a)}, true);
+      else if (/^tel:/i.test(h)) skicka('kontakt_tel', {plats: plats(a)}, true);
+      else if (a.hostname && a.hostname !== location.hostname) skicka('utgaende_klick', {lank_doman: a.hostname}, true);
+    }, true);
+    var djup = {25: 0, 50: 0, 75: 0, 90: 0};
+    addEventListener('scroll', function(){
+      var h = document.documentElement.scrollHeight - innerHeight;
+      if (h <= 0) return;
+      var pr = scrollY / h * 100;
+      [25, 50, 75, 90].forEach(function(t){
+        if (!djup[t] && pr >= t) { djup[t] = 1; skicka('scroll_djup', {procent: t}); }
+      });
+    }, {passive: true});
+    if ('IntersectionObserver' in window) addEventListener('load', function(){
+      [['#hero', 'hero'], ['.h3-om', 'om_mig'], ['.h3-bro', 'brygga'], ['#k1sek', 'kapitel_1'], ['#k2sek', 'kapitel_2'],
+       ['#k3sek', 'kapitel_3'], ['.sl-gang', 'sa_gar_det_till'], ['.sl-kontakt', 'kontakt']].forEach(function(p){
+        var el = document.querySelector(p[0]); if (!el) return;
+        var io = new IntersectionObserver(function(es){
+          es.forEach(function(en){ if (en.isIntersecting) { io.disconnect(); skicka('sektion_synlig', {sektion: p[1]}); } });
+        }, {rootMargin: '-45% 0px -45% 0px', threshold: 0});
+        io.observe(el);
+      });
+    });
   })();
 </script>
 <meta charset="utf-8">
